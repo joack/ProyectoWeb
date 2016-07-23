@@ -25,7 +25,7 @@
     <body>
         <h1>Bienvenido de nuevo Admin!</h1>
  
-        
+<!-- ***** TABLA LISTA DE PRODUCTOS *****-->        
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading" align="center">
@@ -86,28 +86,10 @@
     </div>
     </div>    
 </div>   
+<!-- ****** FIN TABLA DE PRODUCTOS ****** --> 
+   
 
-<!-- Modal -->        
-<div class="modal fade" id="addModal" role="dialog">
-    <div class="modal-dialog" >
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body">
-                <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>        
-    </div>
-    
-</div>
-    
-
+<!-- ****** TABLA LISTA DE USUARIOS ***** -->                
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading" align="center">
@@ -159,7 +141,9 @@
         </div>
         </div>
     </div>
-
+<!-- ****** FIN TABLA DE USUARIOS ****** -->
+                            
+                            
 <script>
     /* must apply only after HTML has loaded */
     $(document).ready(function () {
@@ -187,35 +171,65 @@
         });
     });
 </script>
-    </head>
 
  
-     
-        <!-- Modal addUser -->
-        <div class="modal fade" id="contact_dialog" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Enter your name</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="contact_form" action="signup.do" method="POST">
-                            Email:      <input type="text" name="email">   <br/>
-                            User Name:  <input type="text" name="nick">    <br/>
-                            Password:   <input type="text" name="pass">   <br/>
-                            isAdmin:    <input type="checkbox" name="admin"><br/>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="javascript:window.location.reload()">Close
-                        </button>
-                        <button type="button" id="submitForm" class="btn btn-default">Send</button>
-                    </div>
+<!-- ******** FORMULARIOS MODAL PARA PRODUCTOS ******** -->     
+    
+    <!-- Add Product -->
+    <div class="modal fade" id="contact_dialog" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter your name</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="contact_form" action="signup.do" method="POST">
+                        Email:      <input type="text" name="email">   <br/>
+                        User Name:  <input type="text" name="nick">    <br/>
+                        Password:   <input type="text" name="pass">   <br/>
+                        isAdmin:    <input type="checkbox" name="admin"><br/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="javascript:window.location.reload()">Close
+                    </button>
+                    <button type="button" id="submitForm" class="btn btn-default">Send</button>
                 </div>
             </div>
-        </div>                            
+        </div>
+    </div>
+
+
+
+
+<!-- ******** FORMULARIOS MODAL PARA USUARIOS ******** -->
+    <!-- Modal addUser -->
+    <div class="modal fade" id="contact_dialog" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Enter your name</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="contact_form" action="signup.do" method="POST">
+                        Email:      <input type="text" name="email">   <br/>
+                        User Name:  <input type="text" name="nick">    <br/>
+                        Password:   <input type="text" name="pass">   <br/>
+                        isAdmin:    <input type="checkbox" name="admin"><br/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="javascript:window.location.reload()">Close
+                    </button>
+                    <button type="button" id="submitForm" class="btn btn-default">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>                            
                             
 </body>    
 </html>
