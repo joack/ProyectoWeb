@@ -6,11 +6,13 @@
 package controlador;
 
 import ServiceManager.Service;
+import SuperClases.Usuario;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.UsuarioAdmin;
 import modelo.UsuarioComun;
 
 /**
@@ -31,12 +33,20 @@ public class SignUp extends HttpServlet
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
     {
         Service service = Service.getService();
+        Usuario usuario;
         
         String email    = request.getParameter("email");
         String username = request.getParameter("nick");
         String password = request.getParameter("pass");
+        String isAdmin  = request.getParameter("admin");
         
-        UsuarioComun usuario = new UsuarioComun(email, username, password, "user" );
+        if( isAdmin != null )
+        {
+            usuario = new UsuarioAdmin( email, password, "admin" );
+        }else{
+            usuario = new UsuarioComun( email, username, password, "user" );
+        }
+        
         
         if (service.createUser(usuario)) 
         {
@@ -51,6 +61,7 @@ public class SignUp extends HttpServlet
 
         
         service.closeService();
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

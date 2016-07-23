@@ -20,6 +20,7 @@ public class UsuarioComun extends Usuario
         this.nickName = nickName;
     }
 
+    @Override
     public String getNickName() {
         return nickName;
     }

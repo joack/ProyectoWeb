@@ -5,18 +5,19 @@
  */
 package controlador;
 
+import DAO.UsuarioAdminDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Electrodomestico;
 
 /**
  *
  * @author Joack
  */
-public class AdministradorProducto_Crear extends HttpServlet {
+public class AdministradorProductoCrear extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,9 +31,37 @@ public class AdministradorProducto_Crear extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        int idCodigo = Integer.parseInt( request.getParameter("idCodigo"));
+        int idArticulo = Integer.parseInt( request.getParameter("idArticulo"));
+        String marca = request.getParameter("txtMarca");
+        String modelo = request.getParameter("txtModelo");
+        String nombre = request.getParameter("txtNombre");
+        String descripcion = request.getParameter("txtDescripcion");
+        int stock = Integer.parseInt(request.getParameter("txtStock"));
+        float precio = Float.parseFloat(request.getParameter("txtPrecio"));
+        String imagen = request.getParameter("txtImagen");
         
+        Electrodomestico producto = new Electrodomestico(   idCodigo, idArticulo, marca, modelo, 
+                                                            nombre, descripcion, imagen, stock, precio );
+        
+        UsuarioAdminDAO user = (UsuarioAdminDAO)request.getSession().getAttribute("usuario");
+        
+        if (user.createArticulo(producto)) 
+        {
+            request.getRequestDispatcher("pages/welcomeAdmin.jsp").forward(request, response);
+        }else{
+            String error = "El producto no se ha podido agregar.";
+            errorPage( error, request, response);
+        }
+
     }
 
+    private void errorPage( String error, HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException
+    {
+        request.getSession().setAttribute("error", error);
+        request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
+    }    
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

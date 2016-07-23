@@ -13,12 +13,12 @@
         <servlet-class>controlador.AdministradorProducto</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Crear</servlet-name>
-        <servlet-class>AdministradorProducto.Crear</servlet-class>
+        <servlet-name>AdministradorProductoCrear</servlet-name>
+        <servlet-class>controlador.AdministradorProductoCrear</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdministradorProducto_Crear</servlet-name>
-        <servlet-class>controlador.AdministradorProducto_Crear</servlet-class>
+        <servlet-name>AdministradorUsuarioCrear</servlet-name>
+        <servlet-class>controlador.AdministradorUsuarioCrear</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -33,12 +33,12 @@
         <url-pattern>/administradorProducto.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Crear</servlet-name>
-        <url-pattern>/Crear</url-pattern>
+        <servlet-name>AdministradorProductoCrear</servlet-name>
+        <url-pattern>/administradorProductoCrear.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdministradorProducto_Crear</servlet-name>
-        <url-pattern>/administradorProducto_Crear.do</url-pattern>
+        <servlet-name>AdministradorUsuarioCrear</servlet-name>
+        <url-pattern>/administradorUsuarioCrear.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

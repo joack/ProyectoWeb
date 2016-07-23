@@ -43,7 +43,7 @@
     <div class="container-fluid">
     <div id="table" class="table-editable table-responsive">
         <br>
-        <form action="administradorProducto.do" method="get">
+        <form action="${pageContext.request.contextPath}/pages/addProduct.jsp" method="get">
             <table id="unaTabla" class="table table-bordered table-condensed ">
                 
                 <thead>
@@ -83,7 +83,7 @@
                 
 
             </table>
-            <button action="administradorProducto.do" type="submit" class="btn btn-default pull-left" >Boton</button>
+            <button type="submit" class="btn btn-default pull-left" >Agregar</button>
             <a  class="btn btn-default">Delete Row</a>
             <br><br>
         </form>
@@ -95,7 +95,7 @@
 
         
 
-
+    
 
 <div class="container-fluid">
     <div class="panel panel-default">
@@ -105,38 +105,45 @@
         <div class="container-fluid">
             <div id="table" class="table-editable table-responsive">
                 <br>
-                <table id="tableUsers" class="table table-bordered table-condensed">
-                    <thead>
-                        <tr>
-                            <th> Email      </th>
-                            <th> Nick Name  </th>
-                            <th> Password   </th>
-                            <th> Rol        </th>
-                            <th> Accion     </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <form action="administradorUsuarioCrear.do" method="get">
 
-                        <% 
-                            for ( Usuario usuario: usuarios) 
-                            {
+                    <table id="tableUsers" class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th> Email      </th>
+                                <th> Nick Name  </th>
+                                <th> Password   </th>
+                                <th> Rol        </th>
+                                <th> Accion     </th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                                out.println("<tr>");
-                                //out.println("<form action=\"administradorProducto.do\" method=\"get\" >");
-                                out.println("   <td id=\""+usuario.getEmail()+"\">"+usuario.getEmail()+"</td>");
-                                out.println("   <td>"+usuario.getNickName()+"</td>");
-                                out.println("   <td>"+usuario.getPassword()+"</td>");
-                                out.println("   <td>"+usuario.getRol()+"</td>");
-                                out.println("   <td><button  onClick=\"myF()\">asdfa</button></td>");
-                                //out.println("</form>"); 
-                                out.println("</tr>");  
+                            <% 
+                                for ( Usuario usuario: usuarios) 
+                                {
 
-                            }
-                        %>
+                                    out.println("<tr>");
+                                    //out.println("<form action=\"administradorProducto.do\" method=\"get\" >");
+                                    out.println("   <td id=\""+usuario.getEmail()+"\">"+usuario.getEmail()+"</td>");
+                                    out.println("   <td>"+usuario.getNickName()+"</td>");
+                                    out.println("   <td>"+usuario.getPassword()+"</td>");
+                                    out.println("   <td>"+usuario.getRol()+"</td>");
+                                    out.println("   <td><button  onClick=\"myF()\">asdfa</button></td>");
+                                    //out.println("</form>"); 
+                                    out.println("</tr>");  
 
-                    </tbody>
-                </table>
+                                }
+                            %>
+
+                        </tbody>
+                    </table>
+                    
+                    <button class="btn btn-default" type="submit">Agregar Usurio</button><br><br>        
+                            
+                </form>
             </div>
+            
         </div>
         </div>
     </div>
