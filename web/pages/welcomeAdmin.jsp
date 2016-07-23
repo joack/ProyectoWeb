@@ -17,18 +17,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap.css">
-        <script>
-            $(document).ready(function() {
-                $('#unaTabla').DataTable( {
-                    "scrollY":        "3px",
-                    "scrollCollapse": true,
-                    "paging":         false
-                } );
-            } );
-
-        </script>
-        
-        
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+   
         <title>JSP Page</title>
     </head>
     <body>
@@ -83,7 +74,10 @@
                 
 
             </table>
-            <button type="submit" class="btn btn-default pull-left" >Agregar</button>
+            <!--button type="submit" class="btn btn-default pull-left" >Agregar</button-->
+            <button type="button" class="btn btn-default pull-left" data-toggle="modal" data-target="#addModal">
+                Agregar
+            </button>
             <a  class="btn btn-default">Delete Row</a>
             <br><br>
         </form>
@@ -93,14 +87,31 @@
     </div>    
 </div>   
 
-        
-
+<!-- Modal -->        
+<div class="modal fade" id="addModal" role="dialog">
+    <div class="modal-dialog" >
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>        
+    </div>
+    
+</div>
     
 
 <div class="container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading" align="center">
-            <h4><b><font color="black" style="font-family: fantasy;">Lista de Productos</font> </b></h4> 
+            <h4><b><font color="black" style="font-family: fantasy;">Lista de Usuarios</font> </b></h4> 
         </div>
         <div class="container-fluid">
             <div id="table" class="table-editable table-responsive">
@@ -139,14 +150,72 @@
                         </tbody>
                     </table>
                     
-                    <button class="btn btn-default" type="submit">Agregar Usurio</button><br><br>        
-                    <button class="btn btn-default" > Eliminar Usuario</button>        
+                    <!--button class="btn btn-default" type="submit">Agregar Usurio</button><br><br--> 
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#contact_dialog">Contact</button>
+                    <button class="btn btn-default" > Eliminar Usuario</button> <br><br>       
                 </form>
             </div>
             
         </div>
         </div>
     </div>
-</div>
-    
+
+<script>
+    /* must apply only after HTML has loaded */
+    $(document).ready(function () {
+        $("#contact_form").on("submit", function(e) {
+            var postData = $(this).serializeArray();
+            var formURL = $(this).attr("action");
+            $.ajax({
+                url: formURL,
+                type: "POST",
+                data: postData,
+                success: function(data, textStatus, jqXHR) {
+                    $('#contact_dialog .modal-header .modal-title').html("Result");
+                    $('#contact_dialog .modal-body').html(data);
+                    $("#submitForm").remove();
+                },
+                error: function(jqXHR, status, error) {
+                    console.log(status + ": " + error);
+                }
+            });
+            e.preventDefault();
+        });
+         
+        $("#submitForm").on('click', function() {
+            $("#contact_form").submit();
+        });
+    });
+</script>
+    </head>
+
+ 
+     
+        <!-- Modal addUser -->
+        <div class="modal fade" id="contact_dialog" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Enter your name</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="contact_form" action="signup.do" method="POST">
+                            Email:      <input type="text" name="email">   <br/>
+                            User Name:  <input type="text" name="nick">    <br/>
+                            Password:   <input type="text" name="pass">   <br/>
+                            isAdmin:    <input type="checkbox" name="admin"><br/>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="javascript:window.location.reload()">Close
+                        </button>
+                        <button type="button" id="submitForm" class="btn btn-default">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>                            
+                            
+</body>    
 </html>
