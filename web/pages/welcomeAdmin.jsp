@@ -140,7 +140,7 @@
                     </table>
                     
                     <button class="btn btn-default" type="submit">Agregar Usurio</button><br><br>        
-                            
+                    <button class="btn btn-default" > Eliminar Usuario</button>        
                 </form>
             </div>
             
