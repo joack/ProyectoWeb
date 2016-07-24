@@ -50,9 +50,11 @@ public class SignUp extends HttpServlet
         
         if (service.createUser(usuario)) 
         {
-            System.out.println("Exito al registrar");
+            String success = "Usuario agregado correstamente.";
+            request.getSession().setAttribute("exito", success);
+            request.getRequestDispatcher("/pages/success.jsp").forward(request, response);
         }else{
-            String error = "Error al registrar, intentelo de nuevo.";
+            String error = "<br>Error al registrar, intentelo de nuevo.";
             String linkVolver = "#";
             request.getSession().setAttribute("error", error);
             request.getSession().setAttribute("link", linkVolver);
@@ -61,7 +63,7 @@ public class SignUp extends HttpServlet
 
         
         service.closeService();
-        response.sendRedirect(request.getHeader("referer"));
+        //response.sendRedirect(request.getHeader("referer"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
