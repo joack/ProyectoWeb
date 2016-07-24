@@ -36,7 +36,7 @@ public class AdministradorProductoCrear extends HttpServlet {
         String marca = request.getParameter("txtMarca");
         String modelo = request.getParameter("txtModelo");
         String nombre = request.getParameter("txtNombre");
-        String descripcion = request.getParameter("txtDescripcion");
+        String descripcion = request.getParameter("txtDescrip");
         int stock = Integer.parseInt(request.getParameter("txtStock"));
         float precio = Float.parseFloat(request.getParameter("txtPrecio"));
         String imagen = request.getParameter("txtImagen");

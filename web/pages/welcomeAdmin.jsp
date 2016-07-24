@@ -19,7 +19,13 @@
         <link href="css/bootstrap.css">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-   
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript">
+            function myFunc(id)
+            {
+                alert(id);
+            }
+        </script>        
         <title>Admin Page</title>
     </head>
     <body>
@@ -35,7 +41,7 @@
             <div id="table" class="table-editable table-responsive">
                 <br>
                 <form action="${pageContext.request.contextPath}/pages/addProduct.jsp" method="get">
-                    <table id="unaTabla" class="table table-bordered table-condensed ">
+                    <table id="productTable" class="table table-bordered table-condensed ">
 
                         <thead>
                             <th width="10%">ID Codigo   </th>
@@ -94,11 +100,11 @@
                     <h4><b><font color="black" style="font-family: fantasy;">Lista de Usuarios</font> </b></h4> 
                 </div>
                 <div class="container-fluid">
-                    <div id="table" class="table-editable table-responsive">
+                    <div id="table" class="table-editable table-responsive  row-border order-column" >
                         <br>
                         <form action="administradorUsuarioCrear.do" method="get">
 
-                            <table id="tableUsers" class="table table-bordered table-condensed">
+                            <table id="usersTable" class="table table-bordered table-condensed">
                                 <thead>
                                     <tr>
                                         <th> Email      </th>
@@ -143,33 +149,33 @@
  
 <!-- ******** FORMULARIOS MODAL PARA PRODUCTOS ******** -->        
         <!-- Add Product -->
-        <div class="modal fade" id="productAdd_dialog" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
+        <div class="modal fade " width="30%" id="productAdd_dialog" role="dialog">
+            <div class="modal-dialog" width="10%">
+                <div class="modal-content " >
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Enter your name</h4>
+                        <h4 class="modal-title" align="center">Agregar Producto</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="productAdd_form" action="signup.do" method="POST">
-                            ID Codigo:                                              <br>
-                            <input type="text" name="idCodigo">                     <br>
-                            ID Descripcion:                                         <br>
-                            <input type="text" name="idArticulo">                   <br>
-                            Marca:                                                  <br>
-                            <input type="text" name="txtMarca">                     <br>
-                            Modelo:                                                 <br>
-                            <input type="text" name="txtModelo">                    <br>
-                            Nombre:                                                 <br>
-                            <input type="text" name="txtNombre">                    <br>
-                            Descipcion:                                             <br>
-                            <input type="text" name="txtDescrip">                   <br>
-                            Stcok:                                                  <br>
-                            <input type="text" name="txtStcok">                     <br>
-                            Precio:                                                 <br>
-                            <input type="text" name="txtPrecio">                    <br>
-                            URL Imagen:                                             <br>
-                            <input type="text" name="txtImagen">                    <br>
+                        <form id="productAdd_form" action="administradorProductoCrear.do" method="POST">
+                            ID Codigo:                                          <br>
+                            <input type="text" name="idCodigo" id="fld1" required>&nbsp;<span id="errmsg1"></span><br><br>
+                            ID Descripcion:                                     <br>
+                            <input type="text" name="idArticulo" id="fld2" required>&nbsp;<span id="errmsg2"></span><br>
+                            Marca:                                              <br>
+                            <input type="text" name="txtMarca" required>                 <br>
+                            Modelo:                                             <br>
+                            <input type="text" name="txtModelo" required>                <br>
+                            Nombre:                                             <br>
+                            <input type="text" name="txtNombre" required>                <br>
+                            Descipcion:                                         <br>
+                            <input type="text" name="txtDescrip" required>               <br>
+                            Stock:                                              <br>
+                            <input type="text" name="txtStock" id="fld3" required>&nbsp;<span id="errmsg3"></span><br>
+                            Precio:                                             <br>
+                            <input type="text" name="txtPrecio" id="fld4" required>&nbsp;<span id="errmsg4"></span><br>
+                            URL Imagen:                                         <br>
+                            <input type="text" name="txtImagen" required>                <br>
                         </form>
                     </div>
                     <div class="modal-footer">

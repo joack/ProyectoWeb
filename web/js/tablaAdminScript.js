@@ -43,9 +43,9 @@ $(document).ready(function () {
             type: "POST",
             data: postData,
             success: function(data, textStatus, jqXHR) {
-                $('#contact_dialog .modal-header .modal-title').html("Result");
-                $('#contact_dialog .modal-body').html(data);
-                $("#submitForm").remove();
+                $('#productAdd_dialog .modal-header .modal-title').html("Result");
+                $('#productAdd_dialog .modal-body').html(data);
+                $("#submitProductForm").remove();
             },
             error: function(jqXHR, status, error) {
                 console.log(status + ": " + error);
@@ -57,8 +57,29 @@ $(document).ready(function () {
     $("#submitProductForm").on('click', 
         function() 
         {
-            $("#contact_form").submit();
+            $("#productAdd_form").submit();
         }
 
     );
 });
+
+$(document).ready(function() {
+    $("#productTable, #usersTable").DataTable( {
+        "scrollY":        "200px",
+        "scrollCollapse": true,
+        "paging":         false
+    } );
+} );
+
+$(document).ready(function () {
+  //called when key is pressed in textbox
+  $("#fld1, #fld2, #fld3, #fld4").keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+        //display error message
+        $("#errmsg1, #errmsg2, #errmsg3, #errmsg4").html("Digits Only").show().fadeOut("slow");
+               return false;
+    }
+   });
+});
+
