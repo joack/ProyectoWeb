@@ -29,8 +29,8 @@ public class AdministradorUsuarioCrear extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        request.getSession().setAttribute("ok", true );
-        request.getRequestDispatcher("/pages/signup.jsp").forward(request, response);
+        //request.getSession().setAttribute("ok", true );
+        //request.getRequestDispatcher("/pages/signup.jsp").forward(request, response);
     
     
     }
