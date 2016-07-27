@@ -21,10 +21,7 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery.dataTables.min.js"></script>
         <script type="text/javascript">
-            function myFunc(id)
-            {
-                alert(id);
-            }
+
         </script>        
         <title>Admin Page</title>
     </head>
@@ -54,25 +51,29 @@
                             <th>Stock       </th>
                             <th>Imagen      </th>
                             <th>Edit        </th>
-                            <th>Short       </th>
                         </thead>
                         <tbody>
                         <% 
-                            for ( int i= 0; i < listaProductos.size(); i++) 
+                            for( Articulo producto: listaProductos) 
                             {
-                                out.println("<tr>");
-                                out.println("   <td contenteditable=\"true\" name=\"id\" >"+listaProductos.get(i).getIdCodigo()+    "</td>");
-                                out.println("   <td width=\"10%\" contenteditable=\"true\">"+listaProductos.get(i).getIdArticulo()+  "</td>");
-                                out.println("   <td contenteditable=\"true\">"+listaProductos.get(i).getMarca()+                     "</td>");
-                                out.println("   <td contenteditable=\"true\">"+listaProductos.get(i).getModelo()+                    "</td>");
-                                out.println("   <td contenteditable=\"true\">"+listaProductos.get(i).getNombre()+                    "</td>");
-                                out.println("   <td contenteditable=\"true\">"+listaProductos.get(i).getDescripcion()+               "</td>");
-                                out.println("   <td contenteditable=\"true\">"+listaProductos.get(i).getPrecio()+                    "</td>");
-                                out.println("   <td contenteditable=\"true\">"+listaProductos.get(i).getStock()+                     "</td>");
-                                out.println("   <td contenteditable=\"true\">"+listaProductos.get(i).getImagen()+                    "</td>");
-                                out.println("<td><span class=\"table-edit glyphicon glyphicon-edit\"></span></td>" );
-                                out.println("<td><span class=\"table-up glyphicon glyphicon-arrow-up\"></span>" );
-                                out.println("    <span class=\"table-down glyphicon glyphicon-arrow-down\"></span></td>" );                        
+                                out.println("<tr id=\""+producto.getIdCodigo()+"\">");
+                                out.println("   <td class=\"idCodigo\" width=\"10%\"   >" +producto.getIdCodigo()+   "</td>");
+                                out.println("   <td class=\"idArticulo\" width=\"10%\" >" +producto.getIdArticulo()+   "</td>");
+                                out.println("   <td class=\"idMarca\"  >"              +producto.getMarca()+        "</td>");
+                                out.println("   <td class=\"idModelo\" >"              +producto.getModelo()+       "</td>");
+                                out.println("   <td class=\"idNombre\" >"              +producto.getNombre()+       "</td>");
+                                out.println("   <td class=\"idDescrip\">"              +producto.getDescripcion()+  "</td>");
+                                out.println("   <td class=\"idPrecio\" >"              +producto.getPrecio()+       "</td>");
+                                out.println("   <td class=\"idStock\"  >"              +producto.getStock()+        "</td>");
+                                out.println("   <td class=\"idImagen\" >"              +producto.getImagen()+       "</td>");
+                                out.println("<td><a        type=\"button\" "
+                                                        + "class=\"btn btn-primary btn-xs editProduct\" "
+                                                        + "id=\"editProduc_dialog\">" 
+                                                        + "<span class=\"glyphicon glyphicon-pencil\"></span>"
+                                              + "</a>"
+                                         +  "</td>" ); 
+                                /*out.println("<td><button type=\"button\" class=\"btn btn-primary btn-xs\" data-toggle=\"modal\" data-target=\"#editProduct_dialog\" id=\"editProducRow\">"
+                                              + "<span class=\"glyphicon glyphicon-pencil\"></span></button></td>" );*/
                                 out.println("</tr>");   
                             }
                         %> 
@@ -82,7 +83,7 @@
                     <button type="button" class="btn btn-default pull-left" data-toggle="modal" data-target="#productAdd_dialog">
                         Agregar
                     </button>
-                    <a  class="btn btn-default">Delete Row</a>
+                        <a  class="btn btn-default" onclick="editRowProduct()">Delete Row</a>
                     <br><br>
                 </form>
             </div>
@@ -137,7 +138,10 @@
                             <button type="button" class="btn btn-default" data-toggle="modal" class="form-control" data-target="#addUser_dialog">
                                 Agregar Usuario
                             </button>
-                            <button class="btn btn-default" > Eliminar Usuario</button> <br><br>       
+                            <button type="button" class="btn btn-default" data-toggle="modal" class="form-control" data-target=""> 
+                                Eliminar Usuario
+                            </button> 
+                            <br><br>       
                         </form>
                     </div>
 
@@ -189,6 +193,117 @@
         </div>
         
 
+        <!-- Add Product -->
+        <div class="modal fade " width="30%" id="productDelete_dialog" role="dialog">
+            <div class="modal-dialog" width="10%">
+                <div class="modal-content " >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" align="center">Agregar Producto</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="productDelete_form" action="administradorProductoCrear.do" method="POST">
+                            ID Codigo:                                          <br>
+                            <input type="text" name="idCodigo" id="fld1" required>&nbsp;<span id="errmsg1"></span><br><br>
+                            ID Descripcion:                                     <br>
+                            <input type="text" name="idArticulo" id="fld2" required>&nbsp;<span id="errmsg2"></span><br>
+                            Marca:                                              <br>
+                            <input type="text" name="txtMarca" required>                 <br>
+                            Modelo:                                             <br>
+                            <input type="text" name="txtModelo" required>                <br>
+                            Nombre:                                             <br>
+                            <input type="text" name="txtNombre" required>                <br>
+                            Descipcion:                                         <br>
+                            <input type="text" name="txtDescrip" required>               <br>
+                            Stock:                                              <br>
+                            <input type="text" name="txtStock" id="fld3" required>&nbsp;<span id="errmsg3"></span><br>
+                            Precio:                                             <br>
+                            <input type="text" name="txtPrecio" id="fld4" required>&nbsp;<span id="errmsg4"></span><br>
+                            URL Imagen:                                         <br>
+                            <input type="text" name="txtImagen" required>                <br>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="javascript:window.location.reload()">Close
+                        </button>
+                        <button type="button" id="submitProductForm" class="btn btn-default">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+        
+        <!-- Edit Product -->
+	<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		    	<form class="form-horizontal" id="edit-form">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="edit-modal-label">Edit selected row</h4>
+			      </div>
+			      <div class="modal-body">
+			      		<input type="hidden" id="idCodigo" name="idCodigo" value="" class="hidden">
+			        	<div class="form-group">
+                                            <label for="firstname" class="col-sm-2 control-label">ID Descripcion</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="idArticulo" name="idArticulo" placeholder="ID Articulo" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="col-sm-2 control-label">Marca</label>
+                                            <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="idMarca" name="idMarca" placeholder="Marca Producto" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobile" class="col-sm-2 control-label">Modelo</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="idModelo" name="idModelo" placeholder="Modelo Porducto" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobile" class="col-sm-2 control-label">Nombre</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="idNombre" name="idNombre" placeholder="Nombre Producto" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobile" class="col-sm-2 control-label">Descripcion</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="idDescrip" name="idDescrip" placeholder="Descripcion" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobile" class="col-sm-2 control-label">Precio</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="idPrecio" name="idPrecio" placeholder="Precio" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobile" class="col-sm-2 control-label">Stock</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="idStock" name="idStock" placeholder="Stock" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mobile" class="col-sm-2 control-label">Imagen</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="idImagen" name="idImagen" placeholder="URL Imagen" required>
+                                            </div>
+                                        </div>
+                                        
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="submit" class="btn btn-primary">Save changes</button>
+			      </div>
+		      	</form>
+		    </div>
+		  </div>
+		</div>        
+        
 <!-- ******** FORMULARIOS MODAL PARA USUARIOS ******** -->
     <!-- Modal addUser -->
         <div class="modal fade" id="addUser_dialog" role="dialog">
