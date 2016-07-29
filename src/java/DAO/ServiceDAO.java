@@ -8,6 +8,7 @@ package DAO;
 import SuperClases.Articulo;
 import SuperClases.Usuario;
 import conexion.Conexion;
+import interfaces.IArticulo;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionProducManager;
 import java.sql.PreparedStatement;
@@ -25,7 +26,7 @@ import modelo.UsuarioComun;
  *
  * @author Joack
  */
-public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducManager<Articulo>
+public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducManager<IArticulo>
 {
     private static final String     SQL_INSERT_USER   = "INSERT INTO usuarios(email, user, password, rol) VALUES(?, ?, ?, ?)";
     private static final String     SQL_DELETE_USER   = "DELETE FROM usuarios WHERE email = ?";
@@ -211,7 +212,7 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
 // <editor-fold defaultstate="collapsed" desc="Administracion de productos.">     
     
     @Override
-    public boolean createArticulo( Articulo articulo) 
+    public boolean createArticulo( IArticulo articulo) 
     {
         PreparedStatement pStatement;
         try {
@@ -252,7 +253,7 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
     public boolean deleteArticulo(Object primaryKey) 
     {
         PreparedStatement   pStatement;
-        Articulo            producto    = readAnArticulo(primaryKey);
+        IArticulo           producto    = readAnArticulo(primaryKey);
         
         try {
                 pStatement = CONEXION.getConnection().prepareStatement(SQL_DELETE);
@@ -280,7 +281,7 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
     }
 
     @Override
-    public boolean updateArticulo(Articulo articulo) 
+    public boolean updateArticulo(IArticulo articulo) 
     {
             PreparedStatement pStatement;
         try {
@@ -310,7 +311,7 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
     }
 
     @Override
-    public Articulo readAnArticulo(Object primaryKey) 
+    public IArticulo readAnArticulo(Object primaryKey) 
     {
         ResultSet rs;
         Electrodomestico producto = null;
@@ -344,10 +345,10 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
     }
 
     @Override
-    public ArrayList<Articulo> readAllArticulos() 
+    public ArrayList<IArticulo> readAllArticulos() 
     {
         ResultSet rs;
-        ArrayList<Articulo> electrodomesticos = new ArrayList();        
+        ArrayList<IArticulo> electrodomesticos = new ArrayList();        
         PreparedStatement pStatement;
         
         try {

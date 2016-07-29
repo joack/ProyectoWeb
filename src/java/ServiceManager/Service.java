@@ -9,6 +9,7 @@ import DAO.ServiceDAO;
 import SuperClases.Articulo;
 import interfaces.IDescripcionArticulo;
 import SuperClases.Usuario;
+import interfaces.IArticulo;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionProducManager;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author Joack
  */
-public class Service implements IObligacionAdmin<Usuario>, IObligacionProducManager<Articulo>
+public class Service implements IObligacionAdmin<Usuario>, IObligacionProducManager<IArticulo>
 {
     private final  ServiceDAO   service;
     private static Service      instance;
@@ -89,7 +90,7 @@ public class Service implements IObligacionAdmin<Usuario>, IObligacionProducMana
 // <editor-fold defaultstate="collapsed" desc="Product Manager Services.">    
     
     @Override
-    public boolean createArticulo(Articulo articulo) 
+    public boolean createArticulo(IArticulo articulo) 
     {
         return service.createArticulo(articulo);
     }
@@ -101,19 +102,19 @@ public class Service implements IObligacionAdmin<Usuario>, IObligacionProducMana
     }
 
     @Override
-    public boolean updateArticulo(Articulo articulo) 
+    public boolean updateArticulo(IArticulo articulo) 
     {
         return service.updateArticulo(articulo);
     }
 
     @Override
-    public Articulo readAnArticulo(Object primaryKey) 
+    public IArticulo readAnArticulo(Object primaryKey) 
     {
         return service.readAnArticulo(primaryKey);
     }
 
     @Override
-    public ArrayList<Articulo> readAllArticulos() 
+    public ArrayList<IArticulo> readAllArticulos() 
     {
         return service.readAllArticulos();
     }

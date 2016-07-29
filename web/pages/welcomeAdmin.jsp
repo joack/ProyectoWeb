@@ -1,3 +1,4 @@
+<%@page import="interfaces.IArticulo"%>
 <%@page import="interfaces.IDescripcionArticulo"%>
 <%@page import="SuperClases.Usuario"%>
 <%@page import="modelo.Electrodomestico"%>
@@ -176,16 +177,16 @@
                     </thead>
                     <tbody>
                         <%
-                            for( Articulo producto: listaProductos)
+                            for( IArticulo producto: listaProductos)
                             {
-                                IDescripcionArticulo iProducto = (IDescripcionArticulo) producto;
+                                //IArticulo iProducto = (IArticulo) producto;
                                 
                                 out.println("<tr>");
                                 out.println("<td class=\"idArticulo\">"+producto.getIdArticulo()+"</td>");
-                                out.println("<td class=\"idPrecio\">"+iProducto.getPrecio()+"</td>");
-                                out.println("<td class=\"idStock\">"+iProducto.getStock()+"</td>");
-                                out.println("<td class=\"idDescrip\">"+iProducto.getDescripcion()+"</td>");
-                                out.println("<td class=\"idImagen\">"+iProducto.getImagen()+"</td>");
+                                out.println("<td class=\"idPrecio\">"+producto.getPrecio()+"</td>");
+                                out.println("<td class=\"idStock\">"+producto.getStock()+"</td>");
+                                out.println("<td class=\"idDescrip\">"+producto.getDescripcion()+"</td>");
+                                out.println("<td class=\"idImagen\">"+producto.getImagen()+"</td>");
                                 out.println("<td width=\"7%\">"
                                                 + " <a   type=\"button\" "
                                                     + "  class=\"btn btn-primary btn-xs editProductDesc\" "

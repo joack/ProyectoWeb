@@ -7,8 +7,8 @@ package controlador;
 
 import DAO.UsuarioAdminDAO;
 import SuperClases.Articulo;
+import interfaces.IArticulo;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ public class AdministradorProductoEditar extends HttpServlet {
         float   precio      = (float)   request.getSession().getAttribute("idPrecio");
         int     stock       = (int)     request.getSession().getAttribute("idStock");
 
-        Articulo articulo   = admin.readAnArticulo(idCodigo);
+        IArticulo articulo   = admin.readAnArticulo(idCodigo);
         
         
         

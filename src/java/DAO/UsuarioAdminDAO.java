@@ -3,13 +3,14 @@ package DAO;
 import ServiceManager.Service;
 import SuperClases.Articulo;
 import SuperClases.Usuario;
+import interfaces.IArticulo;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionProducManager;
 import java.util.ArrayList;
 import interfaces.IDescripcionArticulo;
 
 
-public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionProducManager<Articulo>
+public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionProducManager<IArticulo>
 {
     private final Service service = Service.getService();
 
@@ -70,7 +71,7 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
     
 // <editor-fold defaultstate="collapsed" desc="Administracion de productos.">     
     @Override
-    public boolean createArticulo( Articulo articulo) 
+    public boolean createArticulo( IArticulo articulo) 
     {  
         try{
             return service.createArticulo(articulo);
@@ -90,7 +91,7 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
     }
 
     @Override
-    public boolean updateArticulo(Articulo articulo) 
+    public boolean updateArticulo(IArticulo articulo) 
     {      
         try{
             return service.updateArticulo(articulo);
@@ -100,7 +101,7 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
     }
 
     @Override
-    public Articulo readAnArticulo(Object primaryKey) 
+    public IArticulo readAnArticulo(Object primaryKey) 
     {  
         try{
             return service.readAnArticulo(primaryKey);
@@ -110,7 +111,7 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
     }
 
     @Override
-    public ArrayList<Articulo> readAllArticulos() 
+    public ArrayList<IArticulo> readAllArticulos() 
     {
         try{
             return service.readAllArticulos();
