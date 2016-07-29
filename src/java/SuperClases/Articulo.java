@@ -5,11 +5,13 @@
  */
 package SuperClases;
 
+import interfaces.IArticulo;
+
 /**
  *
  * @author Joack
  */
-public abstract class Articulo 
+public abstract class Articulo  implements IArticulo
 {
     private int     idCodigo;   //clave primaria.
     private int     idArticulo; //clave foranea.
@@ -29,73 +31,72 @@ public abstract class Articulo
         this.idArticulo = idArticulo;
     }
 
+    @Override
     public int getIdCodigo() 
     {
         return idCodigo;
     }
 
+    @Override
     public void setIdCodigo(int idCodigo) 
     {
         this.idCodigo = idCodigo;
     }
 
+    @Override
     public int getIdArticulo() 
     {
         return idArticulo;
     }
 
+    @Override
     public void setIdArticulo(int idArticulo) 
     {
         this.idArticulo = idArticulo;
     }
     
-    public int getStock() 
-    {
-        return 0;
-    }
+    @Override
+    public abstract int getStock();
 
+    @Override
     public void setStock(int stock){}
 
-    public String getDescripcion() 
-    {
-        return "";
-    }
+    @Override
+    public abstract String getDescripcion();
 
+    @Override
     public void setDescripcion(String descripcion){}
     
-    public String getImagen()
-    {
-        return "";
-    }
+    @Override
+    public abstract String getImagen();
 
+    
+    @Override
     public void setImagen(String imagen){}  
 
-    public String getMarca() 
-    {
-        return "";
-    }
+    @Override
+    public abstract String getMarca();
 
+    @Override
     public void setMarca(String marca){}
 
-    public String getModelo() 
-    {
-        return "";
-    }
+    @Override
+    public abstract String getModelo(); 
 
+
+    @Override
     public void setModelo(String modelo){}
 
-    public String getNombre() 
-    {
-        return "";
-    }
+    @Override
+    public abstract String getNombre();
 
+    @Override
     public void setNombre(String nombre){}
 
-    public float getPrecio() 
-    {
-        return 0;
-    }
+    @Override
+    public abstract float getPrecio();
 
-    public void setPrecio(float precio){}    
+    @Override
+    public void setPrecio(float precio){}  
     
 }
