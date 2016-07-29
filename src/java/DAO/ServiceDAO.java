@@ -13,10 +13,10 @@ import interfaces.IObligacionProducManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import interfaces.IDescripcionArticulo;
 import modelo.Electrodomestico;
 import modelo.UsuarioAdmin;
 import modelo.UsuarioComun;
@@ -351,9 +351,7 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
         PreparedStatement pStatement;
         
         try {
-            pStatement =  CONEXION.getConnection().prepareStatement("select * from electrodomesticos\n" +
-                                                                    "natural join descripcionarticulos\n" +
-                                                                    "WHERE electrodomesticos.`idArticulo` = descripcionarticulos.`idArticulo`");
+            pStatement =  CONEXION.getConnection().prepareStatement(SQL_READALL);
             rs = pStatement.executeQuery();
             
             while( rs.next())
@@ -377,7 +375,37 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
         return electrodomesticos;
     }
     
-   
+    @Override
+    public boolean createDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean updateDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IDescripcionArticulo readDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<IDescripcionArticulo> readAllDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    } 
+    
+    
 // </editor-fold>   
     
 }

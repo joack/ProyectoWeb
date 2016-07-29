@@ -25,8 +25,13 @@ public class UsuarioComun extends Usuario
         return nickName;
     }
 
+    @Override
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
-    
+
+    @Override
+    public boolean isAdministrator() {
+        return false;
+    }
 }

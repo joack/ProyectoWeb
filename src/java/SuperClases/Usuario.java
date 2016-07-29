@@ -5,11 +5,13 @@
  */
 package SuperClases;
 
+import interfaces.IUser;
+
 /**
  *
  * @author Joack
  */
-public abstract class Usuario 
+public abstract class Usuario implements IUser
 {
     private String email;
     private String password;
@@ -22,6 +24,7 @@ public abstract class Usuario
         this.rol = rol;
     }
 
+    @Override
     public String getEmail() 
     {
         return email;
@@ -33,36 +36,42 @@ public abstract class Usuario
     }
 
 
+    @Override
     public String getPassword() 
     {
         return password;
     }
 
+    @Override
     public void setPassword(String password) 
     {
         this.password = password;
     }
 
+    @Override
     public String getRol() 
     {
         return rol;
     }
 
+    @Override
     public void setRol(String rol) 
     {
         this.rol = rol;
     }
     
+    @Override
     public String getNickName()
     {
         return "";
     }
 
+    @Override
+    public void setNickName( String nickName){}
+    
 
-    public boolean isAdministrator()
-    {
-        return false;
-    }
+    @Override
+    public abstract boolean isAdministrator();
     
     
 }

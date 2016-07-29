@@ -7,6 +7,7 @@ package ServiceManager;
 
 import DAO.ServiceDAO;
 import SuperClases.Articulo;
+import interfaces.IDescripcionArticulo;
 import SuperClases.Usuario;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionProducManager;
@@ -134,5 +135,30 @@ public boolean agregarProductoAlCarrito( Articulo articulo, int cantidad )
     
     
 //</editor-fold>
+
+    @Override
+    public boolean createDescrip() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteDescrip() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean updateDescrip() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IDescripcionArticulo readDescrip() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<IDescripcionArticulo> readAllDescrip() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

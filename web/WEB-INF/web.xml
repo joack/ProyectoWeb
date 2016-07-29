@@ -24,6 +24,14 @@
         <servlet-name>AdministradorProductoEditar</servlet-name>
         <servlet-class>controlador.AdministradorProductoEditar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdministradorProductoEditarDescripcion</servlet-name>
+        <servlet-class>controlador.AdministradorProductoEditarDescripcion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorUsuarioEditar</servlet-name>
+        <servlet-class>controlador.AdministradorUsuarioEditar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login.do</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>AdministradorProductoEditar</servlet-name>
         <url-pattern>/administradorProductoEditar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorProductoEditarDescripcion</servlet-name>
+        <url-pattern>/administradorProductoEditarDescripcion.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorUsuarioEditar</servlet-name>
+        <url-pattern>/administradorUsuarioEditar.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

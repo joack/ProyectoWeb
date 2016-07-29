@@ -6,18 +6,19 @@
 package controlador;
 
 import DAO.UsuarioAdminDAO;
+import SuperClases.Usuario;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Electrodomestico;
 
 /**
  *
  * @author Joack
  */
-public class AdministradorProductoCrear extends HttpServlet {
+public class AdministradorUsuarioEditar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,39 +32,23 @@ public class AdministradorProductoCrear extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        int     idCodigo        = Integer.parseInt( request.getParameter("idCodigo"));
-        int     idArticulo      = Integer.parseInt( request.getParameter("idArticulo"));
-        String  marca           = request.getParameter("txtMarca");
-        String  modelo          = request.getParameter("txtModelo");
-        String  nombre          = request.getParameter("txtNombre");
-        String  descripcion     = request.getParameter("txtDescrip");
-        int     stock           = Integer.parseInt(request.getParameter("txtStock"));
-        float   precio          = Float.parseFloat(request.getParameter("txtPrecio"));
-        String  imagen          = request.getParameter("txtImagen");
+        UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
         
-        Electrodomestico producto = new Electrodomestico(   idCodigo, idArticulo, marca, modelo, 
-                                                            nombre, descripcion, imagen, stock, precio );
+        String email    = (String)request.getSession().getAttribute("email");
+        String nick     = (String)request.getSession().getAttribute("email");
+        String pass     = (String)request.getSession().getAttribute("email");
+        String isAdmin  = (String)request.getSession().getAttribute("email");
         
-        UsuarioAdminDAO user = (UsuarioAdminDAO)request.getSession().getAttribute("usuario");
+        Usuario user = admin.readAUser(this);
         
-        if (user.createArticulo(producto)) 
-        {
-            String success = "Producto agregado correctamente";
-            request.getSession().setAttribute("exito", success);
-            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
-        }else{
-            String error = "El producto no se ha podido agregar.";
-            errorPage( error, request, response);
+        if( user.isAdministrator() )
+        {   
+            
         }
-
+        
+        
     }
 
-    private void errorPage( String error, HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException
-    {
-        request.getSession().setAttribute("error", error);
-        request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-    }    
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

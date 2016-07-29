@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Joack
  */
-public interface IObligacionProducManager<Articulo>
+public interface IObligacionProducManager<Articulo> extends IObligacionDescriptionManager
 {
     public boolean createArticulo(Articulo articulo);
     public boolean deleteArticulo(Object primaryKey);

@@ -6,6 +6,7 @@ import SuperClases.Usuario;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionProducManager;
 import java.util.ArrayList;
+import interfaces.IDescripcionArticulo;
 
 
 public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionProducManager<Articulo>
@@ -117,7 +118,42 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
             service.closeService();
         }     
     }
+   
+     @Override
+    public boolean createDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean deleteDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean updateDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IDescripcionArticulo readDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<IDescripcionArticulo> readAllDescrip() 
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }   
+    
+    
+    
     
 // </editor-fold>
+
+
     
 }
