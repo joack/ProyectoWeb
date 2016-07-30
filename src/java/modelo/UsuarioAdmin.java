@@ -6,12 +6,13 @@
 package modelo;
 
 import SuperClases.Usuario;
+import interfaces.IUser;
 
 /**
  *
  * @author Joack
  */
-public class UsuarioAdmin extends Usuario
+public class UsuarioAdmin extends Usuario implements IUser
 {
     
     public UsuarioAdmin(String email,String password, String rol) 
@@ -24,4 +25,12 @@ public class UsuarioAdmin extends Usuario
     {
         return true;
     }
+
+    @Override
+    public String getNickName() {
+        return "";
+    }
+
+    @Override
+    public void setNickName(String nickName) {}
 }

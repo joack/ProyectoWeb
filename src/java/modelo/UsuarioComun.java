@@ -6,9 +6,10 @@
 package modelo;
 
 import SuperClases.Usuario;
+import interfaces.IUser;
 import java.util.ArrayList;
 
-public class UsuarioComun extends Usuario
+public class UsuarioComun extends Usuario implements IUser
 {
     private String nickName;
     
@@ -34,4 +35,5 @@ public class UsuarioComun extends Usuario
     public boolean isAdministrator() {
         return false;
     }
+    
 }

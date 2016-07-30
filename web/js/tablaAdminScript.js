@@ -104,9 +104,9 @@ $(document).ready(function () {
             type: "POST",
             data: postData,
             success: function(data, textStatus, jqXHR) {
-                $('#productEdit_dialog .modal-header .modal-title').html("Result");
-                $('#productEdit_dialog .modal-body').html(data);
-                $("#submitProductEditForm").remove();
+                $('#delProductEditDescrip_dialog .modal-header .modal-title').html("Result");
+                $('#delProductEditDescrip_dialog .modal-body').html(data);
+                $("#submitDelProductEditDescripForm").remove();
             },
             error: function(jqXHR, status, error) {
                 console.log(status + ": " + error);
@@ -146,7 +146,7 @@ $(document).ready(function () {
    });
 });
 
-// MODAL EDITAR PODUCTO
+// MODAL EDITAR USUARIO
 $(document).ready(function () {
     $("#editUser_form").on("submit", function(e) {
         var postData = $(this).serializeArray();
@@ -158,7 +158,7 @@ $(document).ready(function () {
             success: function(data, textStatus, jqXHR) {
                 $('#editUser_dialog .modal-header .modal-title').html("Result");
                 $('#editUser_dialog .modal-body').html(data);
-                $("#submitEditUserForm").remove();
+                $("#submitEditUserFormButton").remove();
             },
             error: function(jqXHR, status, error) {
                 console.log(status + ": " + error);
@@ -167,7 +167,7 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $("#submitEditUserForm").on('click', 
+    $("#submitEditUserFormButton").on('click', 
         function() 
         {
             $("#editUser_form").submit();
@@ -175,6 +175,39 @@ $(document).ready(function () {
 
     );
 });
+
+// MODAL BORRAR USUARIO
+$(document).ready(function () {
+    $("#deleteUser_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#deleteUser_dialog .modal-header .modal-title').html("Result");
+                $('#deleteUser_dialog .modal-body').html(data);
+                $("#submitDeleteUserFormButton").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitDeleteUserFormButton").on('click', 
+        function() 
+        {
+            $("#deleteUser_form").submit();
+        }
+
+    );
+});
+
+
+//==============================================================================
 
 //MODAL EDITAR PRODUCTO LLENADO DE CAMPOS.
 $('a.editProduct').on('click', function() {
@@ -269,7 +302,6 @@ $('a.delEditProductDesc').on('click', function() {
     return false;
 });
 
-
 //MODAL EDITAR DATOS USUARIO.
 $('a.editUserButton').on('click', function() {
     var myModal = $('#editUser_dialog');
@@ -281,9 +313,9 @@ $('a.editUserButton').on('click', function() {
     var isAdmin     = $(this).closest('tr').find('td.tRol'  ).html();
     
     // and set them in the modal:
-    $('#idEmail'    , myModal).val(email);
-    $('#idUserName' , myModal).val(nickName );
-    $('#idUserPass' , myModal).val(password  );
+    $("#idEmail"    , myModal).val(email);
+    $("#idUserName" , myModal).val(nickName);
+    $("#idUserPass" , myModal).val(password);
     if (isAdmin === "admin") 
     {
         $('#idIsAdmin'  , myModal).prop( "checked", true );
@@ -299,6 +331,18 @@ $('a.editUserButton').on('click', function() {
     return false;
 });
 
+// MODAL BORRAR USUARIO.
+$('a.removeUserButton').on('click', function() {
+    var myModal = $('#deleteUser_dialog');
 
+    // now get the values from the table
+    var email    = $(this).closest('tr').find('td.tEmail').html();
+    
+    // and set them in the modal:
+     $('#idEmail'   , myModal).val(email);
 
+    // and finally show the modal
+    myModal.modal({ show: true });
 
+    return false;
+});

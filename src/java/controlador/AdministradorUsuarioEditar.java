@@ -7,12 +7,15 @@ package controlador;
 
 import DAO.UsuarioAdminDAO;
 import SuperClases.Usuario;
+import interfaces.IUser;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.UsuarioAdmin;
+import modelo.UsuarioComun;
 
 /**
  *
@@ -34,19 +37,38 @@ public class AdministradorUsuarioEditar extends HttpServlet {
     {
         UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
         
-        String email    = (String)request.getSession().getAttribute("email");
-        String nick     = (String)request.getSession().getAttribute("email");
-        String pass     = (String)request.getSession().getAttribute("email");
-        String isAdmin  = (String)request.getSession().getAttribute("email");
+        String email    = (String)request.getParameter("email");
+        String nick     = (String)request.getParameter("nick");
+        String pass     = (String)request.getParameter("pass");
+        String isAdmin  = (String)request.getParameter("isAdmin");
+               
         
-        Usuario user = admin.readAUser(this);
-        
-        if( user.isAdministrator() )
+        if( admin.isAlreadyUser(email) )
         {   
+            IUser user;
+            if (isAdmin != null) 
+            {
+                user = new UsuarioAdmin(email, pass, "admin");
+            }else{
+                user = new UsuarioComun(email, nick, pass, "user");
+            }
             
-        }
-        
-        
+            if( admin.updateUser(user) ) 
+            {
+                String exito = "Se ha actualizado con exito.";
+                request.getSession().setAttribute("exito", exito);
+                request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+            }else{
+                String error = "Error al actualizar.";
+                request.getSession().setAttribute("error", error);
+                request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+            }
+            
+        }else{
+                String error = "Usuario no encontrado.";
+                request.getSession().setAttribute("error", error);
+                request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+        }     
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,23 +5,19 @@
  */
 package controlador;
 
-import ServiceManager.Service;
-import SuperClases.Usuario;
-import interfaces.IUser;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.UsuarioAdmin;
-import modelo.UsuarioComun;
 
 /**
  *
  * @author Joack
  */
-public class SignUp extends HttpServlet 
-{ 
+public class AdministradorProductoDescripcionBorrar extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,40 +27,12 @@ public class SignUp extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException 
     {
-        Service service = Service.getService();
-        IUser usuario;
-        
-        String email    = request.getParameter("email");
-        String username = request.getParameter("nick");
-        String password = request.getParameter("pass");
-        String isAdmin  = request.getParameter("admin");
-        
-        if( isAdmin != null )
-        {
-            usuario = new UsuarioAdmin( email, password, "admin" );
-        }else{
-            usuario = new UsuarioComun( email, username, password, "user" );
-        }
-        
-        
-        if (service.createUser(usuario)) 
-        {
-            String success = "Usuario agregado correstamente.";
-            request.getSession().setAttribute("exito", success);
-            request.getRequestDispatcher("/pages/success.jsp").forward(request, response);
-        }else{
-            String error = "<br>Error al registrar, intentelo de nuevo.";
-            String linkVolver = "#";
-            request.getSession().setAttribute("error", error);
-            request.getSession().setAttribute("link", linkVolver);
-            request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-        }
-
-        
-        service.closeService();
-        //response.sendRedirect(request.getHeader("referer"));
+        String exito = "Operacion realizada.";
+        request.getSession().setAttribute("exito", exito);
+        request.getRequestDispatcher("pages/success.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

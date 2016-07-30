@@ -7,7 +7,7 @@ package controlador;
 
 import DAO.UsuarioAdminDAO;
 import ServiceManager.Service;
-import SuperClases.Usuario;
+import interfaces.IUser;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +41,7 @@ public class Login extends HttpServlet
        
         if ( service.isAlreadyUser(usuario) ) 
         {
-            Usuario user = service.readAUser(usuario);
+            IUser user = service.readAUser(usuario);
             if ( user.getPassword().equals(password)) 
             {     
                 if (service.isAdministrator(user)) 

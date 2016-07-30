@@ -1,23 +1,22 @@
 package DAO;
 
 import ServiceManager.Service;
-import SuperClases.Articulo;
-import SuperClases.Usuario;
 import interfaces.IArticulo;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionProducManager;
 import java.util.ArrayList;
 import interfaces.IDescripcionArticulo;
+import interfaces.IUser;
 
 
-public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionProducManager<IArticulo>
+public class UsuarioAdminDAO implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>
 {
     private final Service service = Service.getService();
 
     
 // <editor-fold defaultstate="collapsed" desc="Administracion de Usuarios.">   
     @Override
-    public boolean createUser(Usuario clase) 
+    public boolean createUser(IUser clase) 
     {   
         try{
             return service.createUser(clase);
@@ -37,7 +36,7 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
     }
 
     @Override
-    public boolean updateUser(Usuario clase) 
+    public boolean updateUser(IUser clase) 
     { 
         try{
             return service.updateUser(clase);
@@ -47,7 +46,7 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
     }
 
     @Override
-    public Usuario readAUser(Object key) 
+    public IUser readAUser(Object key) 
     {
         try{
             return service.readAUser(key);
@@ -57,13 +56,18 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
     }
 
     @Override
-    public ArrayList<Usuario> readAllUsers() 
+    public ArrayList<IUser> readAllUsers() 
     {
         try{
             return service.readAllUsers();
         }finally{
             service.closeService();
         }        
+    }
+    
+    public boolean isAlreadyUser( Object key )
+    {
+        return service.isAlreadyUser(key);
     }
     
 // </editor-fold>
@@ -150,9 +154,7 @@ public class UsuarioAdminDAO implements IObligacionAdmin<Usuario>, IObligacionPr
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }   
     
-    
-    
-    
+       
 // </editor-fold>
 
 

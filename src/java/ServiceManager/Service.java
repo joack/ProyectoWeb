@@ -8,17 +8,17 @@ package ServiceManager;
 import DAO.ServiceDAO;
 import SuperClases.Articulo;
 import interfaces.IDescripcionArticulo;
-import SuperClases.Usuario;
 import interfaces.IArticulo;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionProducManager;
+import interfaces.IUser;
 import java.util.ArrayList;
 
 /**
  *
  * @author Joack
  */
-public class Service implements IObligacionAdmin<Usuario>, IObligacionProducManager<IArticulo>
+public class Service implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>
 {
     private final  ServiceDAO   service;
     private static Service      instance;
@@ -46,7 +46,7 @@ public class Service implements IObligacionAdmin<Usuario>, IObligacionProducMana
 // <editor-fold defaultstate="collapsed" desc="User Manager Services."> 
 
     @Override
-    public boolean createUser(Usuario user)
+    public boolean createUser(IUser user)
     {
         return service.createUser(user);
     }
@@ -58,19 +58,19 @@ public class Service implements IObligacionAdmin<Usuario>, IObligacionProducMana
     }    
     
     @Override
-    public boolean updateUser( Usuario user )
+    public boolean updateUser( IUser user )
     {
         return service.updateUser(user);
     }
     
     @Override
-    public Usuario readAUser(Object primaryKey) 
+    public IUser readAUser(Object primaryKey) 
     {
        return service.readAUser(primaryKey); 
     }
     
     @Override
-    public ArrayList<Usuario> readAllUsers() 
+    public ArrayList<IUser> readAllUsers() 
     {
         return service.readAllUsers();
     }
@@ -80,7 +80,7 @@ public class Service implements IObligacionAdmin<Usuario>, IObligacionProducMana
         return( service.readAUser(primaryKey) != null );
     }
     
-    public boolean isAdministrator( Usuario user )
+    public boolean isAdministrator( IUser user )
     {
         return user.isAdministrator();
     }    

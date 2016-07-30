@@ -26,11 +26,19 @@
     </servlet>
     <servlet>
         <servlet-name>AdministradorProductoEditarDescripcion</servlet-name>
-        <servlet-class>controlador.AdministradorProductoEditarDescripcion</servlet-class>
+        <servlet-class>controlador.AdministradorProductoDescripcionEditar</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdministradorUsuarioEditar</servlet-name>
         <servlet-class>controlador.AdministradorUsuarioEditar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorProductoDescripcionBorrar</servlet-name>
+        <servlet-class>controlador.AdministradorProductoDescripcionBorrar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorUsuarioBorrar</servlet-name>
+        <servlet-class>controlador.AdministradorUsuarioBorrar</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -57,12 +65,20 @@
         <url-pattern>/administradorProductoEditar.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdministradorProductoEditarDescripcion</servlet-name>
-        <url-pattern>/administradorProductoEditarDescripcion.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AdministradorUsuarioEditar</servlet-name>
         <url-pattern>/administradorUsuarioEditar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorProductoDescripcionBorrar</servlet-name>
+        <url-pattern>/administradorProductoDescripcionBorrar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorProductoEditarDescripcion</servlet-name>
+        <url-pattern>/administradorProductoDescripcionEditar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorUsuarioBorrar</servlet-name>
+        <url-pattern>/administradorUsuarioBorrar.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

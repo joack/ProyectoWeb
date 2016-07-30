@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import interfaces.IDescripcionArticulo;
+import interfaces.IUser;
 import modelo.Electrodomestico;
 import modelo.UsuarioAdmin;
 import modelo.UsuarioComun;
@@ -26,11 +27,15 @@ import modelo.UsuarioComun;
  *
  * @author Joack
  */
-public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducManager<IArticulo>
+public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>
 {
     private static final String     SQL_INSERT_USER   = "INSERT INTO usuarios(email, user, password, rol) VALUES(?, ?, ?, ?)";
     private static final String     SQL_DELETE_USER   = "DELETE FROM usuarios WHERE email = ?";
-    private static final String     SQL_UPDATE_USER   = "UPDATE usuarios SET password = ? WHERE email = ?";
+    
+    private static final String     SQL_UPDATE_USER   = "UPDATE usuarios " +
+                                                        "SET    password = ?, rol = ?, `user` = ? " +
+                                                        "WHERE  email = ? ";
+    
     private static final String     SQL_READ_USER     = "SELECT * FROM usuarios WHERE email = ?";
     private static final String     SQL_READALL_USERS = "SELECT * FROM usuarios"; 
 
@@ -65,7 +70,7 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
 // <editor-fold defaultstate="collapsed" desc="Administracion de usuarios."> 
     
     @Override
-    public boolean createUser(Usuario clase) 
+    public boolean createUser(IUser clase) 
     {
         PreparedStatement pStatement;
         try {
@@ -110,15 +115,18 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
     }   
     
     @Override
-    public boolean updateUser(Usuario clase) 
+    public boolean updateUser(IUser clase) 
     {
         PreparedStatement pStatement;
         
         try {
             pStatement = CONEXION.getConnection().prepareStatement(SQL_UPDATE_USER);
             
+            //UPDATE usuarios SET password = ? , rol = ? , user = ? WHERE email = ?"
             pStatement.setString(1, clase.getPassword());
-            pStatement.setString(2, clase.getEmail());
+            pStatement.setString(2, clase.getRol());
+            pStatement.setString(3, clase.getNickName());
+            pStatement.setString(4, clase.getEmail());
             
             if (pStatement.executeUpdate() > 0 )
             {
@@ -134,12 +142,11 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
     } 
     
     @Override
-    public Usuario readAUser(Object key) 
+    public IUser readAUser(Object key) 
     {
         PreparedStatement   pStatement;
         ResultSet           resultSet;
-        Usuario             usuario     = null;
-        
+        IUser               usuario = null;
         try { 
             pStatement = CONEXION.getConnection().prepareStatement(SQL_READ_USER);
             
@@ -159,8 +166,7 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
                                                 resultSet.getString(2),
                                                 resultSet.getString(3),
                                                 resultSet.getString(4) );
-                }
-                
+                }                
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioAdminDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -172,11 +178,11 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
     }
 
     @Override
-    public ArrayList<Usuario> readAllUsers() 
+    public ArrayList<IUser> readAllUsers() 
     {
         PreparedStatement       pStatement;
         ResultSet               resultSet;
-        ArrayList<Usuario>      usuariosList    = new ArrayList();
+        ArrayList<IUser>        usuariosList    = new ArrayList();
         Usuario                 usuario;
         
         try {    
@@ -197,7 +203,7 @@ public class ServiceDAO implements IObligacionAdmin<Usuario>, IObligacionProducM
                                                 resultSet.getString(3),
                                                 resultSet.getString(4) );
                 }
-                usuariosList.add( usuario );
+                usuariosList.add((IUser) usuario);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioAdminDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,14 +1,12 @@
-package controlador;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controlador;
 
 import DAO.UsuarioAdminDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Joack
  */
-public class AdministradorProductoEditarDescripcion extends HttpServlet {
+public class AdministradorUsuarioBorrar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,10 +31,24 @@ public class AdministradorProductoEditarDescripcion extends HttpServlet {
             throws ServletException, IOException 
     {
         UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
+        String email = (String) request.getParameter("email");
         
-        if (true) 
+        if( admin.isAlreadyUser(email) )
         {
-            
+            if(admin.deleteUser(email))
+            {
+                String exito = "Usuario dado de baja exitosamente.";
+                request.getSession().setAttribute("exito", exito);
+                request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+            }else{
+                String error = "El usurio no se ha podido darde baja.";
+                request.getSession().setAttribute("error", error);
+                request.getRequestDispatcher("pages/error.jsp").forward(request, response);  
+            }
+        }else{
+                String error = "Usario no encontrado.";
+                request.getSession().setAttribute("error", error);
+                request.getRequestDispatcher("pages/error.jsp").forward(request, response);
         }
         
     }

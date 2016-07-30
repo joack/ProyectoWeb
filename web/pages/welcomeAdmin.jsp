@@ -1,5 +1,5 @@
+<%@page import="interfaces.IUser"%>
 <%@page import="interfaces.IArticulo"%>
-<%@page import="interfaces.IDescripcionArticulo"%>
 <%@page import="SuperClases.Usuario"%>
 <%@page import="modelo.Electrodomestico"%>
 <%@page import="SuperClases.Articulo"%>
@@ -10,8 +10,8 @@
 
 <% 
     UsuarioAdminDAO user = (UsuarioAdminDAO) request.getSession().getAttribute("usuario"); 
-    ArrayList<Articulo> listaProductos = user.readAllArticulos();
-    ArrayList<Usuario> usuarios = user.readAllUsers();
+    ArrayList<IArticulo> listaProductos = user.readAllArticulos();
+    ArrayList<IUser> usuarios = user.readAllUsers();
 %>
 <!DOCTYPE html>
 <html>
@@ -56,33 +56,18 @@
                                 </thead>
                                 <tbody>
                                 <% 
-                                    for( Articulo producto: listaProductos) 
+                                    for( IArticulo producto: listaProductos) 
                                     {
-                                        IDescripcionArticulo iProducto = (IDescripcionArticulo) producto;
-                                        
                                         out.println("<tr>");
-                                        out.println("   <td class=\"idCodigo\" width=\"10%\"   >" +producto.getIdCodigo()+   "</td>");
+                                        out.println("   <td class=\"idCodigo\" width=\"10%\"   >" +producto.getIdCodigo()+     "</td>");
                                         out.println("   <td class=\"idArticulo\" width=\"10%\" >" +producto.getIdArticulo()+   "</td>");
-                                        out.println("   <td class=\"idMarca\"  >"              +iProducto.getMarca()+        "</td>");
-                                        out.println("   <td class=\"idModelo\" >"              +iProducto.getModelo()+       "</td>");
-                                        out.println("   <td class=\"idNombre\" >"              +iProducto.getNombre()+       "</td>");
-                                        out.println("   <td class=\"idDescrip\">"              +iProducto.getDescripcion()+  "</td>");
-                                        out.println("   <td class=\"idPrecio\" >"              +iProducto.getPrecio()+       "</td>");
-                                        out.println("   <td class=\"idStock\"  >"              +iProducto.getStock()+        "</td>");
-                                        out.println("   <td class=\"idImagen\" >"              +iProducto.getImagen()+       "</td>");
-                                        /*out.println("<td width=\"7%\">"
-                                                        + " <a   type=\"button\" "
-                                                            + "  class=\"btn btn-primary btn-xs editProduct\" "
-                                                            + "  id=\"editProduc_dialog\">" 
-                                                            + "     <span class=\"glyphicon glyphicon-pencil\"></span>"
-                                                        + " </a>"
-
-                                                        + " <a    type=\"button\" "
-                                                            + "   class=\"btn btn-danger btn-xs editProduct\" "
-                                                            + "   id=\"editProduc_dialog\">" 
-                                                            + "     <span class=\"glyphicon glyphicon-remove \"></span>"
-                                                        + " </a>"
-                                                 +  "</td>" );*/ 
+                                        out.println("   <td class=\"idMarca\"  >"                 +producto.getMarca()+        "</td>");
+                                        out.println("   <td class=\"idModelo\" >"                 +producto.getModelo()+       "</td>");
+                                        out.println("   <td class=\"idNombre\" >"                 +producto.getNombre()+       "</td>");
+                                        out.println("   <td class=\"idDescrip\">"                 +producto.getDescripcion()+  "</td>");
+                                        out.println("   <td class=\"idPrecio\" >"                 +producto.getPrecio()+       "</td>");
+                                        out.println("   <td class=\"idStock\"  >"                 +producto.getStock()+        "</td>");
+                                        out.println("   <td class=\"idImagen\" >"                 +producto.getImagen()+       "</td>");
                                         out.println("</tr>");   
                                     }
                                 %> 
@@ -120,16 +105,13 @@
                     </thead>
                     <tbody>
                         <%
-                            for( Articulo producto: listaProductos)
-                            {
-                                IDescripcionArticulo iProducto = (IDescripcionArticulo)producto;
-                                
+                            for( IArticulo producto: listaProductos)
+                            {                               
                                 out.println("<tr>");
                                 out.println("<td class=\"idCodigo\" >"+producto.getIdCodigo()+"</td>");
-                                out.println("<td class=\"idMarca\">"+iProducto.getMarca()+"</td>");
-                                out.println("<td class=\"idModelo\">"+iProducto.getModelo()+"</td>");
-                                out.println("<td class=\"idNombre\">"+iProducto.getNombre()+"</td>");
-                                
+                                out.println("<td class=\"idMarca\">"+producto.getMarca()+"</td>");
+                                out.println("<td class=\"idModelo\">"+producto.getModelo()+"</td>");
+                                out.println("<td class=\"idNombre\">"+producto.getNombre()+"</td>");                                
                                 out.println("<td width=\"7%\">"
                                                 + " <a   type=\"button\" "
                                                     + "  class=\"btn btn-primary btn-xs editProduct\" "
@@ -238,7 +220,7 @@
                                 </thead>
                                 <tbody>
                                     <% 
-                                        for ( Usuario usuario: usuarios) 
+                                        for ( IUser usuario: usuarios) 
                                         {
                                             out.println("<tr>");
                                             out.println("   <td class=\"tEmail\">"+ usuario.getEmail()    +"</td>");
@@ -322,7 +304,7 @@
 	<div class="modal fade" id="productEditDescrip_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form class="form-horizontal" id="productEditDescrip_form" action="administradorProductoEditarDescripcion.do" method="POST">
+                    <form class="form-horizontal" id="productEditDescrip_form" action="administradorProductoDescripcionEditar.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="edit-modal-label">Edit selected row</h4>
@@ -358,7 +340,6 @@
                                     <input type="text" class="form-control" id="idImagen" name="idImagen" placeholder="URL Imagen" required>
                                 </div>
                             </div>
-
                         </div>
                     </form>
                     <div class="modal-footer">
@@ -383,12 +364,6 @@
                         </div>
                         <div class="modal-body">
                             <input type="hidden" id="idCodigo" name="idCodigo" value="" class="hidden">
-                            <!--div class="form-group">
-                                <label for="firstname" class="col-sm-2 control-label">ID Descripcion</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="idArticulo" name="idArticulo" placeholder="ID Articulo" required>
-                                </div>
-                            </div-->
                             <div class="form-group">
                                 <label for="email" class="col-sm-2 control-label">Marca</label>
                                 <div class="col-sm-10">
@@ -407,31 +382,6 @@
                                     <input type="text" class="form-control" id="idNombre" name="idNombre" placeholder="Nombre Producto" required>
                                 </div>
                             </div>
-                            <!--div class="form-group">
-                                <label for="mobile" class="col-sm-2 control-label">Descripcion</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="idDescrip" name="idDescrip" placeholder="Descripcion" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="mobile" class="col-sm-2 control-label">Precio</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="idPrecio" name="idPrecio" placeholder="Precio" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="mobile" class="col-sm-2 control-label">Stock</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="idStock" name="idStock" placeholder="Stock" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="mobile" class="col-sm-2 control-label">Imagen</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="idImagen" name="idImagen" placeholder="URL Imagen" required>
-                                </div>
-                            </div-->
-
                         </div>
                     </form>
                     <div class="modal-footer">
@@ -449,7 +399,7 @@
 	<div class="modal fade" id="delProductEditDescrip_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <form class="form-horizontal" id="delProductEditDescrip_form" action="administradorProductoEditar.do" method="POST">
+                    <form class="form-horizontal" id="delProductEditDescrip_form" action="administradorProductoDescripcionBorrar.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="edit-modal-label">Delete descrip?</h4>
@@ -516,7 +466,7 @@
                                 <div>
                                     <label for="email" class="control-label">Email</label>
                                     <div>
-                                        <input class="" type="email" name="email" id="idEmail" type="hidden" disabled> 
+                                        <input type="email" name="email" id="idEmail"> 
                                     </div>
                                 </div>
                             </div>                            
@@ -544,12 +494,35 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal"
                                 onclick="javascript:window.location.reload()">Close
                         </button>
-                        <button type="button" id="submitEditUserForm" class="btn btn-default">Send</button>
+                        <button type="button" id="submitEditUserFormButton" class="btn btn-default">Send</button>
                     </div>
                 </div>
             </div>
         </div>
 
+    <!-- Modal delete User-->
+        <div class="modal fade" id="deleteUser_dialog" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Enter your name</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="deleteUser_form" action="administradorUsuarioBorrar.do" method="POST">
+                            <input type="text" name="email"  class="hidden" id="idEmail">
+                            <p>Esta seguro de querer eliminar a este usuario?.</p>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="javascript:window.location.reload()">Close
+                        </button>
+                        <button type="button" id="submitDeleteUserFormButton" class="btn btn-default">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
     
         <script src="js/tablaAdminScript.js"></script>
                             
