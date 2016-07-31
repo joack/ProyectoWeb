@@ -297,9 +297,52 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
+        </div>    
 
+         <!-- Edit Product -->
+	<div class="modal fade" id="productEdit_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="productEdit_form" action="administradorProductoEditar.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="edit-modal-label">Edit selected row</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="idCodigo" name="idCodigo" value="" class="hidden">
+                            <div class="form-group">
+                                <label for="email" class="col-sm-2 control-label">Marca</label>
+                                <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="idMarca" name="idMarca" placeholder="Marca Producto" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Modelo</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="idModelo" name="idModelo" placeholder="Modelo Porducto" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Nombre</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="idNombre" name="idNombre" placeholder="Nombre Producto" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                                onclick="javascript:window.location.reload()">Close
+                        </button>
+                        <button type="button" id="submitProductEditForm" class="btn btn-primary">Save changes</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>        
+ 
+        <!-- Delete Producto --> 
+         
+         
         <!-- Edit Product Descrip -->
 	<div class="modal fade" id="productEditDescrip_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
             <div class="modal-dialog" role="document">
@@ -351,50 +394,7 @@
                 </div>
             </div>
         </div>
-        
-        
-        <!-- Edit Product -->
-	<div class="modal fade" id="productEdit_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="productEdit_form" action="administradorProductoEditar.do" method="POST">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label">Edit selected row</h4>
-                        </div>
-                        <div class="modal-body">
-                            <input type="hidden" id="idCodigo" name="idCodigo" value="" class="hidden">
-                            <div class="form-group">
-                                <label for="email" class="col-sm-2 control-label">Marca</label>
-                                <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="idMarca" name="idMarca" placeholder="Marca Producto" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="mobile" class="col-sm-2 control-label">Modelo</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="idModelo" name="idModelo" placeholder="Modelo Porducto" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="mobile" class="col-sm-2 control-label">Nombre</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="idNombre" name="idNombre" placeholder="Nombre Producto" required>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="javascript:window.location.reload()">Close
-                        </button>
-                        <button type="button" id="submitProductEditForm" class="btn btn-primary">Save changes</button>
-                    </div>                    
-                </div>
-            </div>
-        </div>  
-        
-        
+         
         <!-- Delete Product Descrip -->
 	<div class="modal fade" id="delProductEditDescrip_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
             <div class="modal-dialog" role="document">
