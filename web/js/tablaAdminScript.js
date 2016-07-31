@@ -74,9 +74,9 @@ $(document).ready(function () {
             type: "POST",
             data: postData,
             success: function(data, textStatus, jqXHR) {
-                $('#productEdit_dialog .modal-header .modal-title').html("Result");
-                $('#productEdit_dialog .modal-body').html(data);
-                $("#submitProductEditForm").remove();
+                $('#productEditDescrip_dialog .modal-header .modal-title').html("Result");
+                $('#productEditDescrip_dialog .modal-body').html(data);
+                $("#submitProductEditDescripForm").remove();
             },
             error: function(jqXHR, status, error) {
                 console.log(status + ": " + error);
@@ -248,11 +248,7 @@ $('a.editProductDesc').on('click', function() {
     var myModal = $('#productEditDescrip_dialog');
 
     // now get the values from the table
-    //var idCodigo    = $(this).closest('tr').find('td.idCodigo').html();
     var idArticulo  = $(this).closest('tr').find('td.idArticulo').html();
-    /*var idMarca     = $(this).closest('tr').find('td.idMarca').html();
-    var idModelo    = $(this).closest('tr').find('td.idModelo').html();
-    var idNombre    = $(this).closest('tr').find('td.idNombre').html();*/
     var idDescrip   = $(this).closest('tr').find('td.idDescrip').html();
     var idPrecio    = $(this).closest('tr').find('td.idPrecio').html();
     var idStock     = $(this).closest('tr').find('td.idStock').html();
@@ -260,11 +256,7 @@ $('a.editProductDesc').on('click', function() {
     
     // and set them in the modal:
  
-    //$('#idCodigo'   , myModal).val(idCodigo);
     $('#idArticulo' , myModal).val(idArticulo);
-    /*$('#idMarca'    , myModal).val(idMarca);
-    $('#idModelo'   , myModal).val(idModelo);
-    $('#idNombre'   , myModal).val(idNombre);*/
     $('#idDescrip'  , myModal).val(idDescrip);
     $('#idPrecio'   , myModal).val(idPrecio);
     $('#idStock'    , myModal).val(idStock);

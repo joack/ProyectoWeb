@@ -149,7 +149,7 @@
             <div class="panel panel-default">
                 <table class="table table-bordered table-condensed ">
                     <thead>
-                        <th width="7%">ID Articulo</th>
+                        <th width="8%">ID Descrip</th>
                         <th width="7%">Precio</th>
                         <th width="7%">Stock</th>
                         <th>Descripcion</th>

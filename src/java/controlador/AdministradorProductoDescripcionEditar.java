@@ -35,13 +35,13 @@ public class AdministradorProductoDescripcionEditar extends HttpServlet {
     {
         UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
         
-        //int idArticulo  = (int)     request.getSession().getAttribute("idArticulo");
-        String descrip  = (String)  request.getSession().getAttribute("idDescrip");
-        String imagen   = (String)  request.getSession().getAttribute("idImagen");
-        int precio      = (int)     request.getSession().getAttribute("idPrecio");
-        int stock       = (int)     request.getSession().getAttribute("idStock");
+        int     idArticulo  = Integer.parseInt(request.getParameter("idArticulo"));
+        String  descrip     = (String)request.getParameter("idDescrip");
+        String  imagen      = (String)request.getParameter("idImagen");
+        float   precio      = Float.parseFloat(request.getParameter("idPrecio"));
+        int     stock       = Integer.parseInt(request.getParameter("idStock"));
         
-        /*IArticulo articulo = admin.readAnArticulo(idArticulo);
+        IArticulo articulo = admin.readAnArticulo(idArticulo);
         
         articulo.setDescripcion(descrip);
         articulo.setImagen(imagen);
@@ -52,12 +52,12 @@ public class AdministradorProductoDescripcionEditar extends HttpServlet {
         {
             String exito = "Se ha actualizado exitosamente.";
             request.getSession().setAttribute("exito", exito);
-            request.getRequestDispatcher("page/success.jsp").forward(request, response);
+            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
         }else{
             String error = "No se ha podido actualizar.";
             request.getSession().setAttribute("error", error);
-            request.getRequestDispatcher("page/error.jsp").forward(request, response);        
-        } */   
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);        
+        }   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
