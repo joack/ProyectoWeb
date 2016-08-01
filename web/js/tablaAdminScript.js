@@ -249,26 +249,16 @@ $('a.editProduct').on('click', function() {
 
     // now get the values from the table
     var idCodigo    = $(this).closest('tr').find('td.idCodigo').html();
-    //var idArticulo  = $(this).closest('tr').find('td.idArticulo').html();
+    
     var idMarca     = $(this).closest('tr').find('td.idMarca').html();
     var idModelo    = $(this).closest('tr').find('td.idModelo').html();
     var idNombre    = $(this).closest('tr').find('td.idNombre').html();
-    /*var idDescrip   = $(this).closest('tr').find('td.idDescrip').html();
-    var idPrecio    = $(this).closest('tr').find('td.idPrecio').html();
-    var idStock     = $(this).closest('tr').find('td.idStock').html();
-    var idImagen    = $(this).closest('tr').find('td.idImagen').html();*/
-    
-    // and set them in the modal:
- 
-    $('#idCodigo'   , myModal).val(idCodigo);
-    //$('#idArticulo' , myModal).val(idArticulo);
+       
+    // and set them in the modal: 
+    $('#idCodigo'   , myModal).val(idCodigo);   
     $('#idMarca'    , myModal).val(idMarca);
     $('#idModelo'   , myModal).val(idModelo);
     $('#idNombre'   , myModal).val(idNombre);
-    /*$('#idDescrip'  , myModal).val(idDescrip);
-    $('#idPrecio'    , myModal).val(idPrecio);
-    $('#idStock'    , myModal).val(idStock);
-    $('#idImagen'   , myModal).val(idImagen);*/
 
 
     // and finally show the modal

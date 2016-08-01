@@ -4,8 +4,15 @@
     Author     : Joack
 --%>
 
+<%@page import="modelo.UsuarioComun"%>
+<%@page import="DAO.UsuarioComunDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% String userName = (String) request.getSession().getAttribute("usuario"); %>
+<% 
+    UsuarioComunDAO user = (UsuarioComunDAO)request.getSession().getAttribute("usuario");
+    UsuarioComun  userDT = (UsuarioComun) request.getSession().getAttribute("userDT");
+    
+    String hola= "hola";
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,6 +20,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Bienvenido de nuevo <%=userName%>!</h1>
+        <!--h1>Bienvenido de nuevo</h1-->
     </body>
 </html>
