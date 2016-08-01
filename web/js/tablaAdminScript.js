@@ -126,7 +126,9 @@ $(document).ready(function () {
 
 // SCRIPT PARA TABLA CON SCROLL VERTICAL
 $(document).ready(function() {
-    $("#productTable, #usersTable").DataTable( {
+    $("#idProductTableShow  , #idUsersTableShow   , " +
+      "#productTable        , #usersTable           , " +
+      "#productDescripTable" ).DataTable( {
         "scrollY":        "200px",
         "scrollCollapse": true,
         "paging":         false
@@ -206,6 +208,38 @@ $(document).ready(function () {
     );
 });
 
+$(document).ready(function () {
+
+    $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
+      console.log( 'show tab' );
+        $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+          //.responsive.recalc();
+    });
+
+    $("#productTableShow, #usersTableShow").DataTable({
+        data: data,
+        ordering: false,
+        searching: false,
+        info: false
+    });
+});
+
+$(document).ready(function() {
+        
+    // Javascript to enable link to tab
+    var hash = document.location.hash;
+    var prefix = "tab_";
+    if (hash) {
+        $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
+    } 
+
+    // Change hash for page-reload
+    $('.nav-tabs a').on('shown.bs.tab', function (e) {
+        window.location.hash = e.target.hash.replace("#", "#" + prefix);
+    });
+        
+});
 
 //==============================================================================
 
@@ -334,6 +368,15 @@ $('a.removeUserButton').on('click', function() {
      $('#idEmail'   , myModal).val(email);
 
     // and finally show the modal
+    myModal.modal({ show: true });
+
+    return false;
+});
+
+// MODAL LOGOUT.
+$('a.idLogout').on('click', function() {
+    var myModal = $('#logout_dialog');
+
     myModal.modal({ show: true });
 
     return false;

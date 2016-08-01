@@ -8,8 +8,20 @@
 <%@page import="DAO.UsuarioAdminDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<% 
+<%
+    response.setHeader("Cache-Control","no-cache");
+    response.setHeader("Cache-Control","no-store");
+    response.setHeader("Pragma","no-cache");
+    response.setDateHeader ("Expires", 0);      
+    
     UsuarioAdminDAO user = (UsuarioAdminDAO) request.getSession().getAttribute("usuario"); 
+    if ( user == null )
+    {
+        String error = "Session has ended.  Please login.";
+        request.getSession().setAttribute("error", error);
+        request.getRequestDispatcher("error.jsp").forward(request, response);
+    }
+    
     ArrayList<IArticulo> listaProductos = user.readAllArticulos();
     ArrayList<IUser> usuarios = user.readAllUsers();
 %>
@@ -17,246 +29,344 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap.css">
+        <link href="css/welcomeAdmin.css" rel="stylesheet">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.dataTables.min.js"></script>
-        <script type="text/javascript">
-
-        </script>        
+        <script src="js/jquery.dataTables.min.js"></script>     
         <title>Admin Page</title>
     </head>
     <body>      
-        <h1 align="center">Bienvenido de nuevo Admin!</h1>
- 
-<!-- ***** TABLA LISTA DE PRODUCTOS *****-->        
-        <div class="container-fluid">
-            <div class="panel panel-default">
-                <div class="panel-heading" align="center">
-                    <h4><b><font color="black" style="font-family: fantasy;">Lista de Productos</font> </b></h4>
+        <h1 align="center" id="tituloPagina">Bienvenido de nuevo Admin!</h1>
+        
+        
+        <div class="col-lg-12">            
+            <div class="panel with-nav-tabs panel-primary">
+                <div class="panel-heading" id="nav-panel-heading">
+                    <ul class="nav nav-tabs" id="nav-tabs-menu">
+                        <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+                        <li><a href="#Listas" data-toggle="tab" >Listas</a></li>
+                        <li><a href="#EdicionProductos" data-toggle="tab" >Productos</a></li>
+                        <li><a href="#EdicionUsuarios" data-toggle="tab" >Usuarios</a></li>
+                        <li class="pull-right"><a class="idLogout" href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
                 </div>
-                <div class="container-fluid">
-                    <div id="table" class="table-editable table-responsive">
-                        <br>
-                        <form action="${pageContext.request.contextPath}/pages/addProduct.jsp" method="get">
-                            <table id="productTable" class="table table-bordered table-condensed ">
-
-                                <thead>
-                                    <th width="10%">ID Codigo   </th>
-                                    <th width="10%">ID Articulo </th>
-                                    <th>Marca       </th>
-                                    <th>Modelo      </th>
-                                    <th>Nombre      </th>
-                                    <th>Descripcion </th>
-                                    <th>Precio      </th>
-                                    <th>Stock       </th>
-                                    <th>Imagen      </th>
-                                    <!--th>Action   </th-->
-                                </thead>
-                                <tbody>
-                                <% 
-                                    for( IArticulo producto: listaProductos) 
-                                    {
-                                        out.println("<tr>");
-                                        out.println("   <td class=\"idCodigo\" width=\"10%\"   >" +producto.getIdCodigo()+     "</td>");
-                                        out.println("   <td class=\"idArticulo\" width=\"10%\" >" +producto.getIdArticulo()+   "</td>");
-                                        out.println("   <td class=\"idMarca\"  >"                 +producto.getMarca()+        "</td>");
-                                        out.println("   <td class=\"idModelo\" >"                 +producto.getModelo()+       "</td>");
-                                        out.println("   <td class=\"idNombre\" >"                 +producto.getNombre()+       "</td>");
-                                        out.println("   <td class=\"idDescrip\">"                 +producto.getDescripcion()+  "</td>");
-                                        out.println("   <td class=\"idPrecio\" >"                 +producto.getPrecio()+       "</td>");
-                                        out.println("   <td class=\"idStock\"  >"                 +producto.getStock()+        "</td>");
-                                        out.println("   <td class=\"idImagen\" >"                 +producto.getImagen()+       "</td>");
-                                        out.println("</tr>");   
-                                    }
-                                %> 
-                                </tbody>
-                            </table>
-
-                            <button type="button" class="btn btn-success pull-left" data-toggle="modal" data-target="#productAdd_dialog">
-                                Agregar Producto
-                            </button>     
-                            <br>
-                            <br>
-                        </form>
-                    </div>
-
-                </div>
-            </div>    
-        </div>   
-<!-- ****** FIN TABLA DE PRODUCTOS ****** --> 
- 
-<!-- TABLA PRODUCTO -->
-<div class="container-fluid">
-    <button class="btn btn-primary" data-toggle="collapse" data-target="#productToggle">Articulos</button><br>
-    <div class="panel panel-default">
-        <br>
-        <div class="container-fluid" id="productToggle">
-            <div class="panel panel-default">
-                <table class="table table-bordered table-condensed ">
-                    <thead>
-                        <th width="7%">ID Codigo</th>
-                        <th>Marca</th>
-                        <th>Modelo</th>
-                        <th>Nombre</th> 
-                        <th>Accion</th>
-                           
-                    </thead>
-                    <tbody>
-                        <%
-                            for( IArticulo producto: listaProductos)
-                            {                               
-                                out.println("<tr>");
-                                out.println("<td class=\"idCodigo\" >"+producto.getIdCodigo()+"</td>");
-                                out.println("<td class=\"idMarca\">"+producto.getMarca()+"</td>");
-                                out.println("<td class=\"idModelo\">"+producto.getModelo()+"</td>");
-                                out.println("<td class=\"idNombre\">"+producto.getNombre()+"</td>");                                
-                                out.println("<td width=\"7%\">"
-                                                + " <a   type=\"button\" "
-                                                    + "  class=\"btn btn-primary btn-xs editProduct\" "
-                                                    + "  id=\"editProduc_dialog\">" 
-                                                    + "     <span class=\"glyphicon glyphicon-pencil\"></span>"
-                                                + " </a>"
-
-                                                + " <a    type=\"button\" "
-                                                    + "   class=\"btn btn-danger btn-xs editProduct\" "
-                                                    + "   id=\"editProduc_dialog\">" 
-                                                    + "     <span class=\"glyphicon glyphicon-remove \"></span>"
-                                                + " </a>"
-                                         +  "</td>" );                                
-                                
-                                out.println("</tr>");
-                            }
-                        %>
-                    
-                    </tbody>
-                </table>
-            </div>
             
-        </div>
-    </div> 
-    
-</div>
-<!-- -->
+                <div class="panel-body">
 
-<!-- TABLA DESCRIPCION PRODUCTO -->
-<div class="container-fluid">
-    <button class="btn btn-primary" data-toggle="collapse" data-target="#productDescripToggle">Descipcion Articulos</button><br>
-    <div class="panel panel-default">
-        <br>
-        <div class="container-fluid collapse" id="productDescripToggle">
-            <div class="panel panel-default">
-                <table class="table table-bordered table-condensed ">
-                    <thead>
-                        <th width="8%">ID Descrip</th>
-                        <th width="7%">Precio</th>
-                        <th width="7%">Stock</th>
-                        <th>Descripcion</th>
-                        <th>Imagen</th> 
-                        <th>Accion</th>
-                           
-                    </thead>
-                    <tbody>
-                        <%
-                            for( IArticulo producto: listaProductos)
-                            {
-                                //IArticulo iProducto = (IArticulo) producto;
-                                
-                                out.println("<tr>");
-                                out.println("<td class=\"idArticulo\">"+producto.getIdArticulo()+"</td>");
-                                out.println("<td class=\"idPrecio\">"+producto.getPrecio()+"</td>");
-                                out.println("<td class=\"idStock\">"+producto.getStock()+"</td>");
-                                out.println("<td class=\"idDescrip\">"+producto.getDescripcion()+"</td>");
-                                out.println("<td class=\"idImagen\">"+producto.getImagen()+"</td>");
-                                out.println("<td width=\"7%\">"
-                                                + " <a   type=\"button\" "
-                                                    + "  class=\"btn btn-primary btn-xs editProductDesc\" "
-                                                    + "  id=\"editProducDescrip_dialog\">" 
-                                                    + "     <span class=\"glyphicon glyphicon-pencil\"></span>"
-                                                + " </a>"
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
 
-                                                + " <a    type=\"button\" "
-                                                    + "   class=\"btn btn-danger btn-xs delEditProductDesc\" "
-                                                    + "   id=\"delEditProducDescrip_dialog\">" 
-                                                    + "     <span class=\"glyphicon glyphicon-remove \"></span>"
-                                                + " </a>"
-                                         +  "</td>" );                                
-                                
-                                out.println("</tr>");
-                            }
-                        %>
-                    
-                    </tbody>
-                </table>
-            </div>
-            
-        </div>
-    </div> 
-    
-</div>
-<!--  -->
+                            <h3>HOME</h3>
+                            <p>Bienvenido a la pagina de administracion del sitio, en la misma se podran<br>
+                               efectuar las siguientes operaciones: </p>
 
-<!-- ***** TABLA LISTA DE USUARIOS ***** -->                
-        <div class="container-fluid">
-            <div class="panel panel-default">
-                <div class="panel-heading" align="center">
-                    <h4><b><font color="black" style="font-family: fantasy;">Lista de Usuarios</font> </b></h4> 
-                </div>
-                <div class="container-fluid">
-                    <div id="table" class="table-editable table-responsive  row-border order-column" >
-                        <br>
-                        <form action="administradorUsuarioCrear.do" method="get">
+                            <ul>
+                                <li>Agregar un producto.</li>
+                                <li>Agregar la descripcion de un producto.</li>
+                                <li>Agregar un nuevo usuario.</li>
+                                <br>
+                                <li>Editar un producto, ya sea su marca modelo o su nombre.</li>
+                                <li>Editar la decripcion de un producto.</li>
+                                <li>Editar usuarios.</li>
+                                <br>
+                                <li>Borrar un producto.</li>
+                                <li>Borrar la descripcion de un producto.</li>
+                                <li>Borrar a un usuario.</li>
+                            </ul>
+                        </div>        
 
-                            <table id="usersTable" class="table table-bordered table-condensed">
-                                <thead>
-                                    <tr>
-                                        <th> Email      </th>
-                                        <th> Nick Name  </th>
-                                        <th> Password   </th>
-                                        <th> Rol        </th>
-                                        <th> Accion     </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% 
-                                        for ( IUser usuario: usuarios) 
-                                        {
-                                            out.println("<tr>");
-                                            out.println("   <td class=\"tEmail\">"+ usuario.getEmail()    +"</td>");
-                                            out.println("   <td class=\"tNick\" >"+ usuario.getNickName() +"</td>");
-                                            out.println("   <td class=\"tPass\" >"+ usuario.getPassword() +"</td>");
-                                            out.println("   <td class=\"tRol\"  >"+ usuario.getRol()      +"</td>");
-                                            out.println("<td width=\"7%\">"
-                                                            + " <a   type=\"button\" "
-                                                                + "  class=\"btn btn-primary btn-xs editUserButton\" "
-                                                                + "  id=\"editProduc_dialog\">" 
-                                                                + "     <span class=\"glyphicon glyphicon-pencil\"></span>"
-                                                            + " </a>"
-
-                                                            + " <a    type=\"button\" "
-                                                                + "   class=\"btn btn-danger btn-xs removeUserButton\" "
-                                                                + "   id=\"editProduc_dialog\">" 
-                                                                + "     <span class=\"glyphicon glyphicon-remove \"></span>"
-                                                            + " </a>"
-                                                     +  "</td>" );  
-                                        }
-                                    %>
-                                </tbody>
-                            </table>
- 
-                            <button type="button" class="btn btn-success" data-toggle="modal" class="form-control" data-target="#addUser_dialog">
-                                Agregar Usuario
-                            </button> 
+                        <div id="Listas" class="tab-pane fade">
                             <br>
-                            <br>       
-                        </form>
-                    </div>
+                            <div class="container-fluid">
+                                <div class="container">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" align="center">
+                                            <h4><b><font color="black" style="font-family: fantasy;">Lista de Productos</font> </b></h4>
+                                        </div>
+                                        <div class="container-fluid">
+                                            <div id="table" class="table-editable table-responsive">
+                                                <br>
+                                                <form action="${pageContext.request.contextPath}/pages/addProduct.jsp" method="get">
+                                                    <table id="idProductTableShow" class="table table-bordered table-responsive">
+
+                                                        <thead>
+                                                            <th width="10%">ID Codigo   </th>
+                                                            <th width="10%">ID Articulo </th>
+                                                            <th>Marca       </th>
+                                                            <th>Modelo      </th>
+                                                            <th>Nombre      </th>
+                                                            <th>Descripcion </th>
+                                                            <th>Precio      </th>
+                                                            <th>Stock       </th>
+                                                            <th>Imagen      </th>
+                                                            <!--th>Action   </th-->
+                                                        </thead>
+                                                        <tbody>
+                                                        <% 
+                                                            for( IArticulo producto: listaProductos) 
+                                                            {
+                                                                out.println("<tr>");
+                                                                out.println("   <td class=\"idCodigo\" width=\"10%\"   >" +producto.getIdCodigo()+     "</td>");
+                                                                out.println("   <td class=\"idArticulo\" width=\"10%\" >" +producto.getIdArticulo()+   "</td>");
+                                                                out.println("   <td class=\"idMarca\"  >"                 +producto.getMarca()+        "</td>");
+                                                                out.println("   <td class=\"idModelo\" >"                 +producto.getModelo()+       "</td>");
+                                                                out.println("   <td class=\"idNombre\" >"                 +producto.getNombre()+       "</td>");
+                                                                out.println("   <td class=\"idDescrip\">"                 +producto.getDescripcion()+  "</td>");
+                                                                out.println("   <td class=\"idPrecio\" >"                 +producto.getPrecio()+       "</td>");
+                                                                out.println("   <td class=\"idStock\"  >"                 +producto.getStock()+        "</td>");
+                                                                out.println("   <td class=\"idImagen\" >"                 +producto.getImagen()+       "</td>");
+                                                                out.println("</tr>");   
+                                                            }
+                                                        %> 
+                                                        </tbody>
+                                                    </table>
+
+                                                    <button type="button" class="btn btn-success pull-left" data-toggle="modal" data-target="#productAdd_dialog">
+                                                        Agregar Producto
+                                                    </button>
+                                                        <button type="button" class="btn btn-success" onclick="reloadProdTable()">Recargar tabla</button>    
+                                                    <br>
+                                                    <br>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container-fluid">
+                                <div class="container">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" align="center">
+                                            <h4><b><font color="black" style="font-family: fantasy;">Lista de Usuarios</font> </b></h4> 
+                                        </div>
+                                        <div class="container-fluid">
+                                            <div id="table" class="table-editable table-responsive  row-border order-column" >
+                                                <br>
+                                                <form action="administradorUsuarioCrear.do" method="get">
+
+                                                    <table id="idUsersTableShow" class="table table-bordered table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th> Email      </th>
+                                                                <th> Nick Name  </th>
+                                                                <th> Password   </th>
+                                                                <th> Rol        </th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% 
+                                                                for ( IUser usuario: usuarios) 
+                                                                {
+                                                                    out.println("<tr>");
+                                                                    out.println("   <td class=\"tEmail\">"+ usuario.getEmail()    +"</td>");
+                                                                    out.println("   <td class=\"tNick\" >"+ usuario.getNickName() +"</td>");
+                                                                    out.println("   <td class=\"tPass\" >"+ usuario.getPassword() +"</td>");
+                                                                    out.println("   <td class=\"tRol\"  >"+ usuario.getRol()      +"</td>");
+                                                                    out.println("</tr>");  
+                                                                }
+                                                            %>
+                                                        </tbody>
+                                                    </table>       
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                         
+                        </div>
+
+                        <div id="EdicionProductos" class="tab-pane fade">
+                            <br>
+
+                            <!-- TABLA PRODUCTO -->
+                            <div class="container-fluid">
+                                <div class="container">
+                                    <div class="panel panel-default"> 
+                                        <div class="panel-heading" align="center">
+                                            <h4><b><font color="black" style="font-family: fantasy;">Editar Articulo</font> </b></h4> 
+                                        </div>                            
+
+                                        <div class="container-fluid">
+                                            <br>
+                                            <table id="productTable" class="table table-bordered table-condensed ">
+                                                <thead>
+                                                    <th width="7%">ID Codigo</th>
+                                                    <th>Marca</th>
+                                                    <th>Modelo</th>
+                                                    <th>Nombre</th> 
+                                                    <th>Accion</th>
+
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                        for( IArticulo producto: listaProductos)
+                                                        {                               
+                                                            out.println("<tr>");
+                                                            out.println("<td class=\"idCodigo\" >"+producto.getIdCodigo()+"</td>");
+                                                            out.println("<td class=\"idMarca\">"+producto.getMarca()+"</td>");
+                                                            out.println("<td class=\"idModelo\">"+producto.getModelo()+"</td>");
+                                                            out.println("<td class=\"idNombre\">"+producto.getNombre()+"</td>");                                
+                                                            out.println("<td width=\"7%\">"
+                                                                            + " <a   type=\"button\" "
+                                                                                + "  class=\"btn btn-primary btn-xs editProduct\" "
+                                                                                + "  id=\"editProduc_dialog\">" 
+                                                                                + "     <span class=\"glyphicon glyphicon-pencil\"></span>"
+                                                                            + " </a>"
+
+                                                                            + " <a    type=\"button\" "
+                                                                                + "   class=\"btn btn-danger btn-xs editProduct\" "
+                                                                                + "   id=\"editProduc_dialog\">" 
+                                                                                + "     <span class=\"glyphicon glyphicon-remove \"></span>"
+                                                                            + " </a>"
+                                                                     +  "</td>" );                                
+
+                                                            out.println("</tr>");
+                                                        }
+                                                    %>
+                                                </tbody>
+                                            </table>
+                                        </div>  
+                                    </div> 
+                                </div>
+                            </div>
+                            <!-- -->
+
+                            <!-- TABLA DESCRIPCION PRODUCTO -->
+                            <div class="container-fluid">
+                                <div class="container">
+                                    <div class="panel panel-default">                             
+                                        <div class="panel-heading" align="center">
+                                            <h4><b><font color="black" style="font-family: fantasy;">Editar Descripcion Articulo</font> </b></h4> 
+                                        </div>                            
+
+                                        <div class="container-fluid">
+                                            <br>
+                                            <table id="productDescripTable" class="table table-bordered table-condensed ">
+                                                <thead>
+                                                    <th width="8%">ID Descrip</th>
+                                                    <th width="7%">Precio</th>
+                                                    <th width="7%">Stock</th>
+                                                    <th>Descripcion</th>
+                                                    <th>Imagen</th> 
+                                                    <th>Accion</th>
+
+                                                </thead>
+                                                <tbody>
+                                                    <%
+                                                        for( IArticulo producto: listaProductos)
+                                                        {
+                                                            //IArticulo iProducto = (IArticulo) producto;
+
+                                                            out.println("<tr>");
+                                                            out.println("<td class=\"idArticulo\">"+producto.getIdArticulo()+"</td>");
+                                                            out.println("<td class=\"idPrecio\">"+producto.getPrecio()+"</td>");
+                                                            out.println("<td class=\"idStock\">"+producto.getStock()+"</td>");
+                                                            out.println("<td class=\"idDescrip\">"+producto.getDescripcion()+"</td>");
+                                                            out.println("<td class=\"idImagen\">"+producto.getImagen()+"</td>");
+                                                            out.println("<td width=\"7%\">"
+                                                                           + " <a   type=\"button\" "
+                                                                               + "  class=\"btn btn-primary btn-xs editProductDesc\" "
+                                                                               + "  id=\"editProducDescrip_dialog\">" 
+                                                                               + "     <span class=\"glyphicon glyphicon-pencil\"></span>"
+                                                                           + " </a>"
+
+                                                                           + " <a    type=\"button\" "
+                                                                               + "   class=\"btn btn-danger btn-xs delEditProductDesc\" "
+                                                                               + "   id=\"delEditProducDescrip_dialog\">" 
+                                                                               + "     <span class=\"glyphicon glyphicon-remove \"></span>"
+                                                                           + " </a>"
+                                                                    +  "</td>" );                                
+
+                                                            out.println("</tr>");
+                                                        }
+                                                    %>
+                                                </tbody>
+                                            </table>
+                                        </div>                             
+                                    </div>
+                                </div>
+                            </div>
+                            <!--  -->
+
+                        </div>                                
+
+                        <div id="EdicionUsuarios" class="tab-pane fade">
+                            <br>
+                            <!-- ***** TABLA LISTA DE USUARIOS ***** -->                
+                            <div class="container-fluid">
+                                <div class="container">
+                                    <div class="panel panel-default">                       
+                                        <div class="panel-heading" align="center">
+                                            <h4><b><font color="black" style="font-family: fantasy;">Editar Usuarios</font> </b></h4> 
+                                        </div>
+                                        <div class="container-fluid">
+                                            <div id="table" class="table-editable table-responsive  row-border order-column" >
+                                                <br>
+                                                <form action="administradorUsuarioCrear.do" method="get">
+
+                                                    <table id="usersTable" class="table table-bordered table-condensed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th> Email      </th>
+                                                                <th> Nick Name  </th>
+                                                                <th> Password   </th>
+                                                                <th> Rol        </th>
+                                                                <th> Accion     </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% 
+                                                                for ( IUser usuario: usuarios) 
+                                                                {
+                                                                    out.println("<tr>");
+                                                                    out.println("   <td class=\"tEmail\">"+ usuario.getEmail()    +"</td>");
+                                                                    out.println("   <td class=\"tNick\" >"+ usuario.getNickName() +"</td>");
+                                                                    out.println("   <td class=\"tPass\" >"+ usuario.getPassword() +"</td>");
+                                                                    out.println("   <td class=\"tRol\"  >"+ usuario.getRol()      +"</td>");
+                                                                    out.println("<td width=\"7%\">"
+                                                                                    + " <a   type=\"button\" "
+                                                                                        + "  class=\"btn btn-primary btn-xs editUserButton\" "
+                                                                                        + "  id=\"editProduc_dialog\">" 
+                                                                                        + "     <span class=\"glyphicon glyphicon-pencil\"></span>"
+                                                                                    + " </a>"
+
+                                                                                    + " <a    type=\"button\" "
+                                                                                        + "   class=\"btn btn-danger btn-xs removeUserButton\" "
+                                                                                        + "   id=\"editProduc_dialog\">" 
+                                                                                        + "     <span class=\"glyphicon glyphicon-remove \"></span>"
+                                                                                    + " </a>"
+                                                                             +  "</td>" );  
+                                                                }
+                                                            %>
+                                                        </tbody>
+                                                    </table>
+
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" class="form-control" data-target="#addUser_dialog">
+                                                        Agregar Usuario
+                                                    </button> 
+                                                    <br>
+                                                    <br>       
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           <!-- ****** FIN TABLA DE USUARIOS ****** -->
+
+                        </div>
+
+                    </div><!-- Fin DIV de Tabs--> 
+                    
                 </div>
             </div>
         </div>
-<!-- ****** FIN TABLA DE USUARIOS ****** -->
-
+<!-- ***********************************************************************************************-->                                             
  
 <!-- ******** FORMULARIOS MODAL PARA PRODUCTOS ******** -->        
         <!-- Add Product -->
@@ -424,9 +534,10 @@
                 </div>
             </div>
         </div>        
+ 
         
 <!-- ******** FORMULARIOS MODAL PARA USUARIOS ******** -->
-    <!-- Modal addUser -->
+        <!-- Modal addUser -->
         <div class="modal fade" id="addUser_dialog" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -452,7 +563,7 @@
             </div>
         </div> 
 
-    <!-- Modal editUser -->
+        <!-- Modal editUser -->
         <div class="modal fade" id="editUser_dialog" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -500,7 +611,7 @@
             </div>
         </div>
 
-    <!-- Modal delete User-->
+        <!-- Modal delete User-->
         <div class="modal fade" id="deleteUser_dialog" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -524,7 +635,31 @@
             </div>
         </div>    
     
-        <script src="js/tablaAdminScript.js"></script>
-                            
+    
+        
+        <!-- Modal Logout-->
+        <div class="modal fade" id="logout_dialog" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Logout</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Desea cerrar sesion?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="logout.do" method="get">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>                        
+                            <button type="submit" class="btn btn-primary" id="submitLogout">Yes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!---->
+        
+        
+        <script src="js/tablaAdminScript.js"></script>    
     </body>    
 </html>
