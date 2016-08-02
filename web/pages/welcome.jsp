@@ -8,8 +8,16 @@
 <%@page import="DAO.UsuarioComunDAO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% 
-    UsuarioComunDAO user = (UsuarioComunDAO)request.getSession().getAttribute("usuario");
-    UsuarioComun  userDT = (UsuarioComun) request.getSession().getAttribute("userDT");
+    Object user   = request.getSession().getAttribute("usuario");
+    UsuarioComunDAO usuario = null;
+    usuario = (UsuarioComunDAO)user;
+    
+    Object userDT = request.getSession().getAttribute("userDT");
+    UsuarioComun userData = new UsuarioComun();
+    
+    userData = (UsuarioComun)userDT;
+    
+    
     
     String hola= "hola";
 %>
@@ -20,6 +28,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <!--h1>Bienvenido de nuevo</h1-->
+        <h1>Bienvenido de nuevo </h1>
     </body>
 </html>
