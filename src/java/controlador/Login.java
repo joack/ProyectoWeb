@@ -6,6 +6,7 @@
 package controlador;
 
 import DAO.UsuarioAdminDAO;
+import DAO.UsuarioComunDAO;
 import ServiceManager.Service;
 import interfaces.IUser;
 import java.io.IOException;
@@ -43,15 +44,25 @@ public class Login extends HttpServlet
         {
             IUser user = service.readAUser(usuario);
             if ( user.getPassword().equals(password)) 
-            {     
+            {   
+                request.getSession(true);
+                
                 if (service.isAdministrator(user)) 
                 {
-
                     request.getSession().setAttribute("usuario", new UsuarioAdminDAO());
-                    request.getRequestDispatcher("/pages/welcomeAdmin.jsp").forward(request, response);
+                    
+                    String pagina = "/pages/welcomeAdmin.jsp";
+                    request.getSession().setAttribute("pagina", pagina);
+                    
+                    response.sendRedirect("loginRedirect.do");
                 }else{
-                    request.getSession().setAttribute("usuario", usuario);
-                    request.getRequestDispatcher("/pages/welcome.jsp").forward(request, response);
+                    request.getSession().setAttribute("usuario", new UsuarioComunDAO());
+                    
+                    String pagina = "/pages/welcome.jsp";
+                    request.getSession().setAttribute("pagina", pagina);
+                    
+                    request.getSession().setAttribute("userDT", user );
+                    response.sendRedirect("loginRedirect.do");
 
                 }
             }else{
