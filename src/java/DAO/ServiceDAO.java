@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import SuperClases.Articulo;
+
 import SuperClases.Usuario;
 import conexion.Conexion;
 import interfaces.IArticulo;
@@ -18,8 +18,12 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import interfaces.IDescripcionArticulo;
+import interfaces.IObligacionArticuloDescrip;
+import interfaces.IObligacionDescriptionManager;
 import interfaces.IUser;
-import modelo.Electrodomestico;
+import modelo.ProdArticulo;
+import modelo.ProdDescripcion;
+import modelo.Tupla;
 import modelo.UsuarioAdmin;
 import modelo.UsuarioComun;
 
@@ -27,8 +31,10 @@ import modelo.UsuarioComun;
  *
  * @author Joack
  */
-public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>
+public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>, IObligacionDescriptionManager<IDescripcionArticulo>, IObligacionArticuloDescrip<Tupla>
 {
+    // <editor-fold defaultstate="collapsed" desc="String Query tabla de usuarios."> 
+    
     private static final String     SQL_INSERT_USER   = "INSERT INTO usuarios(email, user, password, rol) VALUES(?, ?, ?, ?)";
     private static final String     SQL_DELETE_USER   = "DELETE FROM usuarios WHERE email = ?";
     
@@ -39,30 +45,64 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
     private static final String     SQL_READ_USER     = "SELECT * FROM usuarios WHERE email = ?";
     private static final String     SQL_READALL_USERS = "SELECT * FROM usuarios"; 
 
-    private static final String     SQL_INSERT      =   "INSERT INTO electrodomesticos(idCodigo, idArticulo, marca, modelo, nombre )" +
-                                                        "VALUES (?, ?, ?, ?, ?)";
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="String Query tabla articulo-descrip.">
+    
+    private static final String     SQL_INSERT_PROD_DESC    =   "INSERT INTO articulodescrip( idCodigo, idArticulo ) " +
+                                                                "VALUES (?, ?)";
+    
+    private static final String     SQL_DELETE_PROD_DESC    =   "DELETE FROM articulodescrip " +
+                                                                "WHERE idCodigo = ?";
+    
+    private static final String     SQL_UPDATE_PROD_DESC    =   "UPDATE articulodescrip " +
+                                                                "SET idArticulo = ? " +
+                                                                "WHERE idCodigo = ?";
 
-    private static final String     SQL_INSERT_DESC =   "INSERT INTO descripcionarticulos(idArticulo, stock, descripcion, imagen, precio )" +
-                                                        "VALUES (?, ?, ?, ?, ?)";
+    private static final String     SQL_READ_PROD_DESC      =   "SELECT * FROM articulodescrip " +
+                                                                "WHERE idCodigo = ?";
     
-    private static final String     SQL_DELETE      =   "DELETE FROM electrodomesticos    WHERE idCodigo   = ? ";
+    private static final String     SQL_READALL_PROD_DESC   =   "SELECT * FROM articulodescrip";
     
-    private static final String     SQL_DELETE_DESC =   "DELETE FROM descripcionarticulos WHERE idArticulo = ?";
+    //</editor-fold>
     
-    private static final String     SQL_UPDATE      =   "UPDATE electrodomesticos, descripcionarticulos " +
-                                                        "SET marca = ?, modelo = ?, nombre = ?, stock = ?, descripcion = ?, imagen = ? , precio = ?" +
-                                                        "WHERE electrodomesticos.`idCodigo` = ? " + 
-                                                        "AND descripcionarticulos.`idArticulo` = ?";
+    // <editor-fold defaultstate="collapsed" desc="String Query tabla articulos.">
     
-    private static final String     SQL_READ        =   "SELECT * FROM electrodomesticos " + 
-                                                        "NATURAL JOIN descripcionarticulos " + 
-                                                        "WHERE electrodomesticos.`idCodigo` = ? "+ 
-                                                        "AND electrodomesticos.`idArticulo` = descripcionarticulos.`idArticulo`";
+    private static final String     SQL_INSERT_PROD     =   "INSERT INTO articulos(idCodigo, marca, modelo, nombre )" +
+                                                            "VALUES (?, ?, ?, ?)";
     
-    private static final String     SQL_READALL     =   "SELECT * FROM electrodomesticos\n" +
-                                                        "NATURAL JOIN descripcionarticulos\n" +
-                                                        "WHERE electrodomesticos.`idArticulo` = descripcionarticulos.`idArticulo`";
-                                                        
+    private static final String     SQL_DELETE_PROD     =   "DELETE FROM articulos " +
+                                                            "WHERE  idCodigo = ? ";
+    
+    private static final String     SQL_UPDATE_PROD     =   "UPDATE articulos " +
+                                                            "SET    marca = ?, modelo = ?, nombre = ? " +
+                                                            "WHERE  idCodigo = ? "; 
+
+    private static final String     SQL_READ_PROD       =   "SELECT * FROM articulos " +                                                          
+                                                            "WHERE  idCodigo = ? "; 
+
+    private static final String     SQL_READALL_PROD    =   "SELECT * FROM articulos";
+        
+    //</editor-fold>    
+    
+    // <editor-fold defaultstate="collapsed" desc="String Query tabla descripcion.">
+    
+    private static final String     SQL_INSERT_DESC     =   "INSERT INTO descripcion(idArticulo, stock, descripcion, imagen, precio )" +
+                                                            "VALUES (?, ?, ?, ?, ?)";
+    
+    private static final String     SQL_DELETE_DESC     =   "DELETE FROM descripcion " +
+                                                            "WHERE  idArticulo = ?";
+    
+    private static final String     SQL_UPDATE_DESC     =   "UPDATE descripcion " +
+                                                            "SET stock = ?, descripcion = ?, imagen = ?, precio = ?" +
+                                                            "WHERE idArticulo = ?";
+    
+    private static final String     SQL_READ_DESC       =   "SELECT * FROM descripcion " +
+                                                            "WHERE idArticulo = ?";
+    
+    private static final String     SQL_READALL_DESC    =   "SELECT * FROM descripcion";
+                                                            
+    //</editor-fold>
     
     private static final Conexion   CONEXION        =   Conexion.estado(); 
     
@@ -216,37 +256,28 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
 //</editor-fold>    
     
 // <editor-fold defaultstate="collapsed" desc="Administracion de productos.">     
-    
+
+    // <editor-fold defaultstate="collapsed" desc="Metodos Query para articulos.">    
     @Override
     public boolean createArticulo( IArticulo articulo) 
     {
+        // "INSERT INTO articulos(idCodigo,  marca, modelo, nombre )"
+        // "VALUES (?, ?, ?, ?)";
         PreparedStatement pStatement;
         try {
-            pStatement = CONEXION.getConnection().prepareStatement(SQL_INSERT); 
+            pStatement = CONEXION.getConnection().prepareStatement(SQL_INSERT_PROD); 
             
             
             pStatement.setInt   (1, articulo.getIdCodigo()     );
-            pStatement.setInt   (2, articulo.getIdArticulo()   );
-            pStatement.setString(3, articulo.getMarca()        );
-            pStatement.setString(4, articulo.getModelo()       );
-            pStatement.setString(5, articulo.getNombre()       );
+            pStatement.setString(2, articulo.getMarca()        );
+            pStatement.setString(3, articulo.getModelo()       );
+            pStatement.setString(4, articulo.getNombre()       );
             
             if ( pStatement.executeUpdate() > 0 ) 
             {
-                pStatement = CONEXION.getConnection().prepareStatement(SQL_INSERT_DESC);
-
-                pStatement.setInt   (1, articulo.getIdArticulo()   );
-                pStatement.setInt   (2, articulo.getStock()        );
-                pStatement.setString(3, articulo.getDescripcion()  );
-                pStatement.setString(4, articulo.getImagen()       );
-                pStatement.setFloat (5, articulo.getPrecio()       );
-
-                if( pStatement.executeUpdate() > 0 )
-                {
-                        return true;
-                }
+                return true;
             }
-        } catch (SQLException | NullPointerException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             CONEXION.cerrarConexion();
@@ -258,26 +289,19 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
     @Override
     public boolean deleteArticulo(Object primaryKey) 
     {
+        //"DELETE FROM articulos " +
+        //"WHERE  idCodigo = ? ";
         PreparedStatement   pStatement;
-        IArticulo           producto    = readAnArticulo(primaryKey);
         
         try {
-                pStatement = CONEXION.getConnection().prepareStatement(SQL_DELETE);
-                
-                pStatement.setInt(1, producto.getIdCodigo());
-                
-                
+                pStatement = CONEXION.getConnection().prepareStatement(SQL_DELETE_PROD);               
+                pStatement.setInt(1, (int)primaryKey );
+                               
                 if ( pStatement.executeUpdate() > 0 )
                 {
-                    pStatement = CONEXION.getConnection().prepareStatement(SQL_DELETE_DESC);
-                    pStatement.setInt(1, producto.getIdArticulo());
-                    
-                    if ( pStatement.executeUpdate() > 0 ) 
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-        } catch (SQLException | NullPointerException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             CONEXION.cerrarConexion();
@@ -289,19 +313,17 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
     @Override
     public boolean updateArticulo(IArticulo articulo) 
     {
-            PreparedStatement pStatement;
+        //"UPDATE articulos " +
+        //"SET    marca = ?, modelo = ?, nombre = ? " +
+        //"WHERE  idCodigo = ? ";
+        PreparedStatement pStatement;
         try {
-            pStatement = CONEXION.getConnection().prepareStatement(SQL_UPDATE);
+            pStatement = CONEXION.getConnection().prepareStatement(SQL_UPDATE_PROD);
             
             pStatement.setString(1, articulo.getMarca()        );
             pStatement.setString(2, articulo.getModelo()       );
-            pStatement.setString(3, articulo.getNombre()       );
-            pStatement.setInt   (4, articulo.getStock()        );
-            pStatement.setString(5, articulo.getDescripcion()  );
-            pStatement.setString(6, articulo.getImagen()       );
-            pStatement.setFloat (7, articulo.getPrecio()       );
-            pStatement.setInt   (8, articulo.getIdCodigo()     );
-            pStatement.setInt   (9, articulo.getIdArticulo()   ); 
+            pStatement.setString(3, articulo.getNombre()       );          
+            pStatement.setInt   (4, articulo.getIdCodigo()     );
             
             if ( pStatement.executeUpdate() > 0) 
             {
@@ -319,27 +341,26 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
     @Override
     public IArticulo readAnArticulo(Object primaryKey) 
     {
+        //"SELECT * FROM articulos "                                                           
+        //"WHERE  idCodigo = ? ";
+        
         ResultSet rs;
-        Electrodomestico producto = null;
+        IArticulo producto = null;
         PreparedStatement pStatement;
 
         try {
-            pStatement = CONEXION.getConnection().prepareStatement(SQL_READ);
+            pStatement = CONEXION.getConnection().prepareStatement(SQL_READ_PROD);
             
-            pStatement.setInt( 1, Integer.parseInt(primaryKey.toString()) );
+            pStatement.setInt( 1, (int)primaryKey );
             rs = pStatement.executeQuery();
 
             while(rs.next())
             {
-                producto = new Electrodomestico(    rs.getInt(2),               /* idCodigo     */
-                                                    rs.getInt(1),               /* idArticulo   */
-                                                    rs.getString(3),            /* marca        */
-                                                    rs.getString(4),            /* modelo       */
-                                                    rs.getString(5),            /* nombre       */
-                                                    rs.getString(7),            /* descipcion   */
-                                                    rs.getString(8),            /* imagen       */
-                                                    rs.getInt(6),               /* stock        */
-                                                    rs.getFloat(9));            /* precio       */
+                producto = new ProdArticulo(rs.getInt(1)   ,                    /* idCodigo     */                                               
+                                            rs.getString(4),                    /* nombre       */
+                                            rs.getString(2),                    /* marca        */
+                                            rs.getString(3));                   /* modelo       */
+                                                                                                
             }
         } catch (SQLException | NullPointerException ex) {        
             Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -353,25 +374,22 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
     @Override
     public ArrayList<IArticulo> readAllArticulos() 
     {
+        // "SELECT * FROM articulos"
+
         ResultSet rs;
-        ArrayList<IArticulo> electrodomesticos = new ArrayList();        
+        ArrayList<IArticulo> articulos = new ArrayList();        
         PreparedStatement pStatement;
         
         try {
-            pStatement =  CONEXION.getConnection().prepareStatement(SQL_READALL);
+            pStatement =  CONEXION.getConnection().prepareStatement(SQL_READALL_PROD);
             rs = pStatement.executeQuery();
             
             while( rs.next())
             {
-                electrodomesticos.add(new Electrodomestico(     rs.getInt(2),       /* idCodigo     */
-                                                                rs.getInt(1),       /* idArticulo   */
-                                                                rs.getString(3),    /* marca        */
-                                                                rs.getString(4),    /* modelo       */
-                                                                rs.getString(5),    /* nombre       */
-                                                                rs.getString(7),    /* descipcion   */
-                                                                rs.getString(8),    /* imagen       */
-                                                                rs.getInt(6),       /* stock        */
-                                                                rs.getFloat(9)));   /* precio       */ 
+                articulos.add(new ProdArticulo( rs.getInt(1)   ,                /* idCodigo     */                                                               
+                                                rs.getString(4),                /* nombre       */
+                                                rs.getString(2),                /* marca        */
+                                                rs.getString(3)));              /* modelo       */                                                    
             }
         } catch (SQLException ex) {
             Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -379,40 +397,307 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
             CONEXION.cerrarConexion();
         }
         
-        return electrodomesticos;
+        return articulos;
     }
     
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Metodos Query para descripciones."> 
+    
     @Override
-    public boolean createDescrip() 
+    public boolean createDescrip(IDescripcionArticulo descrip) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //"INSERT INTO descripcion(idArticulo, stock, descripcion, imagen, precio )" +
+        //"VALUES (?, ?, ?, ?, ?)";
+        
+        PreparedStatement pStatement;
+        try {
+            pStatement = CONEXION.getConnection().prepareStatement(SQL_INSERT_DESC); 
+            
+            
+            pStatement.setInt   (1, descrip.getIdArticulo() );
+            pStatement.setInt   (2, descrip.getStock()      );
+            pStatement.setString(3, descrip.getDescripcion());
+            pStatement.setString(4, descrip.getImagen()     );
+            pStatement.setFloat (5, descrip.getPrecio()     );
+            
+            if ( pStatement.executeUpdate() > 0 ) 
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return false;        
     }
 
     @Override
-    public boolean deleteDescrip() 
+    public boolean deleteDescrip( Object primaryKey) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //"DELETE FROM descripcion " +
+        //"WHERE  idArticulo = ?"
+        PreparedStatement   pStatement;
+        
+        try {
+                pStatement = CONEXION.getConnection().prepareStatement(SQL_DELETE_DESC);               
+                pStatement.setInt(1, (int)primaryKey );
+                               
+                if ( pStatement.executeUpdate() > 0 )
+                {
+                    return true;
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return false;        
     }
 
     @Override
-    public boolean updateDescrip() 
+    public boolean updateDescrip(IDescripcionArticulo descrip) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //"UPDATE descripcion " +
+        //"SET stock = ?, descripcion = ?, imagen = ?, precio = ?" +
+        //"WHERE idArticulo = ?"
+        
+        PreparedStatement pStatement;
+        try {
+            pStatement = CONEXION.getConnection().prepareStatement(SQL_UPDATE_DESC);
+            
+            pStatement.setInt   (1, descrip.getStock()        );
+            pStatement.setString(2, descrip.getDescripcion()  );
+            pStatement.setString(3, descrip.getImagen()       );          
+            pStatement.setFloat (4, descrip.getPrecio()       );
+            pStatement.setFloat (5, descrip.getIdArticulo()   );
+            
+            if ( pStatement.executeUpdate() > 0) 
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return false;        
     }
 
     @Override
-    public IDescripcionArticulo readDescrip() 
+    public IDescripcionArticulo readDescrip(Object primaryKey) 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //"SELECT * FROM descripcion " +
+        //"WHERE idArticulo = ?";
+        
+        ResultSet rs;
+        IDescripcionArticulo producto = null;
+        PreparedStatement pStatement;
+
+        try {
+            pStatement = CONEXION.getConnection().prepareStatement(SQL_READ_DESC);
+            
+            pStatement.setInt( 1, (int)primaryKey );
+            rs = pStatement.executeQuery();
+
+            while(rs.next())
+            {
+                producto = new ProdDescripcion(rs.getInt(1)   ,                 /* idArticulo   */                                               
+                                               rs.getInt(2)   ,                 /* stock        */
+                                               rs.getString(3),                 /* descripcion  */
+                                               rs.getString(4),                 /* imagen       */
+                                               rs.getFloat (5) );               /* precio       */                                                    
+            }
+        } catch (SQLException | NullPointerException ex) {        
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return producto;        
     }
 
     @Override
     public ArrayList<IDescripcionArticulo> readAllDescrip() 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //"SELECT * FROM descripcion" 
+        
+        ResultSet rs;
+        ArrayList<IDescripcionArticulo> descripciones = new ArrayList();        
+        PreparedStatement pStatement;
+        
+        try {
+            pStatement =  CONEXION.getConnection().prepareStatement(SQL_READALL_DESC);
+            rs = pStatement.executeQuery();
+            
+            while( rs.next())
+            {
+                descripciones.add(new ProdDescripcion(  rs.getInt(1)   ,                 /* idArticulo   */                                               
+                                                        rs.getInt(2)   ,                 /* stock        */
+                                                        rs.getString(3),                 /* descripcion  */
+                                                        rs.getString(4),                 /* imagen       */
+                                                        rs.getFloat (5)));               /* precio       */
+                                                                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return descripciones;        
     } 
+ 
+    //</editor-fold> 
+ 
+    // <editor-fold defaultstate="collapsed" desc="Metodos Query para articulo-descripcion.">
+    
+    @Override
+    public boolean createTupla( Tupla tupla ) 
+    {
+        //"INSERT INTO articulo-descrip( idCodigo, idArticulo )" +
+        //"VALUES (?, ?)";
+        
+        boolean isValidArticulo = readAnArticulo( tupla.getPrimaryKey() ) != null;
+        boolean isValidDescrip  = readDescrip   ( tupla.getForeignKey() ) != null;
+        
+        if( isValidArticulo && isValidDescrip )       
+        {
+            PreparedStatement pStatement;
+            try {
+                pStatement = CONEXION.getConnection().prepareStatement(SQL_INSERT_PROD_DESC); 
+
+                pStatement.setInt   (1, tupla.getPrimaryKey() );
+                pStatement.setInt   (2, tupla.getForeignKey() );
+
+
+                if ( pStatement.executeUpdate() > 0 ) 
+                {
+                    return true;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }finally{
+                CONEXION.cerrarConexion();
+            }               
+        }
+   
+        return false;        
+    }
+
+    @Override
+    public boolean deleteTupla(Object primaryKey) 
+    {
+        //"DELETE FROM articulo-descrip" +
+        //"WHERE idCodigo = ?"
+        PreparedStatement   pStatement;
+        
+        try {
+                pStatement = CONEXION.getConnection().prepareStatement(SQL_DELETE_PROD_DESC);               
+                pStatement.setInt(1, (int)primaryKey );
+                               
+                if ( pStatement.executeUpdate() > 0 )
+                {
+                    return true;
+                }
+        } catch (SQLException ex) {
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return false;        
+    }
+
+    @Override
+    public boolean updateTupla(Tupla tupla) 
+    {
+        //"UPDATE articulo-descrip" +
+        //"SET idArticulo = ?" +
+        //"WHERE idCodigo = ?"
+        
+        PreparedStatement pStatement;
+        try {
+            pStatement = CONEXION.getConnection().prepareStatement(SQL_UPDATE_PROD_DESC);
+            
+            pStatement.setInt(1, tupla.getForeignKey() );
+            pStatement.setInt(2, tupla.getPrimaryKey() );
+            
+            if ( pStatement.executeUpdate() > 0) 
+            {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return false;        
+    }
+
+    @Override
+    public Tupla readTupla(Object primaryKey) 
+    {
+        //"SELECT * FROM articulo-descrip" +
+        //"WHERE idCodigo = ?"
+        ResultSet rs;
+        Tupla tupla = null;
+        PreparedStatement pStatement;
+
+        try {
+            pStatement = CONEXION.getConnection().prepareStatement(SQL_READ_PROD_DESC);
+            
+            pStatement.setInt( 1, (int)primaryKey );
+            rs = pStatement.executeQuery();
+
+            while(rs.next())
+            {
+                tupla = new Tupla(  rs.getInt(1),                    /* idCodigo   */                                               
+                                    rs.getInt(2));                   /* idArticulo */                                                                                                  
+            }
+        } catch (SQLException | NullPointerException ex) {        
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return tupla;        
+    }
+
+    @Override
+    public ArrayList<Tupla> readAllTupla() 
+    {
+        //"SELECT * FROM articulo-descrip"
+        
+        ResultSet rs;
+        ArrayList<Tupla> tuplasProducto = new ArrayList();        
+        PreparedStatement pStatement;
+        
+        try {
+            pStatement =  CONEXION.getConnection().prepareStatement(SQL_READALL_PROD_DESC);
+            rs = pStatement.executeQuery();
+            
+            while( rs.next())
+            {
+                tuplasProducto.add( new Tupla(  rs.getInt(1) ,                  /* idCodigo   */                                               
+                                                rs.getInt(2)));                 /* idArticulo */                                                      
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            CONEXION.cerrarConexion();
+        }
+        
+        return tuplasProducto;        
+    }
+ 
+    // </editor-fold>
     
     
-// </editor-fold>   
-    
+ // </editor-fold>       
 }

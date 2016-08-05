@@ -7,17 +7,19 @@ package controlador;
 
 import DAO.UsuarioAdminDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Tupla;
+import modelo.ProdArticulo;
+import modelo.ProdDescripcion;
 
 /**
  *
  * @author Joack
  */
-public class AdministradorProductoCrear extends HttpServlet {
+public class AdministradorArticuloEditar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,31 +33,28 @@ public class AdministradorProductoCrear extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        int     idCodigo        = Integer.parseInt( request.getParameter("idCodigo"));
-        int     idArticulo      = Integer.parseInt( request.getParameter("idArticulo"));
+        UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
         
-        Tupla tupla = new Tupla(   idCodigo, idArticulo );
+        int    idArticulo   = Integer.parseInt(request.getParameter("idCodigo"));
+        String marca        = request.getParameter("idMarca");
+        String modelo       = request.getParameter("idModelo");
+        String nombre       = request.getParameter("idNombre");
         
-        UsuarioAdminDAO user = (UsuarioAdminDAO)request.getSession().getAttribute("usuario");
+        ProdArticulo desc = new ProdArticulo(idArticulo, nombre, marca, modelo);
         
-        if (user.createTupla(tupla)) 
+        if (admin.updateArticulo(desc)) 
         {
-            String success = "Producto agregado correctamente";
-            request.getSession().setAttribute("exito", success);
+            String exito = "Se ha actualizado la descripcion correctamente.";
+            request.getSession().setAttribute("exito", exito);
             request.getRequestDispatcher("pages/success.jsp").forward(request, response);
         }else{
-            String error = "El producto no se ha podido agregar.";
-            errorPage( error, request, response);
+            String error = "No se ha podido actualizar la descripcion.";
+            request.getSession().setAttribute("error", error);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
         }
-
+        
     }
 
-    private void errorPage( String error, HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException
-    {
-        request.getSession().setAttribute("error", error);
-        request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-    }    
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

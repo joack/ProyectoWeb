@@ -5,8 +5,8 @@
  */
 package controlador;
 
+import DAO.UsuarioAdminDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Joack
  */
-public class DoLoginRedirect extends HttpServlet {
+public class AdministradorDescripcionBorrar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -28,20 +28,21 @@ public class DoLoginRedirect extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DoLoginRedirect</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DoLoginRedirect at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+            throws ServletException, IOException 
+    {
+        UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
+        int idArticulo = Integer.parseInt(request.getParameter("idArticulo"));
+        
+        if ( admin.deleteDescrip(idArticulo)) 
+        {
+            String exito = "Descripcion borrada exitosamente.";
+            request.getSession().setAttribute("exito", exito);
+            request.getRequestDispatcher("pages/success.jsp").forward(request, response);            
+        }else{
+            String exito = "No se ha podido borrar la descripcion.";
+            request.getSession().setAttribute("error", exito);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,11 +56,8 @@ public class DoLoginRedirect extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
-        //processRequest(request, response);
-        String pagina = (String)request.getSession().getAttribute("pagina");
-        request.getRequestDispatcher(pagina).forward(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

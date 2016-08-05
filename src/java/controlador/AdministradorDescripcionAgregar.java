@@ -5,18 +5,20 @@
  */
 package controlador;
 
+import DAO.UsuarioAdminDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.ProdDescripcion;
 
 /**
  *
  * @author Joack
  */
-public class AdministradorProductoDescripcionBorrar extends HttpServlet {
+public class AdministradorDescripcionAgregar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,9 +32,26 @@ public class AdministradorProductoDescripcionBorrar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        String exito = "Operacion realizada.";
-        request.getSession().setAttribute("exito", exito);
-        request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+        UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
+        
+        int idArticulo  = Integer.parseInt(request.getParameter("idArticulo"));
+        int stock       = Integer.parseInt(request.getParameter("idStock"));
+        float precio    = Float.parseFloat(request.getParameter("idPrecio"));
+        String desc     = request.getParameter("idDescrip");
+        String imagen   = request.getParameter("idImagen");
+        
+        ProdDescripcion descripcion = new ProdDescripcion(idArticulo, stock, desc, imagen, precio);
+        
+        if (admin.createDescrip(descripcion)) 
+        {
+            String exito = "Se ha agregado correctamente la descripcion.";
+            request.getSession().setAttribute("exito", exito);
+            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+        }else{
+            String error = "No se ha podido agregar la descripcion.";
+            request.getSession().setAttribute("error", error);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);        
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

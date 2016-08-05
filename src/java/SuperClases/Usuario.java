@@ -5,8 +5,6 @@
  */
 package SuperClases;
 
-import interfaces.IUser;
-
 /**
  *
  * @author Joack

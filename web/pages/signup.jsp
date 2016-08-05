@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<% boolean habilitarOpcion = (boolean)request.getSession().getAttribute("ok"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,12 +19,6 @@
             Email:     <input type="text" name="email" value="" />              <br>
             User Name: <input type="text" name="nick"  value="" />              <br>
             Password:  <input type="text" name="pass"  value="" />              <br>
-            <%
-                if( habilitarOpcion )
-                {
-                    out.println( "Administrador: <input type=\"checkbox\" name=\"admin\"/>" );                
-                }
-            %>
             <br>
             <input type="submit" value="Enviar" />
         </form>

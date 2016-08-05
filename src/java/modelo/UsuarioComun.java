@@ -13,7 +13,11 @@ public class UsuarioComun extends Usuario implements IUser
 {
     private String nickName;
     
-    ArrayList<Electrodomestico> carrito = new ArrayList();
+    ArrayList<Producto> carrito = new ArrayList();
+    
+    public UsuarioComun(){
+        super(null, null, null);
+    }
     
     public UsuarioComun(String email, String nickName, String password, String rol) 
     {

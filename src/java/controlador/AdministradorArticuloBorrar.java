@@ -5,8 +5,9 @@
  */
 package controlador;
 
-import ServiceManager.Service;
+import DAO.UsuarioAdminDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,9 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Joack
  */
-public class AdministradorProducto extends HttpServlet {
+public class AdministradorArticuloBorrar extends HttpServlet {
 
-    private Service servicio = Service.getService();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -31,12 +31,21 @@ public class AdministradorProducto extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
+        UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
         
+        int idCodigo = Integer.parseInt(request.getParameter("idCodigo"));
         
-                        
-               // errorPage( id, request, response );
-                request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-
+        if (admin.deleteArticulo(idCodigo)) 
+        {
+            admin.deleteTupla(idCodigo);
+            String exito = "El producto ha sido borrado exitosamente.";
+            request.getSession().setAttribute("exito", exito);
+            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+        }else{
+            String error = "El producto no se ha podido eliminar.";
+            request.getSession().setAttribute("error", error);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+        }    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -78,10 +87,4 @@ public class AdministradorProducto extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    
-        private void errorPage( String error, HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException
-    {
-        request.getSession().setAttribute("error", error);
-        request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-    }
 }

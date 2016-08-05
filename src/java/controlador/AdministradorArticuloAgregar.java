@@ -11,13 +11,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Tupla;
+import modelo.ProdArticulo;
 
 /**
  *
  * @author Joack
  */
-public class AdministradorProductoCrear extends HttpServlet {
+public class AdministradorArticuloAgregar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,31 +31,27 @@ public class AdministradorProductoCrear extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        int     idCodigo        = Integer.parseInt( request.getParameter("idCodigo"));
-        int     idArticulo      = Integer.parseInt( request.getParameter("idArticulo"));
+        UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
         
-        Tupla tupla = new Tupla(   idCodigo, idArticulo );
+        int idCodigo  = Integer.parseInt(request.getParameter("idCodigo"));
+        String marca  = (String)request.getParameter("idMarca");
+        String modelo = (String)request.getParameter("idModelo");
+        String nombre = (String)request.getParameter("idNombre");
         
-        UsuarioAdminDAO user = (UsuarioAdminDAO)request.getSession().getAttribute("usuario");
+        ProdArticulo articulo = new ProdArticulo(idCodigo, nombre, marca, modelo);
         
-        if (user.createTupla(tupla)) 
+        if (admin.createArticulo(articulo)) 
         {
-            String success = "Producto agregado correctamente";
-            request.getSession().setAttribute("exito", success);
+            String exito = "Se ha creado el articulo exitosamente.";
+            request.getSession().setAttribute("exito", exito);
             request.getRequestDispatcher("pages/success.jsp").forward(request, response);
         }else{
-            String error = "El producto no se ha podido agregar.";
-            errorPage( error, request, response);
-        }
-
+            String error = "No se ha podido crear el articulo.";
+            request.getSession().setAttribute("exito", error);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);        
+        }    
     }
 
-    private void errorPage( String error, HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException
-    {
-        request.getSession().setAttribute("error", error);
-        request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-    }    
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

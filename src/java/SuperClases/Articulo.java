@@ -5,8 +5,6 @@
  */
 package SuperClases;
 
-import interfaces.IArticulo;
-
 /**
  *
  * @author Joack
@@ -24,7 +22,7 @@ public abstract class Articulo
     {
         this.idCodigo = idCodigo;
     }
-
+    
     public Articulo(int idCodigo, int idArticulo) 
     {
         this.idCodigo = idCodigo;
@@ -36,18 +34,8 @@ public abstract class Articulo
         return idCodigo;
     }
 
-    public void setIdCodigo(int idCodigo) 
-    {
-        this.idCodigo = idCodigo;
-    }
-
     public int getIdArticulo() 
     {
         return idArticulo;
-    }
-
-    public void setIdArticulo(int idArticulo) 
-    {
-        this.idArticulo = idArticulo;
     } 
 }

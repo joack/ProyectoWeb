@@ -10,15 +10,20 @@ import SuperClases.Articulo;
 import interfaces.IDescripcionArticulo;
 import interfaces.IArticulo;
 import interfaces.IObligacionAdmin;
+import interfaces.IObligacionArticuloDescrip;
+import interfaces.IObligacionDescriptionManager;
 import interfaces.IObligacionProducManager;
 import interfaces.IUser;
 import java.util.ArrayList;
+import modelo.ProdDescripcion;
+import modelo.Producto;
+import modelo.Tupla;
 
 /**
  *
  * @author Joack
  */
-public class Service implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>
+public class Service implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>, IObligacionDescriptionManager<IDescripcionArticulo>, IObligacionArticuloDescrip<Tupla>
 {
     private final  ServiceDAO   service;
     private static Service      instance;
@@ -88,7 +93,8 @@ public class Service implements IObligacionAdmin<IUser>, IObligacionProducManage
 //</editor-fold>    
 
 // <editor-fold defaultstate="collapsed" desc="Product Manager Services.">    
-    
+
+    // <editor-fold defaultstate="collapsed" desc="Methods Articulo.">
     @Override
     public boolean createArticulo(IArticulo articulo) 
     {
@@ -119,11 +125,113 @@ public class Service implements IObligacionAdmin<IUser>, IObligacionProducManage
         return service.readAllArticulos();
     }
 
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Methods Articulo descripcion.">
+    @Override
+    public boolean createDescrip(IDescripcionArticulo descrip) 
+    {
+        return service.createDescrip(descrip);
+    }
+
+    @Override
+    public boolean deleteDescrip(Object primaryKey) 
+    {
+        return service.deleteDescrip(primaryKey);
+    }
+
+    @Override
+    public boolean updateDescrip(IDescripcionArticulo descrip) 
+    {
+        return service.updateDescrip(descrip);
+    }
+
+    @Override
+    public IDescripcionArticulo readDescrip(Object primaryKey) 
+    {
+        return service.readDescrip(primaryKey);
+    }
+
+    @Override
+    public ArrayList<IDescripcionArticulo> readAllDescrip() 
+    {
+        return service.readAllDescrip();
+    }
+
+    //</editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Methods Tuplas.">
+ 
+    @Override
+    public boolean createTupla(Tupla prod) 
+    {
+        return service.createTupla(prod);
+    }
+
+    @Override
+    public boolean deleteTupla(Object primaryKey) 
+    {
+        return service.deleteTupla(primaryKey);
+    }
+
+    @Override
+    public boolean updateTupla(Tupla prod) 
+    {
+        return service.updateTupla(prod);
+    }
+
+    @Override
+    public Tupla readTupla(Object primaryKey) 
+    {
+        return service.readTupla(primaryKey);
+    }
+
+    @Override
+    public ArrayList<Tupla> readAllTupla() 
+    {
+        return service.readAllTupla();
+    }
+    
+    //</editor-fold>   
+    
     public boolean articuloExist( Object primaryKey )
     {
         return( service.readAnArticulo(primaryKey) != null );
     }
-    
+
+    public ArrayList<Producto> listaDeProductos()
+    {
+        ArrayList<Producto> listaProductos = new ArrayList();
+        ArrayList<Tupla> tuplas = service.readAllTupla();
+        int pK, fK;
+        IArticulo art;
+        IDescripcionArticulo descrip;
+        
+        for( Tupla tupla: tuplas)
+        {
+            pK = tupla.getPrimaryKey();
+            fK = tupla.getForeignKey();
+            art = readAnArticulo(pK);
+            descrip = readDescrip(fK);
+            
+            if (descrip == null) 
+            {
+                descrip = new ProdDescripcion(-1, -1, "null", "null", -1);
+            }
+            
+            listaProductos.add( new Producto(art.getIdCodigo()       , 
+                                             descrip.getIdArticulo() , 
+                                             art.getMarca()          , 
+                                             art.getModelo()         , 
+                                             art.getNombre()         , 
+                                             descrip.getDescripcion(), 
+                                             descrip.getImagen()     , 
+                                             descrip.getStock()      , 
+                                             descrip.getPrecio()     ));
+        }
+        
+        return listaProductos;
+    }     
     
 //</editor-fold> 
    
@@ -137,29 +245,4 @@ public boolean agregarProductoAlCarrito( Articulo articulo, int cantidad )
     
 //</editor-fold>
 
-    @Override
-    public boolean createDescrip() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean deleteDescrip() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean updateDescrip() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IDescripcionArticulo readDescrip() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ArrayList<IDescripcionArticulo> readAllDescrip() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

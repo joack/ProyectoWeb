@@ -5,7 +5,8 @@
  */
 package controlador;
 
-import conexion.SendEmail;
+import DAO.UsuarioAdminDAO;
+import interfaces.IDescripcionArticulo;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Joack
  */
-public class ForgotPassword extends HttpServlet {
+public class AdministradorDescripcionEditar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,20 +30,31 @@ public class ForgotPassword extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
-    {       
-            String msg =   "   <!DOCTYPE html>                                  " +
-                           "   <html>                                           " +
-                           "     <head>                                         " +
-                           "        <title>Servlet ForgotPassword</title>       " +
-                           "    </head>                                         " +
-                           "    <body>                                          " +
-                           "        <h1>Servlet ForgotPassword </h1>            " +
-                           "    </body>                                         " +
-                           "</html>                                             " ;
-            String email = request.getParameter("email");
-            
-            //SendEmail.send(email, "Forgotten Password", msg);
-   
+    {
+        UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
+        
+        int     idArticulo  = Integer.parseInt(request.getParameter("idArticulo"));
+        String  desc        = (String)request.getParameter("idDescrip");
+        String  imagen      = (String)request.getParameter("idImagen");
+        float   precio      = Float.parseFloat(request.getParameter("idPrecio"));
+        int     stock       = Integer.parseInt(request.getParameter("idStock"));
+        
+        IDescripcionArticulo descrip = admin.readDescrip(idArticulo);
+        
+        descrip.setDescripcion(desc);
+        descrip.setImagen(imagen);
+        descrip.setPrecio(precio);
+        descrip.setStock(stock);
+        
+        if(admin.updateDescrip(descrip)) 
+        {
+            String exito = "Se ha actualizado exitosamente.";
+            request.getSession().setAttribute("exito", exito);
+            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+        }else{
+            String error = "No se ha podido actualizar.";
+            request.getSession().setAttribute("error", error);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);        
         }
     }
 

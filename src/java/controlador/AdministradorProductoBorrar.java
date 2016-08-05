@@ -11,13 +11,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modelo.Tupla;
 
 /**
  *
  * @author Joack
  */
-public class AdministradorProductoCrear extends HttpServlet {
+public class AdministradorProductoBorrar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,31 +30,22 @@ public class AdministradorProductoCrear extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        int     idCodigo        = Integer.parseInt( request.getParameter("idCodigo"));
-        int     idArticulo      = Integer.parseInt( request.getParameter("idArticulo"));
+        UsuarioAdminDAO admin = (UsuarioAdminDAO)request.getSession().getAttribute("usuario");
+        int idCodigo = Integer.parseInt( request.getParameter("idCodigo"));
         
-        Tupla tupla = new Tupla(   idCodigo, idArticulo );
         
-        UsuarioAdminDAO user = (UsuarioAdminDAO)request.getSession().getAttribute("usuario");
-        
-        if (user.createTupla(tupla)) 
+        if( admin.deleteTupla(idCodigo)) 
         {
-            String success = "Producto agregado correctamente";
-            request.getSession().setAttribute("exito", success);
+            String exito = "El producto se ha borrado exitosamente";
+            request.getSession().setAttribute("exito", exito);
             request.getRequestDispatcher("pages/success.jsp").forward(request, response);
         }else{
-            String error = "El producto no se ha podido agregar.";
-            errorPage( error, request, response);
+            String error = "El producto no ha podido ser borrado.";
+            request.getSession().setAttribute("error", error);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
         }
-
     }
 
-    private void errorPage( String error, HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException
-    {
-        request.getSession().setAttribute("error", error);
-        request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-    }    
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

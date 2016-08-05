@@ -30,13 +30,14 @@ $(document).ready(function () {
         {
             $("#addUser_form").submit();
         }
-
     );
 });
 
-// MODAL AGREGADO PRODUCTO
+//==============================================================================
+
+// MODAL PRODUCTO AGREGAR
 $(document).ready(function () {
-    $("#productAdd_form").on("submit", function(e) {
+    $("#AgregarProducto_form").on("submit", function(e) {
         var postData = $(this).serializeArray();
         var formURL = $(this).attr("action");
         $.ajax({
@@ -44,9 +45,9 @@ $(document).ready(function () {
             type: "POST",
             data: postData,
             success: function(data, textStatus, jqXHR) {
-                $('#productAdd_dialog .modal-header .modal-title').html("Result");
-                $('#productAdd_dialog .modal-body').html(data);
-                $("#submitProductForm").remove();
+                $('#AgregaerProducto_dialog .modal-header .modal-title').html("Result");
+                $('#AgregaerProducto_dialog .modal-body').html(data);
+                $("#submitAgregarProductoForm").remove();
             },
             error: function(jqXHR, status, error) {
                 console.log(status + ": " + error);
@@ -55,18 +56,17 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $("#submitProductForm").on('click', 
+    $("#submitAgregarProductoForm").on('click', 
         function() 
         {
-            $("#productAdd_form").submit();
+            $("#AgregarProducto_form").submit();
         }
-
     );
 });
 
-// MODAL EDITAR DESCRIPCION PODUCTO
+// MODAL PRODUCTO EDITAR
 $(document).ready(function () {
-    $("#productEditDescrip_form").on("submit", function(e) {
+    $("#EditarProducto_form").on("submit", function(e) {
         var postData = $(this).serializeArray();
         var formURL = $(this).attr("action");
         $.ajax({
@@ -74,9 +74,9 @@ $(document).ready(function () {
             type: "POST",
             data: postData,
             success: function(data, textStatus, jqXHR) {
-                $('#productEditDescrip_dialog .modal-header .modal-title').html("Result");
-                $('#productEditDescrip_dialog .modal-body').html(data);
-                $("#submitProductEditDescripForm").remove();
+                $('#EditarProducto_dialog .modal-header .modal-title').html("Result");
+                $('#EditarProducto_dialog .modal-body').html(data);
+                $("#submitEditarProductoForm").remove();
             },
             error: function(jqXHR, status, error) {
                 console.log(status + ": " + error);
@@ -85,18 +85,17 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $("#submitProductEditDescripForm").on('click', 
+    $("#submitEditarProductoForm").on('click', 
         function() 
         {
-            $("#productEditDescrip_form").submit();
+            $("#EditarProducto_form").submit();
         }
-
     );
 });
 
-// MODAL BORRAR DESCRIPCION PODUCTO
+// MODAL PRODUCTO BORRAR
 $(document).ready(function () {
-    $("#delProductEditDescrip_form").on("submit", function(e) {
+    $("#BorrarProducto_form").on("submit", function(e) {
         var postData = $(this).serializeArray();
         var formURL = $(this).attr("action");
         $.ajax({
@@ -104,9 +103,9 @@ $(document).ready(function () {
             type: "POST",
             data: postData,
             success: function(data, textStatus, jqXHR) {
-                $('#delProductEditDescrip_dialog .modal-header .modal-title').html("Result");
-                $('#delProductEditDescrip_dialog .modal-body').html(data);
-                $("#submitDelProductEditDescripForm").remove();
+                $('#BorrarProducto_dialog .modal-header .modal-title').html("Result");
+                $('#BorrarProducto_dialog .modal-body').html(data);
+                $("#submitBorrarProductoForm").remove();
             },
             error: function(jqXHR, status, error) {
                 console.log(status + ": " + error);
@@ -115,21 +114,207 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $("#submitDelProductEditDescripForm").on('click', 
+    $("#submitBorrarProductoForm").on('click', 
         function() 
         {
-            $("#delProductEditDescrip_form").submit();
+            $("#BorrarProducto_form").submit();
+        }
+    );
+});
+
+//==============================================================================
+
+// MODAL ARTICULO AGREGAR
+$(document).ready(function () {
+    $("#AgregarArticulo_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#AgregarArticulo_dialog .modal-header .modal-title').html("Result");
+                $('#AgregarArticulo_dialog .modal-body').html(data);
+                $("#submitArgregarArticuloForm").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitArgregarArticuloForm").on('click', 
+        function() 
+        {
+            $("#AgregarArticulo_form").submit();
         }
 
     );
 });
+
+// MODAL ARTICULO EDITAR
+$(document).ready(function () {
+    $("#EditarArticulo_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#EditarArticulo_dialog .modal-header .modal-title').html("Result");
+                $('#EditarArticulo_dialog .modal-body').html(data);
+                $("#submitEditarArticuloForm").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitEditarArticuloForm").on('click', 
+        function() 
+        {
+            $("#EditarArticulo_form").submit();
+        }
+
+    );
+});
+
+// MODAL ARTICULO BORRAR
+$(document).ready(function () {
+    $("#BorrarArticulo_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#BorrarArticulo_dialog .modal-header .modal-title').html("Result");
+                $('#BorrarArticulo_dialog .modal-body').html(data);
+                $("#submitBorrarArticuloForm").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitBorrarArticuloForm").on('click', 
+        function() 
+        {
+            $("#BorrarArticulo_form").submit();
+        }
+
+    );
+});
+
+//==============================================================================
+
+// MODAL DESCRIPCION AGREGAR
+$(document).ready(function () {
+    $("#AgregarDescripcion_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#AgregarDescripcion_dialog .modal-header .modal-title').html("Result");
+                $('#AgregarDescripcion_dialog .modal-body').html(data);
+                $("#submitArgregarDescripcionForm").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitArgregarDescripcionForm").on('click', 
+        function() 
+        {
+            $("#AgregarDescripcion_form").submit();
+        }
+    );
+});
+
+
+// MODAL DESCRIPCION EDITAR
+$(document).ready(function () {
+    $("#EditarDescripcion_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#EditarDescripcion_dialog .modal-header .modal-title').html("Result");
+                $('#EditarDescripcion_dialog .modal-body').html(data);
+                $("#submitEditarDescripcionForm").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitEditarDescripcionForm").on('click', 
+        function() 
+        {
+            $("#EditarDescripcion_form").submit();
+        }
+    );
+});
+
+// MODAL DESCRIPCION BORRAR
+$(document).ready(function () {
+    $("#BorrarDescripcionArticulo_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#BorrarDescripcionArticulo_dialog .modal-header .modal-title').html("Result");
+                $('#BorrarDescripcionArticulo_dialog .modal-body').html(data);
+                $("#submitBorrarDescripcionArticuloForm").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitBorrarDescripcionArticuloForm").on('click', 
+        function() 
+        {
+            $("#BorrarDescripcionArticulo_form").submit();
+        }
+    );
+});
+
+
+
+//==============================================================================
 
 // SCRIPT PARA TABLA CON SCROLL VERTICAL
 $(document).ready(function() {
     $("#idProductTableShow  , #idUsersTableShow   , " +
       "#productTable        , #usersTable           , " +
-      "#productDescripTable" ).DataTable( {
-        "scrollY":        "200px",
+      "#idProductEditTableShow, " +
+      "#productDescripTable, #idUsersTableShow" ).DataTable( {
+        "scrollY":        "250px",
         "scrollCollapse": true,
         "paging":         false
     } );
@@ -208,6 +393,10 @@ $(document).ready(function () {
     );
 });
 
+
+
+//==============================================================================
+
 $(document).ready(function () {
 
     $("a[data-toggle=\"tab\"]").on("shown.bs.tab", function (e) {
@@ -243,9 +432,46 @@ $(document).ready(function() {
 
 //==============================================================================
 
-//MODAL EDITAR PRODUCTO LLENADO DE CAMPOS.
-$('a.editProduct').on('click', function() {
-    var myModal = $('#productEdit_dialog');
+// MODAL PRODUCTO BORRAR
+$('a.BorrarProducto').on('click', function() {
+    var myModal = $('#BorrarProducto_dialog');
+
+    // now get the values from the table
+    var idCodigo    = $(this).closest('tr').find('td.idCodigo').html(); 
+
+    // and set them in the modal:
+    $('#idCodigo'   , myModal).val(idCodigo);
+
+    // and finally show the modal
+    myModal.modal({ show: true });
+
+    return false;
+});
+
+// MODAL PRODUCTO EDITAR 
+$('a.EditarProducto').on('click', function() {
+    var myModal = $('#EditarProducto_dialog');
+
+    // now get the values from the table
+    var idCodigo    = $(this).closest('tr').find('td.idCodigo').html();    
+    var idMarca     = $(this).closest('tr').find('td.idArticulo').html();
+
+       
+    // and set them in the modal: 
+    $('#idCodigo'   , myModal).val(idCodigo);   
+    $('#idMarca'    , myModal).val(idMarca);
+
+    // and finally show the modal
+    myModal.modal({ show: true });
+
+    return false;
+});
+
+//==============================================================================
+
+// MODAL ARTICULO EDITAR.
+$('a.EditarArticulo').on('click', function() {
+    var myModal = $('#EditarArticulo_dialog');
 
     // now get the values from the table
     var idCodigo    = $(this).closest('tr').find('td.idCodigo').html();
@@ -267,9 +493,27 @@ $('a.editProduct').on('click', function() {
     return false;
 });
 
-//  MODAL PARA EDITAR DESCRIPCION DE PRODUCTO
-$('a.editProductDesc').on('click', function() {
-    var myModal = $('#productEditDescrip_dialog');
+// MODAL ARTICULO BORRAR 
+$('a.BorrarArticulo').on('click', function() {
+    var myModal = $('#BorrarArticulo_dialog');
+
+    // now get the values from the table
+    var idCodigo  = $(this).closest('tr').find('td.idCodigo').html();
+   
+    // and set them in the modal:
+    $('#idCodigo' , myModal).val(idCodigo);
+
+    // and finally show the modal
+    myModal.modal({ show: true });
+
+    return false;
+});
+
+//============================================================================== 
+
+//  MODAL PARA EDITAR DESCRIPCION DE Articulo
+$('a.EditarDescripcion').on('click', function() {
+    var myModal = $('#EditarDescripcion_dialog');
 
     // now get the values from the table
     var idArticulo  = $(this).closest('tr').find('td.idArticulo').html();
@@ -294,22 +538,15 @@ $('a.editProductDesc').on('click', function() {
 });
 
 // Boton para borrar descripcion 
-$('a.delEditProductDesc').on('click', function() {
-    var myModal = $('#delProductEditDescrip_dialog');
+$('a.EditarDescipcionArticulo').on('click', function() {
+    var myModal = $('#BorrarDescripcionArticulo_dialog');
 
     // now get the values from the table
     var idArticulo  = $(this).closest('tr').find('td.idArticulo').html();
-    var idDescrip   = $(this).closest('tr').find('td.idDescrip' ).html();
-    var idPrecio    = $(this).closest('tr').find('td.idPrecio'  ).html();
-    var idStock     = $(this).closest('tr').find('td.idStock'   ).html();
-    var idImagen    = $(this).closest('tr').find('td.idImagen'  ).html();
+ 
     
     // and set them in the modal:
     $('#idArticulo' , myModal).val(idArticulo);
-    $('#idDescrip'  , myModal).val(idDescrip );
-    $('#idPrecio'   , myModal).val(idPrecio  );
-    $('#idStock'    , myModal).val(idStock   );
-    $('#idImagen'   , myModal).val(idImagen  );
 
 
     // and finally show the modal
@@ -317,6 +554,11 @@ $('a.delEditProductDesc').on('click', function() {
 
     return false;
 });
+
+
+
+
+//------------------------------------------------------------------------------
 
 //MODAL EDITAR DATOS USUARIO.
 $('a.editUserButton').on('click', function() {
@@ -363,6 +605,8 @@ $('a.removeUserButton').on('click', function() {
     return false;
 });
 
+//------------------------------------------------------------------------------
+
 // MODAL LOGOUT.
 $('a.idLogout').on('click', function() {
     var myModal = $('#logout_dialog');
@@ -371,3 +615,5 @@ $('a.idLogout').on('click', function() {
 
     return false;
 });
+
+

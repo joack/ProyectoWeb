@@ -1,6 +1,6 @@
 package DAO;
 
-import modelo.Electrodomestico;
+import modelo.Producto;
 import conexion.Conexion;
 import interfaces.IObligacion;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ElectrodomesticoDAO implements IObligacion<Electrodomestico>
+public class ElectrodomesticoDAO implements IObligacion<Producto>
 {
     private static final String     SQL_INSERT      =   "INSERT INTO electrodomesticos(idCodigo, idArticulo, marca, modelo, nombre )" +
                                                         "VALUES (?, ?, ?, ?, ?)";
@@ -39,7 +39,7 @@ public class ElectrodomesticoDAO implements IObligacion<Electrodomestico>
     
     
     @Override
-    public boolean create(Electrodomestico clase) 
+    public boolean create(Producto clase) 
     {
         PreparedStatement pStatement;
         try {
@@ -79,7 +79,7 @@ public class ElectrodomesticoDAO implements IObligacion<Electrodomestico>
     public boolean delete(Object key) 
     {
         PreparedStatement   pStatement;
-        Electrodomestico producto    = read(key);
+        Producto producto    = read(key);
         
         try {
                 pStatement = CONEXION.getConnection().prepareStatement(SQL_DELETE);
@@ -107,7 +107,7 @@ public class ElectrodomesticoDAO implements IObligacion<Electrodomestico>
     }
 
     @Override
-    public boolean update(Electrodomestico clase) 
+    public boolean update(Producto clase) 
     {
         PreparedStatement pStatement;
         try {
@@ -136,10 +136,10 @@ public class ElectrodomesticoDAO implements IObligacion<Electrodomestico>
     }
 
     @Override
-    public Electrodomestico read(Object key) 
+    public Producto read(Object key) 
     {
         ResultSet rs;
-        Electrodomestico producto = null;
+        Producto producto = null;
         PreparedStatement pStatement;
 
         try {
@@ -150,7 +150,7 @@ public class ElectrodomesticoDAO implements IObligacion<Electrodomestico>
 
             while(rs.next()) 
             {
-                producto = new Electrodomestico( rs.getInt(2),               /* idCodigo     */
+                producto = new Producto( rs.getInt(2),               /* idCodigo     */
                                                     rs.getInt(1),               /* idArticulo   */
                                                     rs.getString(3),            /* marca        */
                                                     rs.getString(4),            /* modelo       */
@@ -170,10 +170,10 @@ public class ElectrodomesticoDAO implements IObligacion<Electrodomestico>
     }
 
     @Override
-    public ArrayList<Electrodomestico> readAll() 
+    public ArrayList<Producto> readAll() 
     {
         ResultSet rs;
-        ArrayList<Electrodomestico> electrodomesticos = new ArrayList();        
+        ArrayList<Producto> electrodomesticos = new ArrayList();        
         PreparedStatement pStatement;
         
         try {
@@ -182,7 +182,7 @@ public class ElectrodomesticoDAO implements IObligacion<Electrodomestico>
             
             while( rs.next())
             {
-                electrodomesticos.add(new Electrodomestico(  rs.getInt(2),       /* idCodigo     */
+                electrodomesticos.add(new Producto(  rs.getInt(2),       /* idCodigo     */
                                                                 rs.getInt(1),       /* idArticulo   */
                                                                 rs.getString(3),    /* marca        */
                                                                 rs.getString(4),    /* modelo       */

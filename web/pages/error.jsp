@@ -17,8 +17,10 @@
         <title>Error</title>
     </head>
     <body>
-        <h1>Se ha producido un error: <%=error%></h1>                           <br><br>
+        <h1>Se ha producido un error: </h1>                           
+        <p><%=error%></p>
+        <br><br>
         
-        <a href=<%=volverLink%>><Button>Volver</Button>
+        <a href=${pageContext.request.contextPath}<%=volverLink%>><Button>Volver</Button>
     </body>
 </html>

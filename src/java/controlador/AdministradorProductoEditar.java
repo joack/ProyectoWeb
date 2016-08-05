@@ -6,13 +6,12 @@
 package controlador;
 
 import DAO.UsuarioAdminDAO;
-import SuperClases.Articulo;
-import interfaces.IArticulo;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Tupla;
 
 /**
  *
@@ -34,19 +33,22 @@ public class AdministradorProductoEditar extends HttpServlet {
     {
         UsuarioAdminDAO admin = (UsuarioAdminDAO)request.getSession().getAttribute("usuario");
         
-        int     idCodigo    = (int)     request.getSession().getAttribute("idCodigo");
-        int     idArticulo  = (int)     request.getSession().getAttribute("idArticulo");
-        String  descrip     = (String)  request.getSession().getAttribute("idDescrip");
-        String  imagen      = (String)  request.getSession().getAttribute("idImagen");
-        String  marca       = (String)  request.getSession().getAttribute("idMarca");
-        String  modelo      = (String)  request.getSession().getAttribute("idModelo");
-        String  nombre      = (String)  request.getSession().getAttribute("idNombre");
-        float   precio      = (float)   request.getSession().getAttribute("idPrecio");
-        int     stock       = (int)     request.getSession().getAttribute("idStock");
-
-        IArticulo articulo   = admin.readAnArticulo(idCodigo);
+        int idCodigo    = Integer.parseInt( request.getParameter("idCodigo") );
+        int idArticulo  = Integer.parseInt( request.getParameter("idArticulo"));
+       
         
+        Tupla tupla = new Tupla(idCodigo, idArticulo);
         
+        if (admin.updateTupla(tupla)) 
+        {
+            String exito = "Producto actualizado correctamente.";
+            request.getSession().setAttribute("exito", exito);
+            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+        }else{
+            String error = "El producto no se ha podido actualizar.";
+            request.getSession().setAttribute("error", error);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+        }
         
     }
 

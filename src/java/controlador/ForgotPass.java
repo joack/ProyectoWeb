@@ -1,15 +1,14 @@
-package controlador;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controlador;
 
-import DAO.UsuarioAdminDAO;
-import interfaces.IArticulo;
+import conexion.SendEmail;
+import ServiceManager.Service;
+import interfaces.IUser;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +18,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Joack
  */
-public class AdministradorProductoDescripcionEditar extends HttpServlet {
-
+public class ForgotPass extends HttpServlet 
+{
+    private Service service = Service.getService();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,31 +33,15 @@ public class AdministradorProductoDescripcionEditar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        UsuarioAdminDAO admin = (UsuarioAdminDAO) request.getSession().getAttribute("usuario");
+        String email = request.getParameter("email");
         
-        int     idArticulo  = Integer.parseInt(request.getParameter("idArticulo"));
-        String  descrip     = (String)request.getParameter("idDescrip");
-        String  imagen      = (String)request.getParameter("idImagen");
-        float   precio      = Float.parseFloat(request.getParameter("idPrecio"));
-        int     stock       = Integer.parseInt(request.getParameter("idStock"));
+        IUser user =  service.readAUser(email);
         
-        IArticulo articulo = admin.readAnArticulo(idArticulo);
+        String msg = "Has recibido este mensaje debido a que has olvidado tu contraseña. \n"
+                   + "Si no has sido tú el solicitante, por favor no ignora este mail. \n\n"
+                   + "La clave es: " + user.getPassword();
         
-        articulo.setDescripcion(descrip);
-        articulo.setImagen(imagen);
-        articulo.setPrecio(precio);
-        articulo.setStock(stock);
-        
-        if(admin.updateArticulo(articulo)) 
-        {
-            String exito = "Se ha actualizado exitosamente.";
-            request.getSession().setAttribute("exito", exito);
-            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
-        }else{
-            String error = "No se ha podido actualizar.";
-            request.getSession().setAttribute("error", error);
-            request.getRequestDispatcher("pages/error.jsp").forward(request, response);        
-        }   
+        SendEmail.send(email, "Forgotten Password", msg);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

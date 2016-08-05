@@ -5,7 +5,6 @@
  */
 package controlador;
 
-import DAO.UsuarioComunDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -47,7 +46,14 @@ public class LoginRedirect extends HttpServlet {
             throws ServletException, IOException 
     {
         String pagina = (String)request.getSession().getAttribute("pagina");
-        request.getRequestDispatcher(pagina).forward(request, response);
+        try{
+            request.getRequestDispatcher(pagina).forward(request, response);
+        }catch( NullPointerException ex ){
+            String error = "Session has ended. Please Login again.";
+            request.getSession().setAttribute("error", error);
+            request.getSession().setAttribute("link", "/index.jsp");
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+        }
     }
 
     /**

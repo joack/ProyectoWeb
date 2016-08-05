@@ -9,10 +9,6 @@
         <servlet-class>controlador.SignUp</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdministradorProducto</servlet-name>
-        <servlet-class>controlador.AdministradorProducto</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AdministradorProductoCrear</servlet-name>
         <servlet-class>controlador.AdministradorProductoCrear</servlet-class>
     </servlet>
@@ -33,10 +29,6 @@
         <servlet-class>controlador.AdministradorUsuarioEditar</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdministradorProductoDescripcionBorrar</servlet-name>
-        <servlet-class>controlador.AdministradorProductoDescripcionBorrar</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AdministradorUsuarioBorrar</servlet-name>
         <servlet-class>controlador.AdministradorUsuarioBorrar</servlet-class>
     </servlet>
@@ -48,6 +40,38 @@
         <servlet-name>LoginRedirect</servlet-name>
         <servlet-class>controlador.LoginRedirect</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ForgotPass</servlet-name>
+        <servlet-class>controlador.ForgotPass</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorProductoBorrar</servlet-name>
+        <servlet-class>controlador.AdministradorProductoBorrar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorArticuloEditar</servlet-name>
+        <servlet-class>controlador.AdministradorArticuloEditar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorArticuloBorrar</servlet-name>
+        <servlet-class>controlador.AdministradorArticuloBorrar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorArticuloAgregar</servlet-name>
+        <servlet-class>controlador.AdministradorArticuloAgregar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorDescripcionAgregar</servlet-name>
+        <servlet-class>controlador.AdministradorDescripcionAgregar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorDescripcionEditar</servlet-name>
+        <servlet-class>controlador.AdministradorDescripcionEditar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdministradorDescripcionBorrar</servlet-name>
+        <servlet-class>controlador.AdministradorDescripcionBorrar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login.do</url-pattern>
@@ -55,10 +79,6 @@
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/signup.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdministradorProducto</servlet-name>
-        <url-pattern>/administradorProducto.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdministradorProductoCrear</servlet-name>
@@ -77,10 +97,6 @@
         <url-pattern>/administradorUsuarioEditar.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdministradorProductoDescripcionBorrar</servlet-name>
-        <url-pattern>/administradorProductoDescripcionBorrar.do</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AdministradorProductoEditarDescripcion</servlet-name>
         <url-pattern>/administradorProductoDescripcionEditar.do</url-pattern>
     </servlet-mapping>
@@ -96,9 +112,44 @@
         <servlet-name>LoginRedirect</servlet-name>
         <url-pattern>/loginRedirect.do</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPass</servlet-name>
+        <url-pattern>/forgotPass.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorProductoBorrar</servlet-name>
+        <url-pattern>/administradorProductoBorrar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorArticuloEditar</servlet-name>
+        <url-pattern>/administradorArticuloEditar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorArticuloBorrar</servlet-name>
+        <url-pattern>/administradorArticuloBorrar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorArticuloAgregar</servlet-name>
+        <url-pattern>/administradorArticuloAgregar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorDescripcionAgregar</servlet-name>
+        <url-pattern>/administradorDescripcionAgregar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorDescripcionEditar</servlet-name>
+        <url-pattern>/administradorDescripcionEditar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdministradorDescripcionBorrar</servlet-name>
+        <url-pattern>/administradorDescripcionBorrar.do</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

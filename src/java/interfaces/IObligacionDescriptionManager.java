@@ -11,12 +11,12 @@ import java.util.ArrayList;
  *
  * @author Joack
  */
-public interface IObligacionDescriptionManager 
+public interface IObligacionDescriptionManager<Descripcion>
 {
-    public boolean createDescrip();
-    public boolean deleteDescrip();
-    public boolean updateDescrip();
+    public boolean createDescrip(Descripcion prodDescrip);
+    public boolean deleteDescrip(Object primaryKey);
+    public boolean updateDescrip(Descripcion prodDescrip);
     
-    public IDescripcionArticulo readDescrip();
-    public ArrayList<IDescripcionArticulo> readAllDescrip();
+    public Descripcion readDescrip(Object primaryKey);
+    public ArrayList<Descripcion> readAllDescrip();
 }
