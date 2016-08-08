@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import SuperClases.Articulo;
+import interfaces.IProduct;
 
 /**
  *
@@ -13,13 +13,20 @@ import SuperClases.Articulo;
  */
 public class ElementoDelCarrito 
 {
-    private final Articulo producto;
+    private final IProduct producto;
     private int cantidad = 0;
     
-    public ElementoDelCarrito( Articulo producto, int cantidad )
+    
+    //Constructor
+    public ElementoDelCarrito( IProduct producto, int cantidad )
     {
         this.producto = producto;
         this.cantidad = cantidad;
+    }
+    
+    public int getCantidad()
+    {
+        return cantidad;
     }
     
     public int getProductKey()
@@ -27,9 +34,56 @@ public class ElementoDelCarrito
         return producto.getIdCodigo();
     }
     
-    public void incrementElementoDelCarrito( int cantidad )
+    public IProduct getProducto()
     {
-        this.cantidad += cantidad;
+        return producto;
     }
+    
+    public float getPrecioProducto()
+    {
+        return producto.getPrecio();
+    }
+        
+    public float getPrecioTotalDelProducto()
+    {
+        return cantidad * producto.getPrecio();
+    }   
+    
+    public int getStock()
+    {
+        return producto.getStock();
+    }
+    
+    public void setCantidad( int cantidad)
+    {
+        this.cantidad = cantidad;
+    }
+    
+    
+    public boolean incrementElementoDelCarrito( int cantidad )
+    {
+        int stock = producto.getStock();
+        int cantActual = this.cantidad + cantidad;
+        
+        if (cantActual < (stock +1)) 
+        {
+            this.cantidad += cantidad;
+            return true;
+        }
+        return false;
+        
+    }
+    
+    public void decrementElementoDelCarrito( int cantidad )
+    {
+        if ( (this.cantidad - cantidad) < 0 )
+        {
+            this.cantidad = 0;
+        }else{
+            this.cantidad -= cantidad;
+        }
+    }
+   
+
     
 }

@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Carrito;
 
 
 /**
@@ -55,15 +56,20 @@ public class Login extends HttpServlet
                     request.getSession().setAttribute("pagina", pagina);
                     
                     response.sendRedirect("loginRedirect.do");
-                }else{
+                }else{                    
                     request.getSession().setAttribute("usuario", new UsuarioComunDAO());
+                    Service.createCarrito();
                     
-                    String pagina = "/pages/welcome.jsp";
-                    request.getSession().setAttribute("pagina", pagina);
-                    
+                    request.getSession().setAttribute("carrito", service.getCart());
                     request.getSession().setAttribute("userDT", user );
+                    
+                    String pagina = "/pages/welcome.jsp";                    
+                    request.getSession().setAttribute("pagina", pagina);
+                    request.getSession().setAttribute(pagina, pagina);
+                    
                     response.sendRedirect("loginRedirect.do");
 
+                    
                 }
             }else{
                 String error = "Contraseña incorrecta.";

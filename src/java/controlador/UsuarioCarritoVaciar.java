@@ -5,21 +5,19 @@
  */
 package controlador;
 
-import ServiceManager.Service;
+import DAO.UsuarioComunDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Carrito;
 
 /**
  *
  * @author Joack
  */
-public class Logout extends HttpServlet {
+public class UsuarioCarritoVaciar extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,22 +30,13 @@ public class Logout extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
-    { 
-        Service service = Service.getService();
-        request.getSession().removeAttribute("usuario");
-        //Carrito cart =  (Carrito)request.getSession().getAttribute("carrito");
-        try{
-            //cart.destroyCarrito();
-            service.destroyCart();
-        }catch( NullPointerException ex){
-            System.out.println( "El administrador no posee carrito o el carrito ya no es"
-                               +"valido para el usuario actual");
-        }
+    {
+        UsuarioComunDAO usuario = (UsuarioComunDAO)request.getSession().getAttribute("usuario");
         
-        request.getSession().invalidate();
+        float totalPrice = usuario.getTotalPrice();
         
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-   
+        usuario.recalcTotalPrice(totalPrice);
+        usuario.removeAllItems();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

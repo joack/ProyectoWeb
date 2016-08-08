@@ -7,13 +7,10 @@ package modelo;
 
 import SuperClases.Usuario;
 import interfaces.IUser;
-import java.util.ArrayList;
 
 public class UsuarioComun extends Usuario implements IUser
 {
     private String nickName;
-    
-    ArrayList<Producto> carrito = new ArrayList();
     
     public UsuarioComun(){
         super(null, null, null);

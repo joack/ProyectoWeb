@@ -72,6 +72,26 @@
         <servlet-name>AdministradorDescripcionBorrar</servlet-name>
         <servlet-class>controlador.AdministradorDescripcionBorrar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UsuarioCarritoVaciar</servlet-name>
+        <servlet-class>controlador.UsuarioCarritoVaciar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsuarioCarritoIncrementar</servlet-name>
+        <servlet-class>controlador.UsuarioCarritoIncrementar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsuarioCarritoDecrementar</servlet-name>
+        <servlet-class>controlador.UsuarioCarritoDecrementar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsuarioCarritoBorrar</servlet-name>
+        <servlet-class>controlador.UsuarioCarritoBorrar</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsuarioCarritoEditar</servlet-name>
+        <servlet-class>controlador.UsuarioCarritoEditar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login.do</url-pattern>
@@ -143,6 +163,26 @@
     <servlet-mapping>
         <servlet-name>AdministradorDescripcionBorrar</servlet-name>
         <url-pattern>/administradorDescripcionBorrar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsuarioCarritoVaciar</servlet-name>
+        <url-pattern>/usuarioCarritoVaciar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsuarioCarritoIncrementar</servlet-name>
+        <url-pattern>/usuarioCarritoIncrementar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsuarioCarritoDecrementar</servlet-name>
+        <url-pattern>/usuarioCarritoDecrementar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsuarioCarritoBorrar</servlet-name>
+        <url-pattern>/usuarioCarritoBorrar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsuarioCarritoEditar</servlet-name>
+        <url-pattern>/usuarioCarritoEditar.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -37,14 +37,15 @@
         <script src="js/jquery.dataTables.min.js"></script>     
         <title>Admin Page</title>
     </head>
-    <body>      
+    <body>
+        <div class="container-fluid">
         <h1 align="center" id="tituloPagina">Bienvenido de nuevo Admin!</h1>
         
         
         <div class="col-lg-12">            
             <div class="panel with-nav-tabs panel-primary">
                 <div class="panel-heading" id="nav-panel-heading">
-                    <ul class="nav nav-tabs" id="nav-tabs-menu">
+                    <ul class="nav nav-tabs" id="myTab">
                         <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
                         <li><a href="#Listas" data-toggle="tab" >Listas</a></li>
                         <li><a href="#EdicionProductos" data-toggle="tab" >Productos</a></li>
@@ -83,7 +84,7 @@
                         <div id="Listas" class="tab-pane fade">
                             <br>
                             <div class="container-fluid">
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="panel panel-default">
                                         <div class="panel-heading" align="center">
                                             <h4><b><font color="black" style="font-family: fantasy;">Lista de Productos</font> </b></h4>
@@ -134,7 +135,7 @@
                             </div>
 
                             <div class="container-fluid">
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="panel panel-default">
                                         <div class="panel-heading" align="center">
                                             <h4><b><font color="black" style="font-family: fantasy;">Lista de Usuarios</font> </b></h4> 
@@ -180,7 +181,7 @@
                             <br>
                             
                             <div class="container-fluid">
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="panel panel-default">
                                         <div class="panel-heading" align="center">
                                             <h4><b><font color="black" style="font-family: fantasy;">Lista de Productos</font> </b></h4>
@@ -251,7 +252,7 @@
                             
                             <!-- TABLA ARTICULO -->
                             <div class="container-fluid">
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="panel panel-default"> 
                                         <div class="panel-heading" align="center">
                                             <h4><b><font color="black" style="font-family: fantasy;">Editar Articulo</font> </b></h4> 
@@ -310,7 +311,7 @@
 
                             <!-- TABLA DESCRIPCION ARTICULO -->
                             <div class="container-fluid">
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="panel panel-default">                             
                                         <div class="panel-heading" align="center">
                                             <h4><b><font color="black" style="font-family: fantasy;">Editar Descripcion Articulo</font> </b></h4> 
@@ -375,7 +376,7 @@
                             <br>
                             <!-- ***** TABLA LISTA DE USUARIOS ***** -->                
                             <div class="container-fluid">
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="panel panel-default">                       
                                         <div class="panel-heading" align="center">
                                             <h4><b><font color="black" style="font-family: fantasy;">Editar Usuarios</font> </b></h4> 
@@ -441,6 +442,7 @@
                     
                 </div>
             </div>
+        </div>
         </div>
 <!-- ***********************************************************************************************-->                                             
  

@@ -414,21 +414,20 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function() {
-        
-    // Javascript to enable link to tab
-    var hash = document.location.hash;
-    var prefix = "tab_";
-    if (hash) {
-        $('.nav-tabs a[href='+hash.replace(prefix,"")+']').tab('show');
-    } 
-
-    // Change hash for page-reload
-    $('.nav-tabs a').on('shown.bs.tab', function (e) {
-        window.location.hash = e.target.hash.replace("#", "#" + prefix);
-    });
-        
+$('#myTab a').click(function(e) {
+  e.preventDefault();
+  $(this).tab('show');
 });
+
+// store the currently selected tab in the hash value
+$("ul.nav-tabs > li > a").on("shown.bs.tab", function(e) {
+  var id = $(e.target).attr("href").substr(1);
+  window.location.hash = id;
+});
+
+// on load of the page: switch to the currently selected tab
+var hash = window.location.hash;
+$('#myTab a[href="' + hash + '"]').tab('show');
 
 //==============================================================================
 

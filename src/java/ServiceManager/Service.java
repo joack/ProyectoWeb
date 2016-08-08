@@ -6,15 +6,18 @@
 package ServiceManager;
 
 import DAO.ServiceDAO;
-import SuperClases.Articulo;
 import interfaces.IDescripcionArticulo;
 import interfaces.IArticulo;
+import interfaces.ICart;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionArticuloDescrip;
 import interfaces.IObligacionDescriptionManager;
 import interfaces.IObligacionProducManager;
+import interfaces.IProduct;
 import interfaces.IUser;
 import java.util.ArrayList;
+import modelo.Carrito;
+import modelo.ElementoDelCarrito;
 import modelo.ProdDescripcion;
 import modelo.Producto;
 import modelo.Tupla;
@@ -23,9 +26,11 @@ import modelo.Tupla;
  *
  * @author Joack
  */
-public class Service implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>, IObligacionDescriptionManager<IDescripcionArticulo>, IObligacionArticuloDescrip<Tupla>
+public class Service implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>, IObligacionDescriptionManager<IDescripcionArticulo>, IObligacionArticuloDescrip<Tupla>, ICart
 {
     private final  ServiceDAO   service;
+    
+    private static Carrito      cart;
     private static Service      instance;
     
     private Service()
@@ -232,16 +237,89 @@ public class Service implements IObligacionAdmin<IUser>, IObligacionProducManage
         
         return listaProductos;
     }     
+   
+    public IProduct getProducto(int key)
+    {
+        Tupla tupla = readTupla(key);
+        
+        IArticulo art = readAnArticulo(tupla.getPrimaryKey());
+        IDescripcionArticulo descrip = readDescrip(tupla.getForeignKey());
+        
+        return  new Producto(   art.getIdCodigo(), descrip.getIdArticulo(), 
+                                art.getMarca(), art.getModelo(), art.getNombre(), 
+                                descrip.getDescripcion(), descrip.getImagen(),
+                                descrip.getStock(), descrip.getPrecio());
+        
+         
+    }
     
 //</editor-fold> 
    
 //<editor-fold defaultstate="collapsed" desc="Cart Manager Services.">
 
-public boolean agregarProductoAlCarrito( Articulo articulo, int cantidad )
-{
-    return true;
-}    
+    public static Carrito createCarrito()
+    {
+        return (cart = Carrito.createCarrito());   
+    }
     
+    @Override
+    public Carrito getCart() {
+        return cart.getCart();
+    }
+
+    @Override
+    public void destroyCart() {
+        cart.destroyCart();
+    }
+
+    @Override
+    public float getTotalProductPrice(int key) {
+        return cart.getTotalProductPrice(key);
+    }
+
+    @Override
+    public float getTotalPrice() {
+        return cart.getTotalPrice();
+    }
+
+    @Override
+    public void recalcTotalPrice(float monto) {
+        cart.recalcTotalPrice(monto);
+    }
+
+    public IProduct getItem(int key) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void addItem(int key, int cantidad) {
+        cart.addItem(key, cantidad);
+    }
+
+    @Override
+    public void removeItem(int key, int cantidad) {
+        cart.removeItem(key, cantidad);
+    }
+
+    @Override
+    public void setItemAmount(int key, int cantidad) {
+        cart.setItemAmount(key, cantidad);
+    }
+
+    @Override
+    public void deleteItem(int key) {
+        cart.deleteItem(key);
+    }
+
+    @Override
+    public void removeAllItems() {
+        cart.removeAllItems();
+    }
+
+    @Override
+    public void payProducts() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 //</editor-fold>
 
