@@ -12,12 +12,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link rel="icon" href="../../favicon.ico">
 
         <title>no title</title>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="js/jquery.min.js"></script>
@@ -60,7 +57,9 @@
                             <input class="btn btn-primary btn-block" type="submit" id="sign-in" value="Sign In"><br>
                             
                         </form>
-                        <button type="button" class="btn"  data-toggle="modal" data-target="#forgot_dialog">Forgot Password</button>
+                        <span class="divider"></span>
+                        <button type="button" class="btn btn-block"  data-toggle="modal" data-target="#forgot_dialog">Forgot Password</button>
+                        <br>
                     </div>
                 </li>      
             </ul>
@@ -72,20 +71,34 @@
         <div class="modal fade" id="forgot_dialog" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header ">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Forgot Password?</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Desea cerrar sesion?</p>
+                        <p>Ingrese su mail</p>
                         <form action="forgotPass.do" method="get">
                         
-                            <button><span class="glyphicon-envelope"></span></button>
-                            <input type="email" placeholder="Email"  name="email" required>                            
-                       
+                            <div class="input-group col-sm-6">
+                                <span class="input-group-addon" id="basic-addon1">@</span>
+                                <input type="text" class="form-control" placeholder="E-mail" name="email" aria-describedby="basic-addon1">
+                            </div>                           
+                            <br>
                             <button class="btn btn-primary" type="submit">Enviar</button>
                         </form>    
                     </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- PAGE FOOTER - CONTACTS -->
+        <div class="nav navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <p class="navbar-text pull-left">Site Built by <strong>Joaquin Acuña</strong>.</p>
+                <div class="pull-right navbar-btn">
+                    <a href="http://www.facebook.com/Joack23" target="_blank" class=""><span><i class="fa fa-facebook-official" style="font-size:24px"></i></span></a>
+                    <a href="https://ar.linkedin.com/in/joaquin-acuña-3763a540" target="_blank" class=""><span><i class="fa fa-linkedin-square" style="font-size:24px"></i></span></a>
                 </div>
             </div>
         </div>

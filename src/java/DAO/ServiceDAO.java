@@ -9,18 +9,22 @@ package DAO;
 import SuperClases.Usuario;
 import conexion.Conexion;
 import interfaces.IArticulo;
+import interfaces.ICart;
 import interfaces.IObligacionAdmin;
 import interfaces.IObligacionProducManager;
+import interfaces.IDescripcionArticulo;
+import interfaces.IObligacionArticuloDescrip;
+import interfaces.IObligacionDescriptionManager;
+import interfaces.IProduct;
+import interfaces.IUser;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import interfaces.IDescripcionArticulo;
-import interfaces.IObligacionArticuloDescrip;
-import interfaces.IObligacionDescriptionManager;
-import interfaces.IUser;
+import modelo.Carrito;
+import modelo.ElementoDelCarrito;
 import modelo.ProdArticulo;
 import modelo.ProdDescripcion;
 import modelo.Tupla;
@@ -31,7 +35,9 @@ import modelo.UsuarioComun;
  *
  * @author Joack
  */
-public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>, IObligacionDescriptionManager<IDescripcionArticulo>, IObligacionArticuloDescrip<Tupla>
+public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducManager<IArticulo>, 
+                                    IObligacionDescriptionManager<IDescripcionArticulo>, 
+                                    IObligacionArticuloDescrip<Tupla>, ICart
 {
     // <editor-fold defaultstate="collapsed" desc="String Query tabla de usuarios."> 
     
@@ -105,7 +111,7 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
     //</editor-fold>
     
     private static final Conexion   CONEXION        =   Conexion.estado(); 
-    
+    private static final Carrito    CART            =   Carrito.createCarrito();
  
 // <editor-fold defaultstate="collapsed" desc="Administracion de usuarios."> 
     
@@ -699,5 +705,64 @@ public class ServiceDAO implements IObligacionAdmin<IUser>, IObligacionProducMan
     // </editor-fold>
     
     
- // </editor-fold>       
+ // </editor-fold> 
+    
+      
+    @Override
+    public Carrito getCart() {
+        return Carrito.createCarrito();
+    }
+
+    @Override
+    public void destroyCart() {
+        CART.destroyCart();
+    }
+
+    @Override
+    public float getTotalProductPrice(int key) {
+        return CART.getTotalProductPrice(key);
+    }
+
+    @Override
+    public float getTotalPrice() {
+        return CART.getTotalPrice();
+    }
+
+    @Override
+    public void recalcTotalPrice(float monto) {
+        CART.recalcTotalPrice(monto);
+    }
+
+    @Override
+    public void addItem(int key, int cantidad) {
+        CART.addItem(key, cantidad);
+    }
+
+    @Override
+    public void removeItem(int key, int cantidad) {
+        CART.removeItem(key, cantidad);
+    }
+
+    @Override
+    public void setItemAmount(int key, int cantidad) {
+        CART.setItemAmount(key, cantidad);
+    }
+
+    @Override
+    public void deleteItem(int key) {
+        CART.deleteItem(key);
+    }
+
+    @Override
+    public void removeAllItems() {
+        CART.removeAllItems();
+    }
+
+    @Override
+    public void payProducts( )
+    {
+        CART.payProducts();
+    }    
+    
+    
 }

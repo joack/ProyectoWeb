@@ -58,7 +58,7 @@ public class Login extends HttpServlet
                     response.sendRedirect("loginRedirect.do");
                 }else{                    
                     request.getSession().setAttribute("usuario", new UsuarioComunDAO());
-                    Service.createCarrito();
+                    
                     
                     request.getSession().setAttribute("carrito", service.getCart());
                     request.getSession().setAttribute("userDT", user );

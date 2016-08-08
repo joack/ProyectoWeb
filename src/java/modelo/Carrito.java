@@ -7,6 +7,7 @@ package modelo;
 
 import ServiceManager.Service;
 import interfaces.ICart;
+import interfaces.IProduct;
 import java.util.ArrayList;
 
 
@@ -205,8 +206,19 @@ public class Carrito implements ICart
     }
 
     @Override
-    public void payProducts() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void payProducts() 
+    {
+        IProduct prod;
+        int stock = 0;
+        
+        for( ElementoDelCarrito elemento: carrito )
+        {
+            prod = elemento.getProducto();
+            stock = prod.getStock();
+            stock -= elemento.getCantidad();
+            prod.setStock(stock);
+            service.updateDescrip(prod);           
+        }  
     }
     
 }

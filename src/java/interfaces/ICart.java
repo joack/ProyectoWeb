@@ -5,7 +5,9 @@
  */
 package interfaces;
 
+import java.util.ArrayList;
 import modelo.Carrito;
+import modelo.ElementoDelCarrito;
 
 /**
  *

@@ -7,7 +7,9 @@ package DAO;
 
 import ServiceManager.Service;
 import interfaces.ICart;
+import java.util.ArrayList;
 import modelo.Carrito;
+import modelo.ElementoDelCarrito;
 
 /**
  *
@@ -15,72 +17,72 @@ import modelo.Carrito;
  */
 public class UsuarioComunDAO implements ICart
 {
-    private final Service service = Service.getService(); 
+    private final Service serviceManager = Service.getService(); 
 
     @Override
     public Carrito getCart() {
-        return service.getCart();
+        return serviceManager.getCart();
     }
 
     @Override
     public void destroyCart() 
     {
-        service.destroyCart();
+        serviceManager.destroyCart();
     }
 
     @Override
     public float getTotalProductPrice( int key)
     {
-        return service.getTotalProductPrice(key);
+        return serviceManager.getTotalProductPrice(key);
     }
     
     
     @Override
     public float getTotalPrice() 
     {
-        return service.getTotalPrice(); 
+        return serviceManager.getTotalPrice(); 
     }
     
     @Override
     public void recalcTotalPrice( float monto )
     {       
-        service.recalcTotalPrice(monto);
+        serviceManager.recalcTotalPrice(monto);
     }
     
     @Override
     public void addItem(int key, int cantidad) 
     {
-        service.addItem(key, cantidad);
+        serviceManager.addItem(key, cantidad);
     }
 
     @Override
     public void removeItem(int key, int cantidad) 
     {
-        service.removeItem(key, cantidad);
+        serviceManager.removeItem(key, cantidad);
     }
 
     @Override
     public void setItemAmount(int key, int cantidad)
     {
-        service.setItemAmount(key, cantidad);
+        serviceManager.setItemAmount(key, cantidad);
     }
        
     @Override
     public void deleteItem(int key) 
     {
-        service.deleteItem(key);
+        serviceManager.deleteItem(key);
     }
      
     @Override
     public void removeAllItems() 
     {
-        service.removeAllItems();
+        serviceManager.removeAllItems();
     }
 
     @Override
     public void payProducts() 
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        serviceManager.payProducts();
     }
 
    

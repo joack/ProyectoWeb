@@ -26,6 +26,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link href="css/welcomeUser.css" rel="stylesheet">
@@ -95,11 +96,11 @@
                 <div id="home" class="tab-pane fade in active">
 
                     <h3>HOME</h3>
-                    <p>Bienvenido a la pagina de administracion del sitio, en la misma se podran<br>
+                    <p>Bienvenido a la pagina de compra del usuario, en la misma se podran<br>
                        efectuar las siguientes operaciones: </p>
 
                     <ul>
-                        <li>Agregar un producto( Articulo + Descripcion).</li>
+                        <li>Agregar un producto al carrito.</li>
                         <li>Agregar un Articulo.</li>
                         <li>Agregar una descripcion.</li>
                         <li>Agregar un nuevo usuario.</li>
@@ -171,9 +172,10 @@
                                         <strong>Total $</strong><input type="text" disabled="" value="<%=String.format("%.2f", usuario.getTotalPrice())%>"> 
                                     </div>
                                     <br><br>
-                                    <button class="btn btn-primary">Pagar</button>
-                                    <button class="btn btn-danger" data-toggle="modal" 
-                                            data-target="#carritoVaciar_dialog">
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#carritoPagar_dialog">
+                                        Pagar
+                                    </button>
+                                    <button class="btn btn-danger" data-toggle="modal" data-target="#carritoVaciar_dialog">
                                         Vaciar Carrito
                                     </button> 
                                     
@@ -239,7 +241,143 @@
                 
                 
 <!-- *********************************************************************** -->                
-    
+        
+        <!-- CARRITO VACIAR -->
+ 	<div class="modal fade" id="carritoVaciar_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="carritoVaciar_form" action="usuarioCarritoVaciar.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="edit-modal-label">Vaciar Carrito?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h6>¿Estas seguro que quieres vaciar el carrito?.</h6>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button class="btn btn-default hide" id="carritoVaciarBtnClose" onclick="javaScrip:window.location.reload()">Close</button>
+                        <button class="btn btn-default" id="carritoVaciarBtnNo" data-dismiss="modal">No</button>
+                        <button type="button" id="submitVaciarCarritoForm" class="btn btn-primary">Yes</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>         
+               
+        <!-- CARRITO INCREMENTAR ELEMENTO-->
+  	<div class="modal fade" id="carritoIncrementar_dialog" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="carritoIncrementar_form" action="usuarioCarritoIncrementar.do" method="POST">
+                        <input type="text" name="idCodigo" id="idCodigo">
+                        <input type="text" name="cantidad" id="cantidad">
+                    </form>
+                    <div class="modal-footer">                      
+                        <button type="button" id="submitCarritoIncrementarForm" class="hide"></button>
+                    </div>                    
+                </div>
+            </div>
+        </div>       
+ 
+        <!-- CARRITO DECREMENTAR ELEMENTO-->
+  	<div class="modal fade" id="carritoDecrementar_dialog" role="dialog" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="carritoDecrementar_form" action="usuarioCarritoDecrementar.do" method="POST">
+                        <input type="text" name="idCodigo" id="idCodigo">
+                        <input type="text" name="cantidad" id="cantidad">
+                    </form>
+                    <div class="modal-footer">                      
+                        <button type="button" id="submitCarritoDecrementarForm" class="hide"></button>
+                    </div>                    
+                </div>
+            </div>
+        </div>         
+        
+        <!-- CARRITO BORRAR ELEMENTO-->
+  	<div class="modal fade" id="carritoBorra_dialog" role="dialog" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="carritoBorrar_form" action="usuarioCarritoBorrar.do" method="POST">
+                        <input type="text" name="idCodigo" id="idCodigo">                       
+                    </form>
+                    <div class="modal-footer">                      
+                        <button type="button" id="submitCarritoBorrarForm" class="hide"></button>
+                    </div>                    
+                </div>
+            </div>
+        </div>  
+           
+        <!-- CARRITO EDITAR -->
+	<div class="modal fade" id="carritoEditar_dialog" role="dialog" >
+            <div class="modal-dialog" role="dialog">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="carritoEditar_form" action="usuarioCarritoEditar.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="edit-modal-label">Editar Cantidad</h4>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" id="idCodigo" name="idCodigo" value="" class="hidden">
+                            
+                            <div class="form-group">
+                                <label for="descArticulo" class="col-sm-2 control-label">Cantidad</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="idCantidad" name="cantidad" required>&nbsp;<span id="errmsg1"></span>
+                                    <h5><small id="idRemainStock"></small></h5>
+                                </div>
+                            </div>   
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default hide" data-dismiss="modal" id="carritoEditarBtnClose"
+                                onclick="javaScript:location.reload()">
+                            Close
+                        </button>
+                        <button class="btn btn-default" data-dismiss="modal" id="carritoEditarBtnNo">
+                            No
+                        </button>
+                        <button type="button" id="submitEditarProductoForm" class="btn btn-primary">Save changes</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>         
+        
+        <!-- CARRITO PAGAR -->
+ 	<div class="modal fade" id="carritoPagar_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="carritoPagar_form" action="usuarioCarritoPagar.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="edit-modal-label">Pagar?</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h6>¿Estas seguro que no deseas agregar nada mas?.</h6>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button class="btn btn-default hide" id="carritoPagarBtnClose" onclick="javaScrip:location.reload()">Close</button>
+                        <button class="btn btn-default" id="carritoPagarBtnNo" data-dismiss="modal">No, seguir comprando</button>
+                        <button type="button" id="submitCarritoPagarForm" class="btn btn-primary">Listo</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>        
+        
+        
+        
+        
+        
+        
+        <div class="hidden" id="AgregarAlCarrito">
+            <%
+                cart.addItem(1, 1);
+            %>
+        </div>
+        
+<!-- *********************************************************************** -->  
+
         <!-- LOGOUT-->
         <div class="modal fade" id="logout_dialog" role="dialog">
             <div class="modal-dialog">
@@ -307,119 +445,22 @@
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div>        
         
-        <!-- CARRITO VACIAR -->
- 	<div class="modal fade" id="carritoVaciar_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="carritoVaciar_form" action="usuarioCarritoVaciar.do" method="POST">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label">Vaciar Carrito?</h4>
-                        </div>
-                        <div class="modal-body">
-                            <h6>¿Estas seguro que quieres vaciar el carrito?.</h6>
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button class="btn btn-default hide" id="carritoVaciarBtnClose" onclick="javaScrip:window.location.reload()">Close</button>
-                        <button class="btn btn-default" id="carritoVaciarBtnNo" data-dismiss="modal">No</button>
-                        <button type="button" id="submitVaciarCarritoForm" class="btn btn-primary">Yes</button>
-                    </div>                    
+        
+        
+        
+        
+        
+        <!-- PAGE FOOTER - CONTACTS -->
+        <div class="nav navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <p class="navbar-text pull-left">Site Built by <strong>Joaquin Acuña</strong>.</p>
+                <div class="pull-right navbar-btn">
+                    <a href="http://www.facebook.com/Joack23" target="_blank" class=""><span><i class="fa fa-facebook-official" style="font-size:24px"></i></span></a>
+                    <a href="https://ar.linkedin.com/in/joaquin-acuña-3763a540" target="_blank" class=""><span><i class="fa fa-linkedin-square" style="font-size:24px"></i></span></a>
                 </div>
             </div>
-        </div>         
-        
- 
-<!-- *********************************************************************** -->        
-        
-        <!-- CARRITO INCREMENTAR ELEMENTO-->
-  	<div class="modal fade" id="carritoIncrementar_dialog" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="carritoIncrementar_form" action="usuarioCarritoIncrementar.do" method="POST">
-                        <input type="text" name="idCodigo" id="idCodigo">
-                        <input type="text" name="cantidad" id="cantidad">
-                    </form>
-                    <div class="modal-footer">                      
-                        <button type="button" id="submitCarritoIncrementarForm" class="hide"></button>
-                    </div>                    
-                </div>
-            </div>
-        </div>       
- 
-        <!-- CARRITO DECREMENTAR ELEMENTO-->
-  	<div class="modal fade" id="carritoDecrementar_dialog" role="dialog" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="carritoDecrementar_form" action="usuarioCarritoDecrementar.do" method="POST">
-                        <input type="text" name="idCodigo" id="idCodigo">
-                        <input type="text" name="cantidad" id="cantidad">
-                    </form>
-                    <div class="modal-footer">                      
-                        <button type="button" id="submitCarritoDecrementarForm" class="hide"></button>
-                    </div>                    
-                </div>
-            </div>
-        </div>         
-        
-        <!-- CARRITO BORRAR ELEMENTO-->
-  	<div class="modal fade" id="carritoBorra_dialog" role="dialog" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="carritoBorrar_form" action="usuarioCarritoBorrar.do" method="POST">
-                        <input type="text" name="idCodigo" id="idCodigo">                       
-                    </form>
-                    <div class="modal-footer">                      
-                        <button type="button" id="submitCarritoBorrarForm" class="hide"></button>
-                    </div>                    
-                </div>
-            </div>
-        </div>  
-    
-        
-        <!-- CARRITO EDITAR -->
-	<div class="modal fade" id="carritoEditar_dialog" role="dialog" >
-            <div class="modal-dialog" role="dialog">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="carritoEditar_form" action="usuarioCarritoEditar.do" method="POST">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label">Editar Cantidad</h4>
-                        </div>
-                        <div class="modal-body">
-                            <input type="text" id="idCodigo" name="idCodigo" value="" class="hidden">
-                            
-                            <div class="form-group">
-                                <label for="descArticulo" class="col-sm-2 control-label">Cantidad</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="idCantidad" name="cantidad" required>&nbsp;<span id="errmsg1"></span>
-                                    <h5><small id="idRemainStock"></small></h5>
-                                </div>
-                            </div>   
-                        </div>
-                    </form>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default hide" data-dismiss="modal" id="carritoEditarBtnClose"
-                                onclick="javaScript:location.reload()">
-                            Close
-                        </button>
-                        <button class="btn btn-default" data-dismiss="modal" id="carritoEditarBtnNo">
-                            No
-                        </button>
-                        <button type="button" id="submitEditarProductoForm" class="btn btn-primary">Save changes</button>
-                    </div>                    
-                </div>
-            </div>
-        </div>         
-        
-        
-        <div class="hidden" id="AgregarAlCarrito">
-            <%
-                cart.addItem(1, 1);
-            %>
         </div>
         
         <script src="js/usuarioScript.js"></script>

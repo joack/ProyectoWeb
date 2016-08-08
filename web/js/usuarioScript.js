@@ -1,3 +1,37 @@
+// CARRITO PAGAR
+$(document).ready(function () {
+    $("#carritoPagar_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $("#carritoVaciar_dialog  .modal-body ").html(data)
+                $("#carritoPagarBtnClose").removeClass("hide");
+                $("#carritoPagarBtnNo").remove();
+                $("#submitCarritoPagarForm").remove();
+                
+                $("#carritoVaciarBtnClose").removeClass("hide");
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitCarritoPagarForm").on('click', 
+        function() 
+        {
+            $("#carritoPagar_form").submit();
+        }
+
+    );
+});
+
+
 // CARRITO VACIAR
 $(document).ready(function () {
     $("#carritoVaciar_form").on("submit", function(e) {

@@ -92,6 +92,10 @@
         <servlet-name>UsuarioCarritoEditar</servlet-name>
         <servlet-class>controlador.UsuarioCarritoEditar</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UsuarioCarritoPagar</servlet-name>
+        <servlet-class>controlador.UsuarioCarritoPagar</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/login.do</url-pattern>
@@ -183,6 +187,10 @@
     <servlet-mapping>
         <servlet-name>UsuarioCarritoEditar</servlet-name>
         <url-pattern>/usuarioCarritoEditar.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsuarioCarritoPagar</servlet-name>
+        <url-pattern>/usuarioCarritoPagar.do</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -30,7 +30,7 @@ public class Service implements IObligacionAdmin<IUser>, IObligacionProducManage
 {
     private final  ServiceDAO   service;
     
-    private static Carrito      cart;
+    
     private static Service      instance;
     
     private Service()
@@ -256,35 +256,30 @@ public class Service implements IObligacionAdmin<IUser>, IObligacionProducManage
 //</editor-fold> 
    
 //<editor-fold defaultstate="collapsed" desc="Cart Manager Services.">
-
-    public static Carrito createCarrito()
-    {
-        return (cart = Carrito.createCarrito());   
-    }
-    
+   
     @Override
     public Carrito getCart() {
-        return cart.getCart();
+        return service.getCart();
     }
 
     @Override
     public void destroyCart() {
-        cart.destroyCart();
+        service.destroyCart();
     }
 
     @Override
     public float getTotalProductPrice(int key) {
-        return cart.getTotalProductPrice(key);
+        return service.getTotalProductPrice(key);
     }
 
     @Override
     public float getTotalPrice() {
-        return cart.getTotalPrice();
+        return service.getTotalPrice();
     }
 
     @Override
     public void recalcTotalPrice(float monto) {
-        cart.recalcTotalPrice(monto);
+        service.recalcTotalPrice(monto);
     }
 
     public IProduct getItem(int key) {
@@ -293,32 +288,33 @@ public class Service implements IObligacionAdmin<IUser>, IObligacionProducManage
 
     @Override
     public void addItem(int key, int cantidad) {
-        cart.addItem(key, cantidad);
+        service.addItem(key, cantidad);
     }
 
     @Override
     public void removeItem(int key, int cantidad) {
-        cart.removeItem(key, cantidad);
+        service.removeItem(key, cantidad);
     }
 
     @Override
     public void setItemAmount(int key, int cantidad) {
-        cart.setItemAmount(key, cantidad);
+        service.setItemAmount(key, cantidad);
     }
 
     @Override
     public void deleteItem(int key) {
-        cart.deleteItem(key);
+        service.deleteItem(key);
     }
 
     @Override
     public void removeAllItems() {
-        cart.removeAllItems();
+        service.removeAllItems();
     }
 
     @Override
-    public void payProducts() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void payProducts()
+    {
+        service.payProducts();
     }
     
 //</editor-fold>
