@@ -5,5 +5,5 @@ Usuarios disponibles:
 
 USUARIO - PASSWORD
 
-admin@admin.com - admin
+admin@admin.com - admin \n
 user@user.com - user
