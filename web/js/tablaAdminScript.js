@@ -136,6 +136,8 @@ $(document).ready(function () {
             success: function(data, textStatus, jqXHR) {
                 $('#AgregarArticulo_dialog .modal-header .modal-title').html("Result");
                 $('#AgregarArticulo_dialog .modal-body').html(data);
+                $('#idArticuloAgregarCloselBtn').removeClass('hide');
+                $('#idArticuloAgregarCancelBtn').remove(); 
                 $("#submitArgregarArticuloForm").remove();
             },
             error: function(jqXHR, status, error) {
@@ -166,6 +168,8 @@ $(document).ready(function () {
             success: function(data, textStatus, jqXHR) {
                 $('#EditarArticulo_dialog .modal-header .modal-title').html("Result");
                 $('#EditarArticulo_dialog .modal-body').html(data);
+                $("#EditarArticuloCloseBtn").removeClass('hide')();
+                $("#EditarArticuloCancelBtn").remove();
                 $("#submitEditarArticuloForm").remove();
             },
             error: function(jqXHR, status, error) {
@@ -196,6 +200,8 @@ $(document).ready(function () {
             success: function(data, textStatus, jqXHR) {
                 $('#BorrarArticulo_dialog .modal-header .modal-title').html("Result");
                 $('#BorrarArticulo_dialog .modal-body').html(data);
+                $('#idArticuloBorrarOkBtn').removeClass('hide');
+                $('#idArticuloBorrarNoBtn').remove();
                 $("#submitBorrarArticuloForm").remove();
             },
             error: function(jqXHR, status, error) {

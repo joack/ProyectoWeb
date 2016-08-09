@@ -17,7 +17,7 @@
         <title>no title</title>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </head>

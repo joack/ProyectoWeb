@@ -49,3 +49,7 @@ and open the template in the editor.
 	border-color: #428bca;
 	border-bottom-color: transparent;
 }
+
+th, td{
+    text-align: center;   
+}

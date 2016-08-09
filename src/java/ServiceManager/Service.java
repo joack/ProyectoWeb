@@ -17,7 +17,6 @@ import interfaces.IProduct;
 import interfaces.IUser;
 import java.util.ArrayList;
 import modelo.Carrito;
-import modelo.ElementoDelCarrito;
 import modelo.ProdDescripcion;
 import modelo.Producto;
 import modelo.Tupla;

@@ -181,6 +181,35 @@ $(document).ready(function () {
     );
 });
 
+
+// SHOP ITEM AGREGAR
+$(document).ready(function () {
+    $("#shopItemAdd_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                location.reload();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+
+    $("#submitShopItemAddForm").on('click', 
+        function() 
+        {
+            $("#shopItemAdd_form").submit();
+        }
+
+    );
+});
+
 //------------------------------------------------------------------------------
 
 // SCRIPT PARA CAMPOS SOLO NUMERICOS
@@ -286,6 +315,21 @@ $('a.editProd').on('click', function() {
 
      myModal.modal({ show: true });
     //$('#submitCarritoEForm', myModal).click();
+
+    return false;
+});
+
+
+$('a.shopItemAdd').on('click', function() {
+    var myModal = $('#shopItemAdd_dialog');
+
+    var idCodigo = $(this).closest('div').find('a.idCodigo').html();
+    var cantidad = 1;
+    
+    $('#idShopItemAdd'   , myModal).val(idCodigo);
+    $('#idShopItemCount'   , myModal).val(cantidad);    
+
+    $('#submitShopItemAddForm', myModal).click();
 
     return false;
 });

@@ -9,7 +9,7 @@ import ServiceManager.Service;
 import interfaces.ICart;
 import java.util.ArrayList;
 import modelo.Carrito;
-import modelo.ElementoDelCarrito;
+import modelo.Producto;
 
 /**
  *
@@ -21,69 +21,127 @@ public class UsuarioComunDAO implements ICart
 
     @Override
     public Carrito getCart() {
-        return serviceManager.getCart();
+        try{
+            return serviceManager.getCart();
+        }finally{
+            serviceManager.closeService();
+        }
+        
     }
 
     @Override
     public void destroyCart() 
     {
-        serviceManager.destroyCart();
+        try{
+            serviceManager.destroyCart();
+        }finally{
+            serviceManager.closeService();
+        }        
+        
     }
 
     @Override
     public float getTotalProductPrice( int key)
     {
-        return serviceManager.getTotalProductPrice(key);
+        try{
+            return serviceManager.getTotalProductPrice(key);
+        }finally{
+            serviceManager.closeService();
+        }     
     }
     
     
     @Override
     public float getTotalPrice() 
     {
-        return serviceManager.getTotalPrice(); 
+        try{
+            return serviceManager.getTotalPrice();
+        }finally{
+            serviceManager.closeService();
+        }   
     }
     
     @Override
     public void recalcTotalPrice( float monto )
-    {       
-        serviceManager.recalcTotalPrice(monto);
+    {
+        try{
+            serviceManager.recalcTotalPrice(monto);
+        }finally{
+            serviceManager.closeService();
+        }      
     }
     
     @Override
     public void addItem(int key, int cantidad) 
     {
-        serviceManager.addItem(key, cantidad);
+        try{
+            serviceManager.addItem(key, cantidad);
+        }finally{
+            serviceManager.closeService();
+        }  
     }
 
     @Override
     public void removeItem(int key, int cantidad) 
     {
-        serviceManager.removeItem(key, cantidad);
+        try{
+            serviceManager.removeItem(key, cantidad);
+        }finally{
+            serviceManager.closeService();
+        }  
     }
 
     @Override
     public void setItemAmount(int key, int cantidad)
     {
-        serviceManager.setItemAmount(key, cantidad);
+        try{
+            serviceManager.setItemAmount(key, cantidad);
+        }finally{
+            serviceManager.closeService();
+        }   
     }
        
     @Override
     public void deleteItem(int key) 
     {
-        serviceManager.deleteItem(key);
+        try{
+            serviceManager.deleteItem(key);
+        }finally{
+            serviceManager.closeService();
+        }   
     }
      
     @Override
     public void removeAllItems() 
     {
-        serviceManager.removeAllItems();
+        try{
+            serviceManager.removeAllItems();
+        }finally{
+            serviceManager.closeService();
+        }   
     }
 
     @Override
     public void payProducts() 
     {
-        serviceManager.payProducts();
+        try{
+            serviceManager.payProducts();
+        }finally{
+            serviceManager.closeService();
+        }
     }
 
-   
+    public ArrayList<Producto> getProductList()
+    {
+        ArrayList<Producto> lista = serviceManager.listaDeProductos();
+        
+        for (int i = 0; i < lista.size(); i++) 
+        {
+            if (lista.get(i).getStock() == 0 ) 
+            {
+                lista.remove(i);
+            }
+        }
+        return lista;
+    }
 }

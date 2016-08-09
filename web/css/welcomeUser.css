@@ -42,10 +42,27 @@
         border-left:solid 1px;
 }
 
-
-
 #menu img{
     height:100px;
     width:100px;      
 }
 
+#cartStyle{
+    text-align: center;
+}
+
+ul.products li {
+    width: 200px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+
+ ul.products {
+    width: 80%;
+    margin: auto;
+}
+
+div.thumb{
+    height: 400px;
+}

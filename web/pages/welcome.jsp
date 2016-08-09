@@ -4,6 +4,8 @@
     Author     : Joack
 --%>
 
+<%@page import="interfaces.IProduct"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="modelo.Producto"%>
 <%@page import="modelo.ElementoDelCarrito"%>
 <%@page import="modelo.Carrito"%>
@@ -20,6 +22,7 @@
     UsuarioComunDAO usuario = (UsuarioComunDAO)request.getSession().getAttribute("usuario");   
     UsuarioComun userData = (UsuarioComun)request.getSession().getAttribute("userDT");
     Carrito cart = (Carrito)request.getSession().getAttribute("carrito");
+    ArrayList<Producto> listaProductos = usuario.getProductList();
 %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +31,6 @@
         <title>JSP Page</title>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
         <link href="css/welcomeUser.css" rel="stylesheet">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>        
@@ -38,7 +40,7 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.jsp">my brand</a>
+                    <a class="navbar-brand" href="index.jsp">E-Shop</a>
                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -98,23 +100,50 @@
                     <h3>HOME</h3>
                     <p>Bienvenido a la pagina de compra del usuario, en la misma se podran<br>
                        efectuar las siguientes operaciones: </p>
-
-                    <ul>
-                        <li>Agregar un producto al carrito.</li>
-                        <li>Agregar un Articulo.</li>
-                        <li>Agregar una descripcion.</li>
-                        <li>Agregar un nuevo usuario.</li>
-                        <br>
-                        <li>Editar un producto (cambiar la descripcion).</li>
-                        <li>Editar un Articulo.</li>
-                        <li>Editar Descripcion.</li>
-                        <li>Editar usuarios.</li>                      
-                        <br>
-                        <li>Borrar un producto.</li>
-                        <li>Borrar un Articulo.</li>
-                        <li>Borrar Descripcion.</li>
-                        <li>Borrar un usuario.</li>
-                    </ul>
+                    
+                    <br>
+                    <div class="container">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="col-sm-4"><strong><u>Carrito:</u></strong></td>
+                                    <td class="col-sm-4"><strong><u>Shop:</u></strong></td>
+                                    <td class="col-sm-4"><strong><u>Contacto:</u></strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="col-sm-4">
+                                        <div class="container-fluid">
+                                            <ul>
+                                                <br>
+                                                <li>Incrementar la cantidad de un producto.</li>
+                                                <li>Decrementar la cantidad de un producto.</li>
+                                                <li>Editar la cantidad de existencias de un producto dentro del carrito.</li>
+                                                <li>Eliminar un producto del carrito.</li>
+                                                <li>Vaciar el carrito.</li>
+                                                <li>Pagar carrito.</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-4">
+                                        <div class="container-fluid">
+                                            <ul>
+                                                <br>
+                                                <li>Agregar un producto al carrito.</li>
+                                                <li>Consultar la informacion de un producto.</li>                      
+                                            </ul>
+                                        </div>
+                                    </td>
+                                    <td class="col-sm-4">                        
+                                        <div class="container-fluid">
+                                            <ul>
+                                                <li>Simulacro de formulario de contacto.</li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
                 <div id="carrito" class="tab-pane fade">
@@ -123,7 +152,7 @@
                         <div class="panel panel-default" >
                             <div class="panel-heading" align="center">Productos en el Carrito</div>
                             <div class="panel-body">
-                                <table class="table table-bordered table-responsive">
+                                <table class="table table-bordered table-responsive" id="cartStyle">
                                     <thead>
                                         <th class="hide">IdCodigo</th>
                                         <th class="hide">RemainStock</th>
@@ -150,7 +179,7 @@
                                                 out.println("<td>"+producto.getProducto().getDescripcion()+"</td>");
                                                 out.println("<td class=\"tCant\">"+producto.getCantidad()+"</td>");
                                                 out.println("<td>"+"<span>$ </span>"+String.format("%.2f", producto.getPrecioProducto())+"</td>");
-                                                out.println("<td align=\"center\">"+"<image src=\""+producto.getProducto().getImagen()+"\"></td>");
+                                                out.println("<td align=\"center\">"+"<a href=\"#\" class=\"thumbnail\"><image src=\"imagenes/"+producto.getProducto().getImagen()+"\"></a></td>");
                                                 out.println("<td>"  +"<a class=\"btn btn-xs btn-success addProd\">"
                                                                     +"<span class=\"glyphicon glyphicon-plus\"></span></a>  "
                                                                     +"<a class=\"btn btn-xs btn-danger removeProd\">"
@@ -168,61 +197,69 @@
                                         %>
                                     </tbody>
                                 </table>
-                                    <div class="pull-right">
-                                        <strong>Total $</strong><input type="text" disabled="" value="<%=String.format("%.2f", usuario.getTotalPrice())%>"> 
-                                    </div>
-                                    <br><br>
-                                    <button class="btn btn-primary" data-toggle="modal" data-target="#carritoPagar_dialog">
-                                        Pagar
-                                    </button>
-                                    <button class="btn btn-danger" data-toggle="modal" data-target="#carritoVaciar_dialog">
-                                        Vaciar Carrito
-                                    </button> 
-                                    
-                                    
-                                    
+                                <div class="pull-right">
+                                    <strong>Total $</strong><input type="text" disabled="" value="<%=String.format("%.2f", usuario.getTotalPrice())%>"> 
+                                </div>
+                                <br><br>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#carritoPagar_dialog">
+                                    Pagar
+                                </button>
+                                <button class="btn btn-danger" data-toggle="modal" data-target="#carritoVaciar_dialog">
+                                    Vaciar Carrito
+                                </button>
                             </div>
                         </div>
-                        
-                    </div>
+                    </div>                                    
                 </div> 
     
-                
-                
-                
+                              
                 <div id="shop" class="tab-pane fade">
                     <div class="container-fluid">
                         <div class="panel panel-default">
                             <div class="panel-heading">Title</div>
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="panel with-nav-tabs panel-primary">
-                                            <div class="panel-heading" id="nav-panel-heading">
-                                                <ul class="nav nav-tabs" id="nav-tabs-menu">
-                                                    <li class="active">
-                                                        <a data-toggle="tab" href="#shopItem1-1">Item</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#shopItem1-2" data-toggle="tab" >Info</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                    <div class="container">
+                                        <%
+                                            for( int i=0; i < listaProductos.size(); i++ )
+                                            {
+                                                IProduct producto = listaProductos.get(i);
 
-                                            <div class="panel-body">
-                                                <div class="tab-content">
-                                                    <div id="shopItem1-1" class="tab-pane active">
-                                                        <p>Item</p>
-                                                    </div>
-                                                    <div id="shopItem1-2" class="tab-pane">
-                                                        <p>Info</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                       </div>
-                                   </div>
-
-                               </div> 
+                                                out.println("  <div class=\"col-sm-4\">"                                                                      +
+                                                            "       <div class=\"thumbnail thumb\">"                                                                +
+                                                            "           <ul class=\"products\">"                                                              +
+                                                            "               <li>"                                                                           +
+                                                            "                   <div class=\"row\">"                                                          +
+                                                            "                       <a><img src=\"imagenes/"+producto.getImagen()+"\"></a>" +
+                                                            "                   </div>"                                                                     +
+                                                            "                   <div class=\"row\">"                                                          +
+                                                            "                       <h4>"+producto.getNombre()+"</h4>"                                             +
+                                                            "                   </div>"                                                                     +
+                                                            "                   <div class=\"row\">"                                                          +
+                                                            "                       <p><span>$</span>"+String.format("%.2f", producto.getPrecio())+"</p>"                                                          +
+                                                            "                   </div>"                                                                     +
+                                                            "                   <div class=\"row\">"                                                          +
+                                                            "                       <div class=\"nav nav-pills nav-justified\">"                              +
+                                                            "                           <a class=\"hide idCodigo\">"+producto.getIdCodigo()+"</a>"+
+                                                            "                           <a class=\"hide idDescrip\">"+producto.getDescripcion()+"</a>    " +
+                                                            "                           <a class=\"hide idMarca\">"+producto.getMarca()+"</a>"+
+                                                            "                           <a class=\"hide idModelo\">"+producto.getModelo()+"</a>"+
+                                                            "                           <a class=\"hide idNombre\">"+producto.getNombre()+"</a>"+
+                                                            "                           <a class=\"btn btn-success shopItemAdd\">"                                        +
+                                                            "                               <span class=\"glyphicon glyphicon-plus-sign\"></span> Agregar</a>"+
+                                                            "                           <a class=\"btn btn-primary shopItemInfo\">"                                         +
+                                                            "                               <span class=\"glyphicon glyphicon-info-sign\"></span> Detalle</a>"+
+                                                            "                       </div>"                                                                 +
+                                                            "                   </div>"                                                                     +
+                                                            "               </li>"                                                                          +
+                                                            "           </ul>"                                                                              +
+                                                            "       </div>"                                                                                 +
+                                                            "   </div>"
+                                                            );
+                                            }
+                                        %>
+                                    </div>
+                                </div>   
                             </div>
                        </div>
                     </div>                  
@@ -312,12 +349,13 @@
 	<div class="modal fade" id="carritoEditar_dialog" role="dialog" >
             <div class="modal-dialog" role="dialog">
                 <div class="modal-content">
-                    <form class="form-horizontal" id="carritoEditar_form" action="usuarioCarritoEditar.do" method="POST">
+                    
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="edit-modal-label">Editar Cantidad</h4>
                         </div>
                         <div class="modal-body">
+                            <form class="form-horizontal" id="carritoEditar_form" action="usuarioCarritoEditar.do" method="POST">
                             <input type="text" id="idCodigo" name="idCodigo" value="" class="hidden">
                             
                             <div class="form-group">
@@ -326,9 +364,10 @@
                                     <input type="text" class="form-control" id="idCantidad" name="cantidad" required>&nbsp;<span id="errmsg1"></span>
                                     <h5><small id="idRemainStock"></small></h5>
                                 </div>
-                            </div>   
+                            </div>
+                            </form>
                         </div>
-                    </form>
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default hide" data-dismiss="modal" id="carritoEditarBtnClose"
                                 onclick="javaScript:location.reload()">
@@ -365,16 +404,53 @@
             </div>
         </div>        
         
+<!-- *********************************************************************** --> 
+        
+        <!-- SHOP ITEM INFO -->
+ 	<div class="modal fade" id="productoMostrar_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="carritoPagar_form" action="usuarioCarritoPagar.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="edit-modal-label" align="center">Informacion del producto.</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <h3 id="Marca"></h3>
+                            </div>
+                            
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button class="btn btn-default hide" id="carritoPagarBtnClose" onclick="javaScrip:location.reload()">Close</button>
+                        <button class="btn btn-default" id="carritoPagarBtnNo" data-dismiss="modal">No, seguir comprando</button>
+                        <button type="button" id="submitCarritoPagarForm" class="btn btn-primary">Listo</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>        
         
         
-        
-        
-        
-        <div class="hidden" id="AgregarAlCarrito">
-            <%
-                cart.addItem(1, 1);
-            %>
-        </div>
+ 	<div class="modal fade" id="shopItemAdd_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">                    
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="edit-modal-label" align="center">Informacion del producto.</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="usuarioCarritoIncrementar.do" method="post" id="shopItemAdd_form">
+                            <input type="text" name="idCodigo" id="idShopItemAdd">
+                            <input type="text" name="cantidad" id="idShopItemCount">
+                        </form>
+                    </div>             
+                    <div class="modal-footer">
+                        <button type="button" id="submitShopItemAddForm" class="btn btn-primary">Listo</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>     
         
 <!-- *********************************************************************** -->  
 
@@ -447,11 +523,7 @@
             </div>
         </div>        
         
-        
-        
-        
-        
-        
+
         <!-- PAGE FOOTER - CONTACTS -->
         <div class="nav navbar-default navbar-fixed-bottom">
             <div class="container">

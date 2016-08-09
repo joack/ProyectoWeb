@@ -16,7 +16,7 @@
         <title>no title</title>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="css/index.css" rel="stylesheet">
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
     </head>
@@ -25,7 +25,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="index_.html">my brand</a>
+            <a class="navbar-brand" href="#">E-Shop</a>
              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -34,16 +34,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-
-
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Page 1-1</a></li>
-                        <li><a href="#">Page 1-2</a></li>
-                        <li><a href="#">Page 1-3</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Page 2</a></li>
+                <li><a  data-toggle="modal" data-target="#contact_dialog" href="#">Contact me</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="pages/signup.jsp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -91,13 +82,41 @@
             </div>
         </div>
 
+        <!-- CONTACT ME-->
+        <div class="modal fade" id="contact_dialog" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Mis datos</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p><b>Joaquin Acuña</b></p>
+                        <br>
+                        <p>Email: joaquinacuna_1407@hotmail.com</p>
+                        <p>Email: joaquinacuna.1407@gmail.com</p>
+                        <br>
+                        <p>LinkedIn: <a href="https://www.linkedin.com/in/joaquin-acuña-3763a540">
+                                https://www.linkedin.com/in/joaquin-acuña-3763a540</a></p>
+                        <p>Agosto 2016. Curso Java SE - Comunidad IT</p>
+                        
+                        <div class="modal-footer">
+                            <a class="btn btn-primary" data-dismiss="modal">Cerrar</a>
+                        </div>
+                           
+                  
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!-- PAGE FOOTER - CONTACTS -->
         <div class="nav navbar-default navbar-fixed-bottom">
             <div class="container">
                 <p class="navbar-text pull-left">Site Built by <strong>Joaquin Acuña</strong>.</p>
                 <div class="pull-right navbar-btn">
-                    <a href="http://www.facebook.com/Joack23" target="_blank" class=""><span><i class="fa fa-facebook-official" style="font-size:24px"></i></span></a>
+                    <a href="https://github.com/joack/ProyectoWeb" target="_blank" class=""><span><i class="fa fa-github" aria-hidden="true" style="font-size:24px"></i></i></span></a>
                     <a href="https://ar.linkedin.com/in/joaquin-acuña-3763a540" target="_blank" class=""><span><i class="fa fa-linkedin-square" style="font-size:24px"></i></span></a>
                 </div>
             </div>

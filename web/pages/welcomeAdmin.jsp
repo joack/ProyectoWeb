@@ -50,7 +50,7 @@
                         <li><a href="#Listas" data-toggle="tab" >Listas</a></li>
                         <li><a href="#EdicionProductos" data-toggle="tab" >Productos</a></li>
                         <li><a href="#EdicionUsuarios" data-toggle="tab" >Usuarios</a></li>
-                        <li class="pull-right"><a class="idLogout" href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                        <li class="pull-right"><a class="idLogout" href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                     </ul>
                 </div>
             
@@ -108,6 +108,7 @@
                                                         </thead>
                                                         <tbody>
                                                         <% 
+                                                            String path = "imagenes/";
                                                             for( IProduct producto: listaProductos) 
                                                             {
                                                                 out.println("<tr>");
@@ -119,7 +120,8 @@
                                                                 out.println("   <td class=\"idDescrip\">"                 +producto.getDescripcion()+  "</td>");
                                                                 out.println("   <td class=\"idPrecio\" >"                 +producto.getPrecio()+       "</td>");
                                                                 out.println("   <td class=\"idStock\"  >"                 +producto.getStock()+        "</td>");
-                                                                out.println("   <td class=\"idImagen\" >"                 +producto.getImagen()+       "</td>");
+                                                                out.println("   <td class=\"idImagen\"><a href=\"#\" "
+                                                                                                + "class=\"thumbnail\"><image src=\""+ path + producto.getImagen()+"\"></a></td>");
                                                                 out.println("</tr>");   
                                                             }
                                                         %> 
@@ -217,7 +219,8 @@
                                                             out.println("   <td class=\"idDescrip\">"                 +producto.getDescripcion()+  "</td>");
                                                             out.println("   <td class=\"idPrecio\" >"                 +producto.getPrecio()+       "</td>");
                                                             out.println("   <td class=\"idStock\"  >"                 +producto.getStock()+        "</td>");
-                                                            out.println("   <td class=\"idImagen\" >"                 +producto.getImagen()+       "</td>");
+                                                            out.println("   <td class=\"idImagen\"><a href=\"#\" "
+                                                                                                + "class=\"thumbnail\"><image src=\"imagenes/"+producto.getImagen()+"\"></a></td>");
                                                             out.println("<td width=\"7%\">"
                                                                         + " <a   type=\"button\" "
                                                                             + "  class=\"btn btn-primary btn-xs EditarProducto\" "
@@ -536,28 +539,49 @@
 <!-- ******** FORMULARIOS MODAL PARA ARTICULOS ******** --> 
 
         <!-- ARTICULO AGREGAR -->
-        <div class="modal fade " width="30%" id="AgregarArticulo_dialog" role="dialog">
+        <div class="modal fade " width="30%" id="AgregarArticulo_dialog" role="dialog" aria-labelledby="edit-modal-label">
             <div class="modal-dialog" width="10%">
                 <div class="modal-content " >
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" align="center">Agregar Articulo</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="AgregarArticulo_form" action="administradorArticuloAgregar.do" method="POST">
-                            ID Codigo:                                          <br>
-                            <input type="text" name="idCodigo" id="fld1" required>&nbsp;<span id="errmsg1"></span><br><br>                          
-                            Marca:                                              <br>
-                            <input type="text" name="idMarca" required>        <br>
-                            Modelo:                                             <br>
-                            <input type="text" name="idModelo" required>       <br>
-                            Nombre:                                             <br>
-                            <input type="text" name="idNombre" required>       <br>                     
-                        </form>
-                    </div>
+                    <form class="form-horizontal" id="AgregarArticulo_form" action="administradorArticuloAgregar.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" align="center">Agregar Articulo</h4>
+                        </div>
+                        <div class="modal-body">
+                        
+                            <div class="form-group">
+                                <label for="idCodigo" class="col-sm-2 control-label">IdCodigo</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="idCodigo" id="fld1" class="form-control" required>&nbsp;<span id="errmsg1"></span>
+                                </div>
+                            </div>                          
+                            <div class="form-group">
+                                <label for="idCodigo" class="col-sm-2 control-label">Marca</label>
+                                <div class="col-sm-10">                                              
+                                    <input type="text" name="idMarca" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="idCodigo" class="col-sm-2 control-label">Modelo</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="idModelo" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="idCodigo" class="col-sm-2 control-label">Nombre</label>
+                                <div class="col-sm-10">                                            
+                                    <input type="text" name="idNombre" class="form-control" required>      
+                                </div>
+                            </div>
+                        </div>    
+                    </form>
+                    
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                        <button type="button" class="btn btn-default hide" data-dismiss="modal" id="idArticuloAgregarCloselBtn"
                                 onclick="javascript:window.location.reload()">Close
+                        </button>
+                        <button type="button" data-dismiss="modal" class="btn btn-default" id="idArticuloAgregarCancelBtn">
+                            Cancel
                         </button>
                         <button type="button" id="submitArgregarArticuloForm" class="btn btn-default">Send</button>
                     </div>
@@ -582,8 +606,11 @@
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                                onclick="javascript:window.location.reload()">No</button>
+                        <button type="button" class="btn btn-default hide" data-dismiss="modal" id="idArticuloBorrarOkBtn"
+                                onclick="javascript:window.location.reload()">Ok</button>
+                        <button type="button" id="idArticuloBorrarNoBtn" class="btn btn-primary" data-dismiss="modal">
+                            No
+                        </button>
                         <button type="button" id="submitBorrarArticuloForm" class="btn btn-primary">Yes</button>
                     </div>                    
                 </div>
@@ -620,13 +647,14 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="idNombre" name="idNombre" placeholder="Nombre Producto" required>
                                 </div>
-                            </div>
+                            </div>                           
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="EditarArticuloCloseBtn"
                                 onclick="javascript:window.location.reload()">Close
                         </button>
+                        <button type="button" id="EditarArticuloCancelBtn" class="btn btn-primary">Cancel</button>
                         <button type="button" id="submitEditarArticuloForm" class="btn btn-primary">Save changes</button>
                     </div>                    
                 </div>
