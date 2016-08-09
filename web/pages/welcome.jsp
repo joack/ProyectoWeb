@@ -28,7 +28,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>User Page</title>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/welcomeUser.css" rel="stylesheet">
@@ -78,7 +78,7 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <span class="glyphicon glyphicon-user"></span>
-                                Hola, <%=userData.getNickName()%><span class="caret"></span>
+                                Hola <%=userData.getNickName()%>! <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Page 1-1</a></li>
@@ -216,7 +216,7 @@
                 <div id="shop" class="tab-pane fade">
                     <div class="container-fluid">
                         <div class="panel panel-default">
-                            <div class="panel-heading">Title</div>
+                            <div class="panel-heading" align="center"><b>Productos</b></div>
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="container">
@@ -407,31 +407,29 @@
 <!-- *********************************************************************** --> 
         
         <!-- SHOP ITEM INFO -->
- 	<div class="modal fade" id="productoMostrar_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
+ 	<div class="modal fade" id="shopItemInfo_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
             <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <form class="form-horizontal" id="carritoPagar_form" action="usuarioCarritoPagar.do" method="POST">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label" align="center">Informacion del producto.</h4>
+                <div class="modal-content"> 
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="edit-modal-label" align="center">Informacion del producto.</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <h3 id="pName"></h3>
+                            <p id="pMarca"><u>Marca:</u> </p>
+                            <p id="pModelo"><u>Modelo:</u> </p>
+                            <p id="pDescrip"><u>Descripcion:</u> </p>
                         </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <h3 id="Marca"></h3>
-                            </div>
-                            
-                        </div>
-                    </form>
+                    </div> 
                     <div class="modal-footer">
-                        <button class="btn btn-default hide" id="carritoPagarBtnClose" onclick="javaScrip:location.reload()">Close</button>
-                        <button class="btn btn-default" id="carritoPagarBtnNo" data-dismiss="modal">No, seguir comprando</button>
-                        <button type="button" id="submitCarritoPagarForm" class="btn btn-primary">Listo</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" >Close</button>
                     </div>                    
                 </div>
             </div>
         </div>        
         
-        
+        <!-- SHOP ITEM ADD -->
  	<div class="modal fade" id="shopItemAdd_dialog" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">                    
@@ -517,7 +515,9 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">
                             Close
                         </button>
-                        <button type="button" id="submitEditUserFormButton" class="btn btn-default">Send</button>
+                        <button type="button" id="submitEditUserFormButton" class="btn btn-default" data-dismiss="modal">
+                            Send
+                        </button>
                     </div>
                 </div>
             </div>
@@ -529,7 +529,7 @@
             <div class="container">
                 <p class="navbar-text pull-left">Site Built by <strong>Joaquin Acuña</strong>.</p>
                 <div class="pull-right navbar-btn">
-                    <a href="http://www.facebook.com/Joack23" target="_blank" class=""><span><i class="fa fa-facebook-official" style="font-size:24px"></i></span></a>
+                    <a href="https://github.com/joack/ProyectoWeb" target="_blank" class=""><span><i class="fa fa-github" aria-hidden="true" style="font-size:24px"></i></i></span></a>
                     <a href="https://ar.linkedin.com/in/joaquin-acuña-3763a540" target="_blank" class=""><span><i class="fa fa-linkedin-square" style="font-size:24px"></i></span></a>
                 </div>
             </div>

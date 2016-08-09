@@ -210,6 +210,7 @@ $(document).ready(function () {
     );
 });
 
+
 //------------------------------------------------------------------------------
 
 // SCRIPT PARA CAMPOS SOLO NUMERICOS
@@ -332,4 +333,22 @@ $('a.shopItemAdd').on('click', function() {
     $('#submitShopItemAddForm', myModal).click();
 
     return false;
+});
+
+$('a.shopItemInfo').on('click', function() {
+    var myModal = $('#shopItemInfo_dialog');
+
+    var name = $(this).closest('div').find('a.idNombre').html();
+    var marca = $(this).closest('div').find('a.idMarca').html();
+    var modelo = $(this).closest('div').find('a.idModelo').html();
+    var descrip = $(this).closest('div').find('a.idDescrip').html();
+    
+    
+    $('#pName'     , myModal).text("Nombre: "+name);
+    $('#pMarca'    , myModal).text("Marca: "+marca);    
+    $('#pModelo'   , myModal).text("Modelo: "+modelo);
+    $('#pDescrip'  , myModal).text("Descripcion: "+descrip);
+
+    myModal.modal({ show: true });
+
 });

@@ -47,6 +47,8 @@ $(document).ready(function () {
             success: function(data, textStatus, jqXHR) {
                 $('#AgregaerProducto_dialog .modal-header .modal-title').html("Result");
                 $('#AgregaerProducto_dialog .modal-body').html(data);
+                $('#agregarProductoCloseBtn').removeClass('hide');
+                $('#AgregarProductoCancelBtn').remove();
                 $("#submitAgregarProductoForm").remove();
             },
             error: function(jqXHR, status, error) {

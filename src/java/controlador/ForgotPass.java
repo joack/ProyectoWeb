@@ -35,13 +35,26 @@ public class ForgotPass extends HttpServlet
     {
         String email = request.getParameter("email");
         
-        IUser user =  service.readAUser(email);
-        
-        String msg = "Has recibido este mensaje debido a que has olvidado tu contraseña. \n"
-                   + "Si no has sido tú el solicitante, por favor no ignora este mail. \n\n"
-                   + "La clave es: " + user.getPassword();
-        
-        SendEmail.send(email, "Forgotten Password", msg);
+        if (service.isAlreadyUser(email)) 
+        {
+            IUser user =  service.readAUser(email);
+  
+            String msg = "Has recibido este mensaje debido a que has olvidado tu contraseña. \n"
+                       + "Si no has sido tú el solicitante, por favor no ignora este mail. \n\n"
+                       + "La clave es: " + user.getPassword();
+
+            SendEmail.send(email, "Forgotten Password", msg);
+            
+            String exito =  "El mensaje se ha enviado correctamente. Por\n"
+                    +       "favor revisa tu correo electronico.";
+            
+            request.getSession().setAttribute("exito", exito);
+            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+        }else{
+            String error = "El usuario ingresado es invalido. Ingrese un usuario valido.";
+            request.getSession().setAttribute("error", error);
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

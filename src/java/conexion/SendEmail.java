@@ -41,7 +41,7 @@ public class SendEmail
     {
         protected PasswordAuthentication getPasswordAuthentication() 
         {
-               return new PasswordAuthentication("send.Pass.do@gmail.com","32128131");
+               return new PasswordAuthentication("<USER>@gmail.com","<PASSWORD>");
         }
     });
     
@@ -53,7 +53,7 @@ public class SendEmail
         */
 
         MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("send.Pass.do@gmail.com"));
+        message.setFrom(new InternetAddress("<USER>@gmail.com"));
         message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
         message.setSubject(sub);
         message.setText(msg);

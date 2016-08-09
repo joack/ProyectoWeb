@@ -29,6 +29,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap.css">
         <link href="css/welcomeAdmin.css" rel="stylesheet">
@@ -455,21 +456,32 @@
         <div class="modal fade " width="30%" id="AgregaerProducto_dialog" role="dialog">
             <div class="modal-dialog" width="10%">
                 <div class="modal-content " >
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" align="center">Agregar Producto</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="AgregarProducto_form" action="administradorProductoCrear.do" method="POST">
-                            ID Codigo:                                          <br>
-                            <input type="text" name="idCodigo" id="fld1" required>&nbsp;<span id="errmsg1"></span><br><br>                            
-                            ID Descripcion:                                     <br>
-                            <input type="text" name="idArticulo" id="fld1" required>&nbsp;<span id="errmsg1"></span><br><br>
-                        </form>
-                    </div>
+                    <form class="form-horizontal" id="AgregarProducto_form" action="administradorProductoCrear.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" align="center">Agregar Producto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="idCodigo" class="col-sm-2 control-label">Id Codigo</label>
+                                <div class="col-sm-10">                                          
+                                    <input type="text" class="form-control" name="idCodigo" id="fld1" required>&nbsp;<span id="errmsg1"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="idDescrip" class="col-sm-2 control-label">Id Descrip</label>
+                                <div class="col-sm-10">                                     
+                                    <input type="text" class="form-control" name="idArticulo" id="fld1" required>&nbsp;<span id="errmsg1"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
+                        <button type="button" class="btn btn-default hide" data-dismiss="modal" id="agregarProductoCloseBtn"
                                 onclick="javascript:window.location.reload()">Close
+                        </button>
+                        <button type="button" id="AgregarProductoCancelBtn" class="btn btn-default" data-dismiss="modal">
+                            Cancel
                         </button>
                         <button type="button" id="submitAgregarProductoForm" class="btn btn-default">Send</button>
                     </div>
@@ -651,10 +663,12 @@
                         </div>
                     </form>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="EditarArticuloCloseBtn"
+                        <button type="button" class="btn btn-default hide" data-dismiss="modal" id="EditarArticuloCloseBtn"
                                 onclick="javascript:window.location.reload()">Close
                         </button>
-                        <button type="button" id="EditarArticuloCancelBtn" class="btn btn-primary">Cancel</button>
+                        <button type="button" id="EditarArticuloCancelBtn" class="btn btn-default" data-dismiss="modal">
+                            Cancel
+                        </button>
                         <button type="button" id="submitEditarArticuloForm" class="btn btn-primary">Save changes</button>
                     </div>                    
                 </div>
@@ -670,24 +684,45 @@
         <div class="modal fade " width="30%" id="AgregarDescripcion_dialog" role="dialog">
             <div class="modal-dialog" width="10%">
                 <div class="modal-content " >
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" align="center">Agregar Articulo</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="AgregarDescripcion_form" action="administradorDescripcionAgregar.do" method="POST">
-                            ID Descripcion:                                     <br>
-                            <input type="text" name="idArticulo" id="fld1" required>&nbsp;<span id="errmsg1"></span><br><br>                          
-                            Stock:                                              <br>
-                            <input type="text" name="idStock"   id="fld2" required>&nbsp;<span id="errmsg2"></span><br>
-                            precio:                                             <br>
-                            <input type="text" name="idPrecio"  id="fld3" required>&nbsp;<span id="errmsg3"></span><br>
-                            Descripcion:                                        <br>
-                            <input type="text" name="idDescrip" required>       <br>
-                            URL Imagen:                                         <br>
-                            <input type="text" name="idImagen" required>        <br>
-                        </form>
-                    </div>
+                    <form id="AgregarDescripcion_form" class="form-horizontal" action="administradorDescripcionAgregar.do" method="POST">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" align="center">Agregar Articulo</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Id Desccrip:</label>
+                                <div class="col-sm-10">                                    
+                                    <input type="text" class="form-control" name="idArticulo" id="fld1" required>&nbsp;<span id="errmsg1"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Stock</label>
+                                <div class="col-sm-10">                                             
+                                    <input type="text" class="form-control" name="idStock"   id="fld2" required>&nbsp;<span id="errmsg2"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Precio</label>
+                                <div class="col-sm-10">                                             
+                                    <input type="text" class="form-control" name="idPrecio"  id="fld3" required>&nbsp;<span id="errmsg3"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Descripcion</label>
+                                <div class="col-sm-10">                                       
+                                    <input type="text" class="form-control" name="idDescrip" required>       
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">URL Imagen</label>
+                                <div class="col-sm-10">                                         
+                                    <input type="text" class="form-control" name="idImagen" required>       
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"
                                 onclick="javascript:window.location.reload()">Close
@@ -783,18 +818,39 @@
         <div class="modal fade" id="addUser_dialog" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Enter your name</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addUser_form" action="signup.do" method="POST">
-                            Email:      <input type="email" name="email">   <br/>
-                            User Name:  <input type="text" name="nick">    <br/>
-                            Password:   <input type="text" name="pass">   <br/>
-                            isAdmin:    <input type="checkbox" name="admin"><br/>
-                        </form>
-                    </div>
+                    <form class="form-horizontal" id="addUser_form" action="signup.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Enter your name</h4>
+                        </div>
+                        <div class="modal-body">
+                        
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" name="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Nick</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="nick">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Password</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="pass">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">isAdmin</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox" class="form-control" name="admin">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"
                                 onclick="javascript:window.location.reload()">Close
@@ -833,40 +889,39 @@
         <div class="modal fade" id="editUser_dialog" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Enter your name</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form id="editUser_form" action="administradorUsuarioEditar.do" method="POST">
-                            <div class ="form-group">
-                                <div>
-                                    <label for="email" class="control-label">Email</label>
-                                    <div>
-                                        <input type="email" name="email" id="idEmail"> 
-                                    </div>
+                    <form class="form-horizontal" id="editUser_form" action="administradorUsuarioEditar.do" method="POST">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Enter your name</h4>
+                        </div>
+                        <div class="modal-body">
+                        
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                        <input type="email" class="form-control" name="email" id="idEmail"> 
                                 </div>
                             </div>                            
                             <div class="form-group">
-                                <label for="NickName" class=" control-label">User Name</label>
-                                <div>
-                                    <input type="text"  name="nick"  id="idUserName" placeholder="Nick Name">
+                                <label for="mobile" class="col-sm-2 control-label">Nick</label>
+                                <div class="col-sm-10">
+                                    <input type="text"  class="form-control" name="nick"  id="idUserName" placeholder="Nick Name">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="Password" class=" control-label">Password</label>
-                                <div >
-                                    <input type="text"  name="pass"  id="idUserPass" placeholder="Password">
+                                <label for="mobile" class="col-sm-2 control-label">Password</label>
+                                <div class="col-sm-10">
+                                    <input type="text"  class="form-control" name="pass"  id="idUserPass" placeholder="Password">
                                 </div>
                             </div>      
-                            <div class="form-grup">
-                                <label for="isAdmin" class=" control-label">isAdmin</label>
-                                <div >
-                                    <input type="checkbox"  name="isAdmin" id="idIsAdmin">
+                            <div class="form-group">
+                                <label for="mobile" class="col-sm-2 control-label">isAdmin</label>
+                                <div class="col-sm-10">
+                                    <input type="checkbox"  class="form-control" name="isAdmin" id="idIsAdmin">
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal"
                                 onclick="javascript:window.location.reload()">Close
@@ -902,6 +957,17 @@
             </div>
         </div>
         <!---->
+
+        <!-- PAGE FOOTER - CONTACTS -->
+        <div class="nav navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <p class="navbar-text pull-left">Site Built by <strong>Joaquin Acuña</strong>.</p>
+                <div class="pull-right navbar-btn">
+                    <a href="https://github.com/joack/ProyectoWeb" target="_blank" class=""><span><i class="fa fa-github" aria-hidden="true" style="font-size:24px"></i></i></span></a>
+                    <a href="https://ar.linkedin.com/in/joaquin-acuña-3763a540" target="_blank" class=""><span><i class="fa fa-linkedin-square" style="font-size:24px"></i></span></a>
+                </div>
+            </div>
+        </div>
         
         
         <script src="js/tablaAdminScript.js"></script>    

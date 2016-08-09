@@ -41,27 +41,34 @@ public class SignUp extends HttpServlet
         String password = request.getParameter("pass");
         String isAdmin  = request.getParameter("admin");
         
-        if( isAdmin != null )
+        if (email != null && username != null && password != null ) 
         {
-            usuario = new UsuarioAdmin( email, password, "admin" );
-        }else{
-            usuario = new UsuarioComun( email, username, password, "user" );
-        }
-        
-        
-        if (service.createUser(usuario)) 
-        {
-            String success = "Usuario agregado correstamente.";
-            request.getSession().setAttribute("exito", success);
-            request.getRequestDispatcher("/pages/success.jsp").forward(request, response);
-        }else{
-            String error = "<br>Error al registrar, intentelo de nuevo.";
-            String linkVolver = "#";
-            request.getSession().setAttribute("error", error);
-            request.getSession().setAttribute("link", linkVolver);
-            request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
-        }
+            if( isAdmin != null )
+            {
+                usuario = new UsuarioAdmin( email, password, "admin" );
+            }else{
+                usuario = new UsuarioComun( email, username, password, "user" );
+            }
 
+
+            if (service.createUser(usuario)) 
+            {
+                String success = "Usuario agregado correstamente.";
+                request.getSession().setAttribute("exito", success);
+                request.getRequestDispatcher("/pages/success.jsp").forward(request, response);
+            }else{
+                String error = "<br>Error al registrar, intentelo de nuevo.";
+                String linkVolver = "#";
+                request.getSession().setAttribute("error", error);
+                request.getSession().setAttribute("link", linkVolver);
+                request.getRequestDispatcher("/pages/error.jsp").forward(request, response);
+            }
+        }else{
+            String error = "Los campos no puede estar vacios";
+            request.getSession().setAttribute("error", error);
+            request.getSession().setAttribute("link", "index.jsp");
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+        }
         
         service.closeService();
         //response.sendRedirect(request.getHeader("referer"));
