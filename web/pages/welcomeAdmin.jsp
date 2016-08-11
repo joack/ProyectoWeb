@@ -496,7 +496,7 @@
                     <form class="form-horizontal" id="BorrarProducto_form" action="administradorProductoBorrar.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label">Delete Product?</h4>
+                            <h4 class="modal-title" id="edit-modal-label">Borrar Producto.</h4>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -608,7 +608,7 @@
                     <form class="form-horizontal" id="BorrarArticulo_form" action="administradorArticuloBorrar.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label">Borrar Articulo?</h4>
+                            <h4 class="modal-title" id="edit-modal-label">Borrar Articulo</h4>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -636,7 +636,7 @@
                     <form class="form-horizontal" id="EditarArticulo_form" action="administradorArticuloEditar.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label">Edit selected row</h4>
+                            <h4 class="modal-title" id="edit-modal-label">Editar articulo</h4>
                         </div>
                         <div class="modal-body">
                             
@@ -688,7 +688,7 @@
 
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title" align="center">Agregar Articulo</h4>
+                            <h4 class="modal-title" align="center">Agregar Descripcion</h4>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -740,7 +740,7 @@
                     <form class="form-horizontal" id="BorrarDescripcionArticulo_form" action="administradorDescripcionBorrar.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label">Delete descrip?</h4>
+                            <h4 class="modal-title" id="edit-modal-label">Borrar descripcion</h4>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
@@ -767,7 +767,7 @@
                     <form class="form-horizontal" id="EditarDescripcion_form" action="administradorDescripcionEditar.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="edit-modal-label">Edit selected row</h4>
+                            <h4 class="modal-title" id="edit-modal-label">Editar descripcion.</h4>
                         </div>
                         <div class="modal-body">                            
                             
@@ -821,7 +821,7 @@
                     <form class="form-horizontal" id="addUser_form" action="signup.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Enter your name</h4>
+                            <h4 class="modal-title">Registrar usuario.</h4>
                         </div>
                         <div class="modal-body">
                         
@@ -892,7 +892,7 @@
                     <form class="form-horizontal" id="editUser_form" action="administradorUsuarioEditar.do" method="POST">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Enter your name</h4>
+                            <h4 class="modal-title">Editar usuario.</h4>
                         </div>
                         <div class="modal-body">
                         
