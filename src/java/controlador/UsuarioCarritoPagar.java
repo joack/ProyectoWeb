@@ -32,12 +32,23 @@ public class UsuarioCarritoPagar extends HttpServlet {
             throws ServletException, IOException 
     {
         UsuarioComunDAO usuario = (UsuarioComunDAO)request.getSession().getAttribute("usuario");
-        usuario.payProducts();
-        usuario.removeAllItems();
         
-        String exito = "Operacion realizada con exito.";
-        request.getSession().setAttribute("exito", exito);
-        request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+        if (usuario.getCart().getProductos().size() > 0) 
+        {
+            usuario.payProducts();
+            usuario.removeAllItems();
+
+            String exito = "Operacion realizada con exito.";
+            request.getSession().setAttribute("exito", exito);
+            request.getRequestDispatcher("pages/success.jsp").forward(request, response);
+        }else{
+            String error = "Debes tener al menos un producto en el carrito para pagar.";
+            request.getSession().setAttribute("error", error);
+            request.getSession().setAttribute("link", request.getAttribute("javax.servlet.forward.request_uri"));
+            request.getRequestDispatcher("pages/error.jsp").forward(request, response);
+        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

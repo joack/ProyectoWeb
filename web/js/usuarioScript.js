@@ -7,8 +7,8 @@ $(document).ready(function () {
             url: formURL,
             type: "POST",
             data: postData,
-            success: function(data, textStatus, jqXHR) {
-                $("#carritoVaciar_dialog  .modal-body ").html(data)
+            success: function(data, textStatus, jqXHR) {             
+                $("#carritoPagar_dialog .modal-body ").html(data);
                 $("#carritoPagarBtnClose").removeClass("hide");
                 $("#carritoPagarBtnNo").remove();
                 $("#submitCarritoPagarForm").remove();
@@ -324,7 +324,7 @@ $('a.editProd').on('click', function() {
     return false;
 });
 
-
+//SHOP ITEM AGREGAR
 $('a.shopItemAdd').on('click', function() {
     var myModal = $('#shopItemAdd_dialog');
 
@@ -338,6 +338,7 @@ $('a.shopItemAdd').on('click', function() {
 
 });
 
+//SHOP ITEM INFORMACION
 $('a.shopItemInfo').on('click', function() {
     var myModal = $('#shopItemInfo_dialog');
 

@@ -129,7 +129,7 @@ public class Carrito implements ICart
         return costo;
     }
     
-    public ElementoDelCarrito getItem_(int key)
+    public ElementoDelCarrito getItem(int key)
     {
         ElementoDelCarrito producto = null;
         
