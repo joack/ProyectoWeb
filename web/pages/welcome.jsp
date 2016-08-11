@@ -40,7 +40,7 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.jsp">E-Shop</a>
+                    <a class="navbar-brand" href="">E-Shop</a>
                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -81,9 +81,9 @@
                                 Hola <%=userData.getNickName()%>! <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Page 1-1</a></li>
-                                <li><a href="#">Page 1-2</a></li>
-                                <li><a href="#">Page 1-3</a></li>
+                                <li><a href="#">Una accion</a></li>
+                                <li><a href="#">Otra accion</a></li>
+                                <li><a href="#">Y otra mas</a></li>
                                 <li class="divider"></li>
                                 <li><a href="#" class="idLogout" ><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                             </ul>
@@ -219,26 +219,26 @@
                             <div class="panel-heading" align="center"><b>Productos</b></div>
                             <div class="panel-body">
                                 <div class="row">
-                                    <div class="container">
+                                    <div class="container-fluid">
                                         <%
                                             for( int i=0; i < listaProductos.size(); i++ )
                                             {
                                                 IProduct producto = listaProductos.get(i);
 
-                                                out.println("  <div class=\"col-sm-4\">"                                                                      +
+                                                out.println("  <div class=\"col-sm-4 col-xs-4\">"                                                                      +
                                                             "       <div class=\"thumbnail thumb\">"                                                                +
                                                             "           <ul class=\"products\">"                                                              +
                                                             "               <li>"                                                                           +
-                                                            "                   <div class=\"row\">"                                                          +
+                                                            "                   <div class=\"row-fluid\">"                                                          +
                                                             "                       <a><img src=\"imagenes/"+producto.getImagen()+"\"></a>" +
                                                             "                   </div>"                                                                     +
-                                                            "                   <div class=\"row\">"                                                          +
+                                                            "                   <div class=\"row-fluid\">"                                                          +
                                                             "                       <h4>"+producto.getNombre()+"</h4>"                                             +
                                                             "                   </div>"                                                                     +
-                                                            "                   <div class=\"row\">"                                                          +
+                                                            "                   <div class=\"row-fluid\">"                                                          +
                                                             "                       <p><span>$</span>"+String.format("%.2f", producto.getPrecio())+"</p>"                                                          +
                                                             "                   </div>"                                                                     +
-                                                            "                   <div class=\"row\">"                                                          +
+                                                            "                   <div class=\"row-fluid\">"                                                          +
                                                             "                       <div class=\"nav nav-pills nav-justified\">"                              +
                                                             "                           <a class=\"hide idCodigo\">"+producto.getIdCodigo()+"</a>"+
                                                             "                           <a class=\"hide idDescrip\">"+producto.getDescripcion()+"</a>    " +
@@ -435,16 +435,23 @@
                 <div class="modal-content">                    
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="edit-modal-label" align="center">Informacion del producto.</h4>
+                        <h4 class="modal-title" id="edit-modal-label" align="center">Agregar Item.</h4>
                     </div>
                     <div class="modal-body">
                         <form action="usuarioCarritoIncrementar.do" method="post" id="shopItemAdd_form">
-                            <input type="text" name="idCodigo" id="idShopItemAdd">
-                            <input type="text" name="cantidad" id="idShopItemCount">
+                            <input type="text" name="idCodigo" id="idShopItemAdd" class="hide">
+                            <input type="text" name="cantidad" id="idShopItemCount" class="hide">
+                            <p>Deseas agregar este producto al carrito?</p>
                         </form>
                     </div>             
                     <div class="modal-footer">
-                        <button type="button" id="submitShopItemAddForm" class="btn btn-primary">Listo</button>
+                        <button type="button" class="btn btn-default hide" onclick="location.reload()" id="shopItemAddCloseBtn">
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="shopItemAddCancelBtn">
+                            Cancelar
+                        </button>
+                        <button type="button" id="submitShopItemAddForm" class="btn btn-primary">Si</button>
                     </div>                    
                 </div>
             </div>
@@ -472,8 +479,8 @@
                 </div>
             </div>
         </div>
-        <!---->       
-     
+        <!---->  
+         
         <!-- MODAL CONTACT -->
         <div class="modal fade" id="contact_dialog" role="dialog">
             <div class="modal-dialog">
@@ -527,10 +534,12 @@
         <!-- PAGE FOOTER - CONTACTS -->
         <div class="nav navbar-default navbar-fixed-bottom">
             <div class="container">
-                <p class="navbar-text pull-left">Site Built by <strong>Joaquin Acuña</strong>.</p>
+                <p class="navbar-text pull-left">Site Built by <strong>Joaquin Acuña</strong>.Agosto 2016</p>
                 <div class="pull-right navbar-btn">
-                    <a href="https://github.com/joack/ProyectoWeb" target="_blank" class=""><span><i class="fa fa-github" aria-hidden="true" style="font-size:24px"></i></i></span></a>
-                    <a href="https://ar.linkedin.com/in/joaquin-acuña-3763a540" target="_blank" class=""><span><i class="fa fa-linkedin-square" style="font-size:24px"></i></span></a>
+                    <a href="https://github.com/joack/ProyectoWeb" target="_blank" data-toggle="tooltip" data-placement="top" title="Mi GitHub">
+                        <span><i class="fa fa-github" aria-hidden="true" style="font-size:24px"></i></i></span></a>
+                    <a href="https://ar.linkedin.com/in/joaquin-acuña-3763a540" target="_blank" data-toggle="tooltip" data-placement="top" title="Mi LinkedIn">
+                        <span><i class="fa fa-linkedin-square" style="font-size:24px"></i></span></a>
                 </div>
             </div>
         </div>

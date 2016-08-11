@@ -192,7 +192,11 @@ $(document).ready(function () {
             type: "POST",
             data: postData,
             success: function(data, textStatus, jqXHR) {
-                location.reload();
+                
+                $("#shopItemAdd_dialog .modal-body").html(data);
+                $("#shopItemAddCloseBtn").removeClass("hide");
+                $("#shopItemAddCancelBtn").remove();
+                $("#submitShopItemAddForm").remove();
             },
             error: function(jqXHR, status, error) {
                 console.log(status + ": " + error);
@@ -330,9 +334,8 @@ $('a.shopItemAdd').on('click', function() {
     $('#idShopItemAdd'   , myModal).val(idCodigo);
     $('#idShopItemCount'   , myModal).val(cantidad);    
 
-    $('#submitShopItemAddForm', myModal).click();
+    myModal.modal({ show: true });
 
-    return false;
 });
 
 $('a.shopItemInfo').on('click', function() {
