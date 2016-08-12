@@ -15,7 +15,6 @@ import interfaces.IObligacionProducManager;
 import interfaces.IDescripcionArticulo;
 import interfaces.IObligacionArticuloDescrip;
 import interfaces.IObligacionDescriptionManager;
-import interfaces.IProduct;
 import interfaces.IUser;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modelo.Carrito;
-import modelo.ElementoDelCarrito;
 import modelo.ProdArticulo;
 import modelo.ProdDescripcion;
 import modelo.Tupla;
@@ -179,7 +177,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioAdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+         
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -215,7 +213,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                 }                
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioAdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -252,7 +250,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                 usuariosList.add((IUser) usuario);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioAdminDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         
         return usuariosList;
@@ -284,7 +282,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -308,7 +306,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                     return true;
                 }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -336,7 +334,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -369,7 +367,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                                                                                                 
             }
         } catch (SQLException | NullPointerException ex) {        
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -398,7 +396,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                                                 rs.getString(3)));              /* modelo       */                                                    
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -432,7 +430,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -456,7 +454,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                     return true;
                 }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -486,7 +484,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -519,7 +517,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                                                rs.getFloat (5) );               /* precio       */                                                    
             }
         } catch (SQLException | NullPointerException ex) {        
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -550,7 +548,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                                                                 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -586,7 +584,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                     return true;
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                
             }finally{
                 CONEXION.cerrarConexion();
             }               
@@ -611,7 +609,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                     return true;
                 }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -638,7 +636,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                 return true;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+           
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -667,7 +665,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                                     rs.getInt(2));                   /* idArticulo */                                                                                                  
             }
         } catch (SQLException | NullPointerException ex) {        
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -694,7 +692,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
                                                 rs.getInt(2)));                 /* idArticulo */                                                      
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ElectrodomesticoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
         }finally{
             CONEXION.cerrarConexion();
         }
@@ -707,7 +705,8 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
     
  // </editor-fold> 
     
-      
+ // <editor-fold defaultstate="collapsed" desc="Administracion de Carrito.">  
+    
     @Override
     public Carrito getCart() {
         return Carrito.createCarrito();
@@ -763,6 +762,7 @@ public class ServiceDAO implements  IObligacionAdmin<IUser>, IObligacionProducMa
     {
         CART.payProducts();
     }    
-    
+ 
+// </editor-fold>
     
 }
